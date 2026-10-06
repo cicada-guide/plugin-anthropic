@@ -318,7 +318,9 @@ which query actually ran. Never conclude a state has no legislation on a topic f
 **`status` is a partial match on the recorded status text.** `status: "Passed"` matches every
 status containing that word, which can record passage of one chamber or a committee rather than
 enactment. Report each bill's `status` as recorded, and never present a `status` filter as proof
-that a bill became law.
+that a bill became law. A status of exactly `Passed`
+is the bill's final status, dated when it became law, and the bill card shows it as Enacted; one
+that only contains the word, such as `Passed Senate`, is not.
 
 **Some tools omit `total`.** `search_bills`, `search_people`, `get_votes`, and `get_person_votes`
 return `has_more` but no exact count. Do not report a total for these; say "at least N" or
@@ -355,9 +357,10 @@ cursor it cannot place fails with `Error: cursor is not a next_cursor from get_p
 cursor to restart from the newest vote.` rather than returning an empty page; omit `cursor` to
 start over. `latest: true` ignores `cursor`.
 
-**A `null` `text_source` from `get_latest_bill_document` means the text is unavailable** — the
-document may be a scan, or the fetch may have timed out. Say so and offer the document URL; do not
-treat the empty text as the bill's contents.
+**A `null` `text_source` from `get_latest_bill_document` means the text could not be read** — the
+document may be a scan, or the fetch may have timed out. Say you could not read the text, not that
+it does not exist, and offer the document URL; when you show the bill card, say its Documents tab
+can display the document. Do not treat the empty text as the bill's contents.
 
 **Long bill text comes in parts.** `get_latest_bill_document` returns as much text as fits under
 25,000 characters, with `text_total_chars` (the full length) and `next_text_offset`. Until
