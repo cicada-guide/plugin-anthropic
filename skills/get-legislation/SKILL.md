@@ -360,7 +360,9 @@ start over. `latest: true` ignores `cursor`.
 **A `null` `text_source` from `get_latest_bill_document` means the text could not be read** — the
 document may be a scan, or the fetch may have timed out. Say you could not read the text, not that
 it does not exist, and offer the document URL; when you show the bill card, say its Documents tab
-can display the document. Do not treat the empty text as the bill's contents.
+can display the document. Do not treat the empty text as the bill's contents. `text_unavailable.reason`
+says why: `refused` means the state's site turned away the automated request, so tell the user the
+text is on the state's site at `item.url`; `not_text` is most often a PDF.
 
 **Long bill text comes in parts.** `get_latest_bill_document` returns as much text as fits under
 25,000 characters, with `text_total_chars` (the full length) and `next_text_offset`. Until

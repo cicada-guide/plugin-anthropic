@@ -95,7 +95,9 @@ Otherwise call in this order, skipping what the request does not need:
 3. `get_latest_bill_document` — the newest available document, not necessarily enacted law, with
    its text. Check `text_source`; a `null` means the text could not be read, not that it is empty
    or missing — say you could not read it and give `item.url`, and when you show the bill card,
-   say its Documents tab can display the document. Long text comes in parts: until `next_text_offset` is `null`, call again with
+   say its Documents tab can display the document. `text_unavailable.reason` says why: `refused`
+   means the state's site turned away the automated request, so the text is on that site at
+   `item.url`; `not_text` is most often a PDF. Long text comes in parts: until `next_text_offset` is `null`, call again with
    `text_offset` set to it, and read every part before writing what the bill does. For an older
    version, list it with `get_documents` and report its URL. `read_pdf_bytes` returns base64 PDF
    bytes, not text; do not use it to read a bill.

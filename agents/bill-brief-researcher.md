@@ -59,7 +59,9 @@ complete, or return a request for session clarification. Do not silently choose 
 - `get_latest_bill_document` with `bill_id` for the newest text. Check `text_source`: `"clean_text"`,
   `"raw_text"`, and `"document_url"` are real text; `null` means nothing stored and the fetch failed.
   On `null`, report that the text could not be read (not that it does not exist), cite `item.url`,
-  and note that the bill card's Documents tab can display the document. Never treat an empty string as the
+  and note that the bill card's Documents tab can display the document. `text_unavailable.reason`
+  says why: `refused` means the state's site turned away the automated request, so the text is on
+  that site at `item.url`; `not_text` is most often a PDF. Never treat an empty string as the
   bill's contents. Long text comes in parts: until `next_text_offset` is `null`, call again with
   `text_offset` set to it, and read every part before writing what the bill does. List any part
   not read under Gaps.

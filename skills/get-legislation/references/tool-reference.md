@@ -385,6 +385,21 @@ document's metadata, not its stored text.
 seconds or 2 MB and returns `null` text rather than failing. HTML is stripped to plain text;
 binary content types yield `null`.
 
+When `text` is `null`, `text_unavailable` says why, and markdown adds a line starting `_No text:`.
+It is absent whenever `text` is present.
+
+```json
+"text_unavailable": { "reason": "refused", "http_status": 403 }
+```
+
+| `reason` | Meaning |
+| --- | --- |
+| `refused` | The state's site turned away the automated request (401, 403 or 429, in `http_status`) |
+| `not_text` | No stored text, and the link is not a text page — most often a PDF |
+| `no_url` | No stored text and no link |
+| `too_large` | The linked document is over the 2 MB fetch bound |
+| `fetch_failed` | Any other status (in `http_status`), a timeout, or a network error |
+
 ### `get_documents`
 
 `bill_id` (UUID, required), plus `limit` / `offset`. Metadata only — no document text. Ordered by

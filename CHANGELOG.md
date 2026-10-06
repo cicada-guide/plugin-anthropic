@@ -20,6 +20,10 @@ plugin's guidance, including updates made to match what the server returns.
   say so.
 - `read_pdf_bytes` carries `_meta.ui.visibility: ["app"]` on the server: the bill card's PDF viewer
   is its caller, and a host that honors MCP Apps visibility does not offer it to the model.
+- `get_latest_bill_document` now returns `text_unavailable` with a `null` text, saying why
+  (`refused`, `not_text`, `no_url`, `too_large` or `fetch_failed`). The tool reference documents
+  it, and the get-legislation and research-legislation skills and the bill-brief-researcher agent
+  tell the user where the text is when a state's site turned the request away.
 
 ## [0.11.3] - 2026-10-06
 
