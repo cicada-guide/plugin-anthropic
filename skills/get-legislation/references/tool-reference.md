@@ -243,8 +243,8 @@ status of exactly `Passed` is the bill's final status, dated when it became law,
 shows it as Enacted; one that only contains the word, such as `Passed Senate`, is not.
 
 **Every call also renders a results card** in a host that supports MCP Apps, via
-`ui://cicada-guide/bill-results-v16.html`. It lists the results with a "Show more" button that
-pages with the same arguments. Tapping a result posts a user turn asking you to show that bill with
+`ui://cicada-guide/bill-results-v17.html`. Inline it lists the first three, with "Show all N"
+opening full screen; once every loaded result is shown, "Show more" pages with the same arguments. Tapping a result posts a user turn asking you to show that bill with
 `show_bill` (see [`show_bill`](#show_bill)); the card opens no bill itself. You still receive
 the full list as text or JSON, so read results from it as usual. Where the card renders, summarize
 the results rather than tabulating every row it already shows.
@@ -302,7 +302,7 @@ It is a general rule, not this bill's deadline: never compute a date from it. Th
 
 Like the other display tools, it has no `response_format`.
 
-Renders a bill card via `ui://cicada-guide/bill-workspace-v22.html` in hosts that support MCP Apps.
+Renders a bill card via `ui://cicada-guide/bill-workspace-v23.html` in hosts that support MCP Apps.
 The card shows the state and session, the status with its date, the bill number, and a title plate
 that shows your `headline` first; tapping the plate toggles to the official title and back. Then
 come four tabs. Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed,
@@ -434,7 +434,7 @@ ask which one the user means.
 `max(limit, ids.length)`, so one call returns the whole batch instead of silently paginating. The
 envelope gains `unresolved_ids` listing ids that matched no row — present only when `ids` was
 supplied, so a caller never reports fewer legislators than it asked about. When every id misses,
-the tool returns explanatory text instead of an empty envelope. If a batch does not fit under
+the tool returns explanatory text and an empty envelope whose `unresolved_ids` lists every id. If a batch does not fit under
 25,000 characters, `has_more` is `true`: call again with the same `ids` and `offset` set to
 `next_offset` for the rest. The first response's `unresolved_ids` covers the whole batch; use it,
 and not any `unresolved_ids` on a later page of the same batch.
@@ -454,7 +454,7 @@ Use it when the user wants to know who someone is or how to reach them. For how 
 `get_person_votes` or `show_person_record`.
 
 In a host that supports MCP Apps it renders a contact card via
-`ui://cicada-guide/official-card-v13.html`: the photo, the seat line, party, contact buttons for
+`ui://cicada-guide/official-card-v14.html`: the photo, the seat line, party, contact buttons for
 every entry in `contact_options` (several of one kind open as a list under the row), a district map when `office.outline` exists, and a Recent votes
 panel. It shows no vote tally. The card asks the host for geolocation, and offers no location
 toggle on mobile, where hosts grant none; when the viewer turns location on, the map places them and, below the map, reads "You're in this district." or
@@ -502,7 +502,7 @@ for the rest, and never supply one from elsewhere.
 `id` (UUID, required), from `search_people` after resolving identity. It has no `response_format`.
 
 In a host that supports MCP Apps it renders a legislator record via
-`ui://cicada-guide/legislator-record-v20.html`: the seat (no contact buttons), the vote history
+`ui://cicada-guide/legislator-record-v21.html`: the seat (no contact buttons), the vote history
 with session, vote, and subject filters, and the bills they sponsored. The card loads the votes
 through `get_person_votes` itself; its session picker lists only sessions with the legislator's
 votes, newest first, and its tally counts only the votes loaded, so never quote it as a career
@@ -700,7 +700,9 @@ and still tell the user the dataset does not cover it.
 Streams a PDF in base64 chunks using HTTP Range requests; a source that ignores Range is read from
 the start instead, for files up to 20 MB. It returns file bytes, not readable text:
 read a bill's text with `get_latest_bill_document`, and give the user an older version's `url` from
-`get_documents` rather than reading its bytes.
+`get_documents` rather than reading its bytes. Its descriptor carries `_meta.ui.visibility:
+["app"]`: the bill card's PDF viewer is its caller, so a host that honors MCP Apps visibility leaves
+it out of the tools you can call.
 
 | Parameter | Type | Default | Constraints |
 | --- | --- | --- | --- |

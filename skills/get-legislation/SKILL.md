@@ -149,7 +149,8 @@ calls with their counts; pass `response_format: "json"` for the same data as JSO
 `get_rollcall_breakdown` returns one roll call's whole breakdown in one call: `counts`, `by_party`,
 and every member's name, party, and vote in `members`. Resolve identity with `search_people`
 before `show_person_record` or `show_official`, and pass only an id it returned.
-`read_pdf_bytes` returns base64 PDF bytes, not readable text. For a bill's text use
+`read_pdf_bytes` returns base64 PDF bytes, not readable text, and serves the bill card's PDF viewer;
+a host that honors MCP Apps visibility does not offer it to you. For a bill's text use
 `get_latest_bill_document`; for an older version, report its document URL from `get_documents`.
 
 UUIDs flow between tools. `list_states` yields `division_id`; `list_sessions` yields `session_id`;
