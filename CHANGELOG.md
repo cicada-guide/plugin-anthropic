@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.2] - 2026-10-06
+
 ### Changed
 
 - Card resource URI `bill-workspace-v19`, after the bill card's Overview gained a Passed step
@@ -453,7 +455,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.1...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.2...HEAD
+[0.11.2]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.1...v0.11.2
 [0.11.1]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.10.0...v0.10.1
