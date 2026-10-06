@@ -20,7 +20,8 @@ node scripts/check.mjs
 They cover the invariants below: the three version fields, manifest names and `source`, the pinned
 endpoint and server key, skill and agent frontmatter, `${CLAUDE_PLUGIN_ROOT}` and Markdown links,
 tool counts in prose, the numbers in each restated dataset rule, each entry point carrying the
-rules it relies on, and phrases that critique the dataset. The project docs (`CONTRIBUTING.md`,
+rules it relies on, phrases that critique the dataset, and any mention of a bill synopsis, which
+the server never returns. The project docs (`CONTRIBUTING.md`,
 `CHANGELOG.md`, `SECURITY.md`, `docs/`) get the link, tool-count, number and critique checks too.
 `.github/workflows/check.yml` runs them on every pull request, then Claude Code's own
 `claude plugin validate --strict` on both manifests, `skills` and `agents`. When a rule changes on

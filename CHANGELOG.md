@@ -10,34 +10,40 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.3] - 2026-10-06
+
+### Added
+
+- `references/governor-action.md`: each state's governor deadline during session and after
+  adjournment, whether an unsigned bill becomes law or is pocket vetoed, and the default effective
+  date, with how to use it. Illinois, Maine, Michigan, New Hampshire, Oregon, Pennsylvania and Utah
+  were checked against their constitutions or statutes. `get_bill_dossier` now returns the bill's
+  state's rule as `governor_action`. The always-on skill, `research-legislation` and
+  `bill-brief-researcher` give its summary as the state's general rule when the record shows a bill
+  passed, never as this bill's deadline or outcome, and `check.mjs` fails an entry point that
+  mentions `governor_action` without saying so.
+
 ### Changed
 
-- Card resource URIs `bill-workspace-v21`, `bill-results-v15` and `legislator-record-v19`. The bill
-  card's line under the path shows the latest passage vote, "After passage" folds behind a button,
-  every status tag carries its date, and a status of exactly `Passed` shows as Enacted. Earlier
-  URIs still resolve.
+- Card resource URIs `bill-workspace-v22`, `bill-results-v16` and `legislator-record-v20`. Earlier
+  URIs still resolve. No card shows a synopsis. On the bill card:
+  - The line under the path shows the latest passage vote rather than the latest roll call.
+  - "After passage" folds the state's governor rule behind a button.
+  - Every status tag carries its date.
+  - A status of exactly `Passed`, or a Chaptered version, shows as Enacted, and a status reads
+    "Recorded status: Passed" rather than "not yet law".
 - A status of exactly `Passed` is described as the bill's final status, dated when it became law,
   in the always-on skill, `research-legislation`, the tool reference and the workflows, so Claude
   and the bill card agree.
 - A `null` `text_source` is reported as text that could not be read, not text that does not exist,
   and points to the bill card's Documents tab, which can display the document.
 
-### Added
+### Removed
 
-- `references/governor-action.md`: each state's governor deadline during session and after
-  adjournment, whether an unsigned bill becomes law or is pocket vetoed, and the default effective
-  date, with how to use it. `get_bill_dossier` now returns the bill's state's rule as
-  `governor_action`. The always-on skill, `research-legislation` and `bill-brief-researcher` give
-  its summary as the state's general rule when the record shows a bill passed, never as this bill's
-  deadline or outcome, and `check.mjs` fails an entry point that mentions `governor_action` without
-  saying so.
-
-### Changed
-
-- Card resource URIs `bill-workspace-v20`, `bill-results-v14` and `legislator-record-v18`. A
-  status such as Passed now reads only "Recorded status: Passed", without "not yet law". The bill
-  card's path fills Enacted for a Chaptered version, and its Overview shows the state's general
-  rule under "After passage". Earlier URIs still resolve.
+- Every use of a bill's synopsis. The skills, agents, references and docs describe a bill from its
+  title and its text only, and no longer offer the synopsis as a fallback, a search field or a card
+  label. The server stopped reading it in the same release window. `check.mjs` fails any runtime or
+  project doc that mentions one.
 
 ## [0.11.2] - 2026-10-06
 
@@ -484,7 +490,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.2...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.3...HEAD
+[0.11.3]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.2...v0.11.3
 [0.11.2]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.1...v0.11.2
 [0.11.1]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.0...v0.11.1
 [0.11.0]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.10.1...v0.11.0

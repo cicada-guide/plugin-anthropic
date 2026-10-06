@@ -189,6 +189,16 @@ for (const file of [...docFiles, ...projectDocs]) {
   }
 }
 
+// Bills are described from their title and their text. The server never reads bills.synopsis, so
+// no guidance or doc may send Claude to one. CHANGELOG.md keeps the history of when it did.
+const SYNOPSIS = /\bsynops[ie]s\b/gi;
+for (const file of [...docFiles, ...projectDocs].filter((f) => f !== "CHANGELOG.md")) {
+  const text = read(file);
+  for (const m of text.matchAll(SYNOPSIS)) {
+    fail(file, lineOf(text, m.index), `"${m[0]}": bills are described from their title and text, and no tool returns one`);
+  }
+}
+
 // show_official and show_person_record return a seat's chamber and district; the old claim that
 // no tool does would stop Claude from reporting them.
 const NO_SEAT = /no tool returns[^.]{0,40}\b(?:chamber|district)/gi;

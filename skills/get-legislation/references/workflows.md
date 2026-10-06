@@ -48,14 +48,13 @@ tapping a result posts a request to show that bill (see "Show-bill request from 
 Summarize what matched and why, rather than tabulating
 every row the card already lists, and still name the bills your answer rests on.
 
-`query` searches title and synopsis *and* the full text of attached documents, then ORs the two
+`query` searches titles *and* the full text of attached documents, then ORs the two
 result sets. Skip `division_id` for a nationwide sweep. There is no `total` on this envelope — use
 `has_more` and `next_offset`, and describe counts as "at least N".
 
-**More words widen the results.** The title/synopsis half splits `query` into words, matches each
-as a separate substring, and ORs them; only the first 8 terms of the string are used. Prefer one
-distinctive word over a phrase: `"school choice"` matches every bill with "school" in its title or
-synopsis.
+**More words widen the results.** The title half splits `query` into words, matches each as a
+separate substring, and ORs them; only the first 8 terms of the string are used. Prefer one
+distinctive word over a phrase: `"school choice"` matches every bill with "school" in its title.
 
 **Scope before the full-text cap.** The document full-text half resolves at most 50 distinct
 bills. `division_id`, `session_id`, and `session_name` scope it before that cap, so a scoped search
@@ -201,7 +200,7 @@ ask.
 // 1. resolve the bill, scoped as in "Find a bill by number in a named state"
 { "tool": "search_bills", "arguments": { "bill": "HB 314", "division_id": "<uuid>" } }
 
-// 2. read what it says; fall back to the synopsis when text_source is null
+// 2. read what it says; when text_source is null, say the text could not be read
 { "tool": "get_latest_bill_document", "arguments": { "bill_id": "<bill uuid>" } }
 
 // 3. show the card with your headline and summary
@@ -209,7 +208,7 @@ ask.
 ```
 
 Always pass both `headline` and `summary`: a call without either fails with `-32602`. Write both
-for a voter, from the document text or the synopsis:
+for a voter, from the document text:
 
 - `headline`: 1–120 characters of plain text saying what the bill does, e.g. "Bans buying soda and
   candy with SNAP benefits". No markdown, no trailing period needed. The card's title plate shows
@@ -217,9 +216,8 @@ for a voter, from the document text or the synopsis:
 - `summary`: 1–1500 characters of plain prose: what the bill does, who it affects, and where it
   stands as recorded. The card labels it as written by the AI assistant.
 
-The card renders both as text, so markdown does not render. When neither text nor synopsis is on
-record, say so in the summary rather than guess, and write the headline from the official title
-alone. Build the summary only from what the tools returned — the title, status, sponsors, and
+The card renders both as text, so markdown does not render. When the text could not be read, say so in
+the summary rather than guess, and write the headline from the official title alone. Build the summary only from what the tools returned — the title, status, sponsors, and
 recorded votes — and point to the document URL for the text. Never fill it from news coverage, web
 search, or general knowledge, even with a note saying so: the card presents the summary as the
 bill's. Never infer or claim passage or an outcome in either.
@@ -236,11 +234,11 @@ Tapping a bill in the `search_bills` results card, a vote in the `show_person_re
 sponsored bill's "Show in the conversation" button posts a user turn such as:
 
 ```text
-Show HB 314 (bill id <uuid>) with show_bill. First read its text with get_latest_bill_document, or its synopsis, and pass a short plain-language headline as headline and a plain-language summary for a voter as summary: what it does, who it affects, and where it stands.
+Show HB 314 (bill id <uuid>) with show_bill. First read its text with get_latest_bill_document, and pass a short plain-language headline as headline and a plain-language summary for a voter as summary: what it does, who it affects, and where it stands.
 ```
 
 ```jsonc
-// 1. read every part of the text; use the synopsis when text_source is null
+// 1. read every part of the text; when text_source is null, say it could not be read
 { "tool": "get_latest_bill_document", "arguments": { "bill_id": "<bill uuid from the turn>" } }
 
 // 2. show the card with your headline and summary
@@ -347,7 +345,7 @@ The reverse direction — every bill a legislator sponsored — goes through `se
 | A sitting legislator appears to have no votes | The chosen row may be a different legislator with the same name | Surface other rows with the same name as candidates and ask |
 | Right bill number, wrong bill | The same number exists in another session or state | Scope by `division_id` and `session_id` (or `session_name`); read each result's session |
 | Names missing from a vote breakdown | `get_votes` returns UUIDs only | Use `get_rollcall_breakdown`, whose `members` carry names and party |
-| `headline` or `summary` rejected by `show_bill` | Missing, empty, or too long: over 120 characters for `headline`, 1500 for `summary` | Always pass both, as plain text: a headline of at most 120 characters and a summary under 1500; when no text or synopsis is on record, say so in the summary |
+| `headline` or `summary` rejected by `show_bill` | Missing, empty, or too long: over 120 characters for `headline`, 1500 for `summary` | Always pass both, as plain text: a headline of at most 120 characters and a summary under 1500; when the text could not be read, say so in the summary |
 | Asked for a legislator's chamber or district | `search_people` and `get_person` return neither | Use the `show_official` seat line; when it has none, say they are not recorded |
 | A count looks wrong | `search_bills` / `search_people` / `get_votes` / `get_person_votes` have no `total` | Report "at least N", or paginate to exhaustion |
 | A topic search finds nothing, or suspiciously little | `search_bills` full-text caps at 50 bills — nationwide unless scoped by `division_id` or a session — and uses 8 terms, silently | Try one distinctive word, scope by `division_id` and `session_id` / `session_name`; do not report absence from one query |

@@ -168,6 +168,13 @@ longer words. (This page is checked too, so it cannot quote them.)
 - Fix: say what the tools return, such as "not recorded" or "not on record". The repo is public
   and does not critique the data.
 
+**No stored bill summary.** Applies to runtime docs and project docs except `CHANGELOG.md`, which
+keeps the history. The server no longer reads a bill's stored summary field, and no tool returns
+it, so the check fails any mention of that field's name, singular or plural, in any case. Bills are
+described from their title and their text. (This page is checked too, so it cannot name the word.)
+- Message: `<file>:<line>: "<match>": bills are described from their title and text, and no tool returns one`
+- Fix: describe the bill from its title or from `get_latest_bill_document` text instead.
+
 **No claim that chamber or district is unavailable.** Applies to runtime docs, with whitespace
 collapsed. "no tool returns" followed within 40 characters, with no full stop, by "chamber" or
 "district", any case.

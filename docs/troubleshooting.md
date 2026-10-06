@@ -89,8 +89,8 @@ so is one over its limit. Either way the call fails with `MCP error -32602: Inpu
 error:` naming `headline` or `summary`, and no card appears.
 
 Ask Claude to read the bill, write a plain-language headline under 120 characters and a summary
-under 1,500, and show the bill again with both. When the bill has no text or synopsis on record,
-the summary says so. If calls without a headline or summary keep happening, update the plugin:
+under 1,500, and show the bill again with both. When the bill's text could not be read, the
+summary says so. If calls without a headline or summary keep happening, update the plugin:
 versions through 0.8.0 treated `summary` as optional, and later ones before the `headline` change
 never passed a headline.
 
@@ -98,7 +98,7 @@ never passed a headline.
 
 Cards render only in hosts that support MCP Apps. A text-only host, such as Claude Code in the
 terminal, shows no card. Claude receives the call's text result or its structured data, depending
-on the host: for `show_bill`, the bill's number, title, status and synopsis, but not the floor votes
+on the host: for `show_bill`, the bill's number, title and status, but not the floor votes
 or sponsors the card would fetch for itself. That is expected, not a fault. The plugin writes every answer from the data
 tools so that it stands on its own without a card.
 
@@ -131,7 +131,7 @@ tools. Claude doesn't see what the card fetched, so it answers from its own tool
 the card.
 
 The summary on a bill card is labelled as written by the AI assistant. It is Claude's plain-language
-reading of the bill text or synopsis, not an official summary, and it never predicts passage. The
+reading of the bill text, not an official summary, and it never predicts passage. The
 headline on the card's title plate is Claude's too; tap the plate to see the official title. The
 vote tallies on the legislator cards cover only the votes they name; the plugin never uses them to
 grade or rank a legislator.
