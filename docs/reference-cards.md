@@ -14,10 +14,10 @@ there rather than repeating them. Why the plugin ends answers with a card is in
 
 | Tool | Card | Resource URI | The card fetches | The model receives |
 | --- | --- | --- | --- | --- |
-| `search_bills` | Bill results | `ui://cicada-guide/bill-results-v16.html` | More pages of the same search | The full result list, as text or JSON, as usual |
-| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v22.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
-| `show_official` | Contact card | `ui://cicada-guide/official-card-v13.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
-| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v20.html` | Vote history (`get_person_votes`), sessions (`list_sessions`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
+| `search_bills` | Bill results | `ui://cicada-guide/bill-results-v17.html` | More pages of the same search, once every loaded result is shown | The full result list, as text or JSON, as usual |
+| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v23.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
+| `show_official` | Contact card | `ui://cicada-guide/official-card-v14.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
+| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v21.html` | Vote history (`get_person_votes`), sessions (`list_sessions`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
 
 The URIs are the ones the live `tools/list` advertises in each tool's `_meta.ui.resourceUri`. The
 `-vN` suffix changes when the server changes a card's HTML shell, so a host that caches by URI
@@ -59,14 +59,15 @@ shows only the tool's result, so every card tool is safe to call everywhere.
 Every `search_bills` call renders the results card in a card host; there is no separate display
 tool for a list.
 
-**The card shows** the matching bills, newest first, with a "Show more" button. When nothing
+**The card shows** the matching bills, newest first: the first three inline, with a "Show all N"
+button that opens full screen (or grows the list in place where the host has no full screen). When nothing
 matches, it says so: `No bills matched these filters. Try a broader word, or ask about another
 year.`
 
 **Interactions.**
 
-- **Show more** calls `search_bills` again with the same arguments and the next offset, and
-  appends the page.
+- **Show more**, once every loaded result is shown, calls `search_bills` again with the same
+  arguments and the next offset, and appends the page.
 - **Tapping a result** posts the [show-bill request](#the-show-bill-request) for that bill. The
   result's footer then reads "Asked the assistant to show this bill".
 

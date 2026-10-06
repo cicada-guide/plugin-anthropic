@@ -172,7 +172,7 @@ to display one yourself: your output is not rendered to the user, so the caller 
   resolve against and inventing a constraint would be a guess.
 - **Candidate with no votes.** Report them as unverifiable rather than excluding them; absence of
   data is not evidence of the wrong person.
-- **Every id in a batch misses.** The tool returns explanatory text instead of an empty envelope.
-  Report that outcome plainly rather than as an empty result set.
+- **Every id in a batch misses.** The tool returns explanatory text and an empty page whose
+  `unresolved_ids` lists every id. Report that outcome plainly rather than as an empty result set.
 - **No cicada-guide tools available.** Return immediately saying the `guide-public` server isn't
   connected and that `/mcp` and a new session are the fix. Do not answer from general knowledge.

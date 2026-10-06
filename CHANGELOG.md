@@ -10,6 +10,17 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Card URIs follow the server's new shells: `bill-workspace-v23`, `bill-results-v17`,
+  `official-card-v14` and `legislator-record-v21`. The results card now shows three bills inline,
+  with "Show all N" opening full screen before "Show more" pages on.
+- `search_people` with every id missing now returns an empty page whose `unresolved_ids` lists
+  them all, beside the explanatory text; the tool reference and the legislator-disambiguator agent
+  say so.
+- `read_pdf_bytes` carries `_meta.ui.visibility: ["app"]` on the server: the bill card's PDF viewer
+  is its caller, and a host that honors MCP Apps visibility does not offer it to the model.
+
 ## [0.11.3] - 2026-10-06
 
 ### Added
