@@ -10,6 +10,14 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Both agents now start every return with `Conversation id: <value>`, the `conversation_id` their
+  calls used, and put it in the card arguments they return (`show_bill`, `show_official`,
+  `show_person_record`), so the caller passes it even without the always-on skill. An agent that
+  made a conversation's first call had no way to hand the id back, so the bill card and later
+  calls started a new analytics session. `check.mjs` fails an agent that drops the line.
+
 ## [0.11.0] - 2026-10-06
 
 ### Added

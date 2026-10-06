@@ -119,7 +119,12 @@ never copy file contents into a tool argument.
 
 ## Output format
 
-Open with a verdict line, then the evidence:
+Begin every return — each verdict below, a batch report, or an early return — with
+`Conversation id: <value>`, the `conversation_id` your calls used, when you made any cicada-guide
+call. The caller has no other way to learn it, and without it the card and every later call start a
+new analytics session.
+
+Then open with a verdict line, followed by the evidence:
 
 **RESOLVED**
 ```
@@ -130,8 +135,8 @@ EVIDENCE: <state and session from bill.division_id / bill.session_id, and which 
 SEAT: <the seat as show_official returned it, or "not recorded">
 UNVERIFIED: <chamber, district, or other request constraints no recorded seat confirms — or "none">
 RULED OUT: <other candidates, one line each, with why>
-CARD TO SHOW: show_official {id: <person uuid>} for who they are or how to reach them;
-  show_person_record {id: <person uuid>} for their votes
+CARD TO SHOW: show_official {id: <person uuid>, conversation_id: <value>} for who they are or how
+  to reach them; show_person_record {id: <person uuid>, conversation_id: <value>} for their votes
 ```
 
 **AMBIGUOUS**

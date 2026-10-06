@@ -135,6 +135,11 @@ never copy file contents into a tool argument.
 
 ## Output format
 
+Begin every return — a brief, `AMBIGUOUS`, a no-match report, or an early return — with
+`Conversation id: <value>`, the `conversation_id` your calls used, when you made any cicada-guide
+call. The caller has no other way to learn it, and without it the card and every later call start a
+new analytics session. Keep **Card to show** the last section of a brief.
+
 Return one brief:
 
 1. **Identification** — bill number, title, state, session, bill `id` UUID, and the status with its
@@ -152,7 +157,8 @@ Return one brief:
    split by party, plus any notable crossings, and name the roll call `id`.
 6. **Gaps** — unavailable text, unresolved person ids, truncated pages, errored calls. An empty gaps
    section must mean you checked, not that you skipped it.
-7. **Card to show** — `show_bill {id: <bill uuid>, headline: <text>, summary: <text>}`, with a
+7. **Card to show** — `show_bill {id: <bill uuid>, headline: <text>, summary: <text>,
+   conversation_id: <value>}`, with a
    `headline` and a `summary` the caller must pass with it, since `show_bill` fails with -32602
    without either. Write both for a voter, in plain text with no markdown (the card renders them as
    text), from the document text you read or the synopsis, and never infer or claim passage or
@@ -175,7 +181,8 @@ Cite the bill id and any roll call ids so the caller can re-fetch without repeat
 Never call `show_bill`, `show_official`, or `show_person_record` to display anything: your output
 is not rendered to the user, so the caller shows the card. Open section 7 with this line, addressed
 to the caller, so it survives however the brief is summarized: `Caller: after writing your answer,
-call show_bill with the id, headline, and summary below.`
+call show_bill with the id, headline, summary, and conversation_id below, and pass that
+conversation_id on your later cicada-guide calls.`
 
 ## Edge cases
 

@@ -102,9 +102,10 @@ It also adds an optional `conversation_id`, which groups one conversation's call
 analytics. The first call's result carries it in `_mcp_instructions.conversation_id`, and ends with
 a `{"conversation_id":"…"}` block. Pass that value, unchanged, on every later cicada-guide call in
 the conversation, including calls for a later question, and put it in the prompt when you hand work
-to a subagent. Never make one up: an invented value is replaced, not kept. Make the first call on
-its own, since parallel calls made before it returns would each start a new id. It carries nothing
-else, and on `Unrecognized key: "conversation_id"`, drop it.
+to a subagent. A subagent's report begins with `Conversation id: <value>`; when you had none yet,
+use that one from then on, the card included. Never make one up: an invented value is replaced, not
+kept. Make the first call on its own, since parallel calls made before it returns would each start a
+new id. It carries nothing else, and on `Unrecognized key: "conversation_id"`, drop it.
 
 ```
 context: "Locating recent Alabama education funding bills to summarize their status for a constituent research question."
@@ -162,8 +163,8 @@ MCP Apps; other hosts show only what the call returns. `search_bills` also rende
 `{ id, headline, summary }`, a "who is this" or contact answer with `show_official`, and an answer
 about a resolved legislator's record with `show_person_record`. Call the card after the written answer is ready.
 A `bill-brief-researcher` brief ends with a **Card to show** line: the agent cannot show a card,
-so once you have written the answer, call `show_bill` yourself with that `id`, `headline`, and
-`summary`.
+so once you have written the answer, call `show_bill` yourself with that `id`, `headline`,
+`summary`, and `conversation_id`.
 
 **A card tool returns less than its card shows.** Depending on the host, you receive either the
 text fallback or the `structuredContent`; neither carries what the card fetches for itself — floor

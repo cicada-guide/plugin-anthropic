@@ -18,7 +18,7 @@ described in [Cards reference](reference-cards.md).
 | [`research-legislation`](#research-legislation) | Slash-command skill | `/cicada-guide:research-legislation <bill number or topic> [state] [year]`, or chosen by Claude | A sourced brief on one bill, or a list of bills on a topic | `show_bill` with a `summary` (not for a topic list) |
 | [`voting-record`](#voting-record) | Slash-command skill | `/cicada-guide:voting-record <legislator name> [state] [bill] [session or date range]`, or chosen by Claude | A legislator's votes over time, one roll call by party, or one legislator's vote on one bill | `show_person_record`, or `show_bill` for a bill-scoped question |
 | [`contact-legislator`](#contact-legislator) | Slash-command skill | `/cicada-guide:contact-legislator <name> [state]`, or chosen by Claude | Who a legislator is, their seat, and the contact details on record | `show_official` |
-| [`bill-brief-researcher`](#bill-brief-researcher) | Subagent | Dispatched by Claude | The same brief as `research-legislation`, gathered autonomously | A **Card to show** line naming `show_bill` and a `summary` |
+| [`bill-brief-researcher`](#bill-brief-researcher) | Subagent | Dispatched by Claude | The same brief as `research-legislation`, gathered autonomously | A **Card to show** line naming `show_bill` with a `summary` and the `conversation_id` |
 | [`legislator-disambiguator`](#legislator-disambiguator) | Subagent | Dispatched by Claude | Pinning a name to one person id, or resolving a batch of ids | A `CARD TO SHOW:` line on a `RESOLVED` verdict |
 
 A subagent's output is not rendered to the user, so a subagent never calls a card tool to display
@@ -36,8 +36,9 @@ These hold for all seven files, and each file states them itself rather than poi
   with `context_prefix` when the project sets one. `llm_model` is the exact model identifier, or
   `"unknown"`.
 - **The `conversation_id` passed back.** Every call after the first carries the
-  `conversation_id` an earlier result ended with, unchanged; none is ever made up. An agent uses
-  the one in its prompt when the caller gave one.
+  `conversation_id` an earlier result returned, unchanged; none is ever made up. An agent uses the
+  one in its prompt when the caller gave one, and reports the one it used on a `Conversation id:`
+  line at the start of every return, which the caller then uses.
 - **Deferred tools are loaded first.** When a tool is listed by name only, its definition is loaded
   with the tool-search tool before the first call.
 - **The tool reference on hand.** Each file points to the tool reference when a parameter or
@@ -280,7 +281,8 @@ the intermediate calls don't fill the conversation. Not for a topic sweep across
    to read the seat; `get_rollcalls`, every page; `get_rollcall_breakdown` for individual
    positions.
 
-**Output format.** One brief in seven parts:
+**Output format.** Every return starts with a `Conversation id: <value>` line once the agent has
+called a tool, so the caller keeps one analytics session. Then one brief in seven parts:
 
 1. **Identification** — number, title, state, session, bill `id`, and status with its date.
 2. **What it does** — two to five sentences from the document text, labeled with `text_source`.
@@ -291,10 +293,10 @@ the intermediate calls don't fill the conversation. Not for a topic sweep across
    roll call `id`.
 6. **Gaps** — unavailable text, unresolved ids, truncated pages, errored calls. An empty section
    means it checked.
-7. **Card to show** — `show_bill {id: <bill uuid>, headline: <text>, summary: <text>}`, with a
-   `headline` and `summary` the caller must pass: plain text for a voter, no markdown, the headline
-   at most 120 characters and the summary at most 1,500. When neither text nor synopsis is on
-   record, the summary says so.
+7. **Card to show** — `show_bill {id: <bill uuid>, headline: <text>, summary: <text>,
+   conversation_id: <value>}`, with a `headline` and `summary` the caller must pass: plain text for
+   a voter, no markdown, the headline at most 120 characters and the summary at most 1,500. When
+   neither text nor synopsis is on record, the summary says so.
 
 **Edge cases.** Several plausible bills returns `AMBIGUOUS` with the candidates and stops. Nothing
 matching lists the searches that ran. A bill with no documents or no roll calls is reported as
@@ -327,12 +329,13 @@ someone's votes. It returns identifications, never a voting record.
 7. In batch mode, `search_people` with `ids` in batches of up to 100, accounting for every id in
    `unresolved_ids`.
 
-**Output format.** A verdict line, then evidence:
+**Output format.** Every return starts with a `Conversation id: <value>` line once the agent has
+called a tool, so the caller keeps one analytics session. Then a verdict line, then evidence:
 
 - `VERDICT: RESOLVED` with `PERSON`, `ID`, `EVIDENCE` (state and session, and which call produced
-  them), `SEAT`, `UNVERIFIED`, `RULED OUT`, and `CARD TO SHOW: show_official {id: <person uuid>}`
-  for who they are or how to reach them, and `show_person_record {id: <person uuid>}` for their
-  votes.
+  them), `SEAT`, `UNVERIFIED`, `RULED OUT`, and `CARD TO SHOW: show_official {id: <person uuid>,
+  conversation_id: <value>}` for who they are or how to reach them, and
+  `show_person_record {id: <person uuid>, conversation_id: <value>}` for their votes.
 - `VERDICT: AMBIGUOUS — N candidates remain`, one numbered line per candidate with party, id, seat,
   and evidence, then `ASK:` with the single question that would separate them.
 - `VERDICT: NOT FOUND` with `TRIED:` and `SUGGEST:`.
