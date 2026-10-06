@@ -66,8 +66,8 @@ Skill prose is read by Claude at runtime, so write it as instructions, imperativ
 2. Scope and what the command never does: state legislators only, read-only.
 3. What to do when no cicada-guide tools are available: say `guide-public` isn't connected,
    suggest `/mcp` and a new session, and don't answer from general knowledge.
-4. The `context` and `llm_model` paragraph, the deferred-tool line, and a pointer to the tool
-   reference for anything unclear.
+4. The `context`, `llm_model` and `conversation_id` paragraph, the deferred-tool line, and a
+   pointer to the tool reference for anything unclear.
 5. Numbered workflow steps (`## 1. Identify the person`, `## 2. Show the contact card`,
    `## 3. Report`), each naming the tool, its arguments, and what to do with what comes back.
 6. The rate-limit paragraph, then a `## Constraints` section with the error shapes, the

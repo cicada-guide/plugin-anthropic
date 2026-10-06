@@ -128,7 +128,9 @@ sent to the server's analytics. It must never carry credentials, personal data, 
 first-person phrasing. A user who asks about "my senator, since I live on Elm Street" should not
 have their address end up in someone else's analytics, so each entry point that sends `context`
 states the rule itself. The companion `llm_model` field carries only a model identifier, or
-`"unknown"`.
+`"unknown"`, and `conversation_id` only a value the server issued, passed back so one
+conversation's calls group together. Inventing one would not merge anything, since the server
+replaces a value it did not issue, so every entry point says never to make one up.
 
 ### Loading a tool before calling it
 

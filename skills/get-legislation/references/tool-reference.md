@@ -41,6 +41,7 @@ Every input schema is strict — an unknown parameter is rejected before the han
 | --- | --- | --- | --- |
 | `context` | string | — | Declared and required by every published schema. 15-25 words, third person, no personal data or people's names. See the note below — the handler behind it does not declare it. |
 | `llm_model` | string | — | Declared and required by every published schema. The exact model identifier of the calling model, or `"unknown"`. Added by the same wrapper as `context` — see below. |
+| `conversation_id` | string | — | Declared by every published schema, not required. The value an earlier result returned, unchanged. Added by the same wrapper — see below. |
 | `limit` | integer | `20` | 1-100. Only on `search_bills`, `search_people`, `list_sessions`, `get_documents`, `get_rollcalls`, `get_votes`, and `get_person_votes`. |
 | `offset` | integer | `0` | 0-10000. Only on `search_bills`, `search_people`, `list_sessions`, `get_documents`, and `get_rollcalls`. `get_votes` and `get_person_votes` page by `cursor`; `read_pdf_bytes` takes a byte `offset` of its own. |
 | `response_format` | `"markdown"` \| `"json"` | `"markdown"` | Absent on `show_bill`, `show_person_record`, `show_official`, and `get_rollcall_breakdown`. Passing it to one of them fails with `-32602`. |
@@ -62,6 +63,16 @@ identifier stated in your system prompt or environment, such as `claude-opus-4-8
 stated with certainty, send `"unknown"`. Never guess one from a product name. It is analytics only
 and carries nothing else. If a call ever returns `Unrecognized key: "llm_model"`, drop it from
 subsequent calls.
+
+**`conversation_id` groups a conversation's calls.** The same wrapper declares it on every schema,
+optional, and strips it before validation. A call without one gets a result whose last text block
+is `{"conversation_id":"…"}`, after the tool's own text; no tool's `structuredContent` carries it.
+Pass that value, unchanged, on every later call in the conversation: the server then
+records the calls as one session and returns no new block. A value it did not issue is replaced
+with a new one, never merged, so never make one up. Parallel calls made before the first result
+returns each start their own id. Verified 2026-10-06: separate requests echoing one value share a
+session, and `conversation_id: "conv-1"` comes back with a new id. It is analytics only. If a call
+ever returns `Unrecognized key: "conversation_id"`, drop it from subsequent calls.
 
 Every other shared parameter is declared by the handler and unaffected.
 
@@ -658,6 +669,7 @@ and still tell the user the dataset does not cover it.
 | --- | --- | --- | --- |
 | `context` | string, required | — | The goal and the kind of tool that would help, in the third person, with no names or personal details |
 | `llm_model` | string | — | Your model identifier, or `"unknown"` |
+| `conversation_id` | string | — | The value an earlier result returned |
 
 ## Documents
 

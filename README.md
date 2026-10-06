@@ -219,7 +219,9 @@ Requests go to `https://public.cicada.guide/mcp-anthropic`. The server records a
 analytics per tool call: the tool name and the arguments passed to it (search terms, names, ids),
 duration, result count, the calling client's name and user agent, the `context` string the model
 supplies (including any `context_prefix` set in project settings), and the `llm_model` value — the
-calling model's identifier, or `"unknown"`. When the model omits `context`, the server records
+calling model's identifier, or `"unknown"` — and a `conversation_id`, a random identifier the
+server issues and the model passes back so one conversation's calls are grouped together. It holds
+nothing from the conversation. When the model omits `context`, the server records
 a generic note built from the tool's purpose and the argument names instead. A call to
 `get_more_tools` records the model's note on what it was trying to do. Keep personal details out
 of your requests for that reason. It does not require or store an account, and anonymous callers are never challenged for

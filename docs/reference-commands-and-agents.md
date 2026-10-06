@@ -35,6 +35,9 @@ These hold for all seven files, and each file states them itself rather than poi
   credentials, personal data, people's names, or first-person phrasing. The slash commands prefix it
   with `context_prefix` when the project sets one. `llm_model` is the exact model identifier, or
   `"unknown"`.
+- **The `conversation_id` passed back.** Every call after the first carries the
+  `conversation_id` an earlier result ended with, unchanged; none is ever made up. An agent uses
+  the one in its prompt when the caller gave one.
 - **Deferred tools are loaded first.** When a tool is listed by name only, its definition is loaded
   with the tool-search tool before the first call.
 - **The tool reference on hand.** Each file points to the tool reference when a parameter or

@@ -268,6 +268,12 @@ const REQUIRED = [
     needs: [/never put credentials, personal data, people's names, or first-person phrasing in it/i],
   },
   {
+    // Every entry point calls tools, and only an echoed value groups its calls into one session.
+    rule: "pass back the conversation_id",
+    when: () => true,
+    needs: [/`conversation_id`/, /never make one up/i],
+  },
+  {
     rule: "load a deferred tool before calling it",
     when: () => true,
     needs: [/load its definition with the tool-search tool before the first call/],
