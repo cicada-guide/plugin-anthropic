@@ -110,8 +110,9 @@ its own copy of whichever of these rules it relies on: `search_bills`' exact bil
 and query caps, `get_rollcalls` including vote-linked roll calls, never adding counts across roll
 calls, the 100-id `search_people` batch cap, the two error shapes, the 60-a-minute rate limit,
 25,000-character truncation, keeping credentials, personal data and names out of `context`,
-passing back the `conversation_id` an earlier result returned and never making one up, and loading
-a tool listed by name only before calling it. Agents also state that `Read` is for
+passing back the `conversation_id` an earlier result returned and never making one up, treating
+`governor_action` as the state's general rule and never computing a date from it, and loading a
+tool listed by name only before calling it. Agents also state that `Read` is for
 `${CLAUDE_PLUGIN_ROOT}` files only. When one changes, grep `skills/` and `agents/` for its other
 copies and update every one. A lagging copy gives only that entry point the wrong answer, so
 nothing else looks broken.

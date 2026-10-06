@@ -212,6 +212,7 @@ file; the file then needs every listed phrase.
 | `25,000-character truncation` | "output", "markdown", "text", or "response" followed within 40 characters, with no full stop, by "truncat" (any case); or `` `offset` ``, `` `cursor` ``, `` `next_cursor` ``, `` `has_more` ``, or `` `limit` `` in backticks | "25,000" |
 | ``keep credentials, personal data and names out of `context` `` | `` `context` `` in backticks | "never put credentials, personal data, people's names, or first-person phrasing in it", any case |
 | `pass back the conversation_id` | Always | `` `conversation_id` `` in backticks, and "never make one up", any case |
+| `governor_action is a general rule` | `` `governor_action` `` in backticks | "general rule" and "never compute a date from it", any case |
 | `load a deferred tool before calling it` | Always | "load its definition with the tool-search tool before the first call" |
 | `agents report the conversation_id` | The file is under `agents/` | "Begin every return" followed, in the same sentence, by ``with `Conversation id: <value>` `` |
 | `agents read only plugin files` | The file is under `agents/` | ``Use `Read` only for files under `${CLAUDE_PLUGIN_ROOT}` `` |

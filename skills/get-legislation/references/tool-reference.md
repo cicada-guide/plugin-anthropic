@@ -241,7 +241,7 @@ whose text contains "Passed", which can record one chamber's passage rather than
 each bill's `status` as recorded, and never treat a `status` filter as proof a bill became law.
 
 **Every call also renders a results card** in a host that supports MCP Apps, via
-`ui://cicada-guide/bill-results-v13.html`. It lists the results with a "Show more" button that
+`ui://cicada-guide/bill-results-v14.html`. It lists the results with a "Show more" button that
 pages with the same arguments. Tapping a result posts a user turn asking you to show that bill with
 `show_bill` (see [`show_bill`](#show_bill)); the card opens no bill itself. You still receive
 the full list as text or JSON, so read results from it as usual. Where the card renders, summarize
@@ -272,8 +272,23 @@ calls are available.
 Markdown renders the same data as `structuredContent`: the bill number, title, state, session,
 status and date; any warnings; sponsors (name, party, id); documents (type, date, URL); and roll
 calls with their counts as yea, nay, absent, not voting, or `votes not recorded` when `counts` is
-`null`, ending with a pointer to `get_rollcalls` when more exist. `response_format: "json"` returns
-the object as text.
+`null`, with a pointer to `get_rollcalls` when more exist, and an "After passage" section with
+`governor_action`'s summary and note. `response_format: "json"` returns the object as text.
+
+`governor_action` is the bill's state's general rule after the legislature passes a bill, or `null`
+outside the 50 states:
+
+| Field | Meaning |
+| --- | --- |
+| `state` | State name |
+| `during_session_days`, `during_session_default` | Days the governor has to act in session, and what happens if the governor does not: `"law"` or `"pocket_veto"` |
+| `after_session_days`, `after_session_default` | The same after the legislature adjourns |
+| `effective_date` | When a bill that becomes law takes effect, as stated, such as `"In bill text"` |
+| `summary` | The rule as one sentence |
+| `note` | What it leaves out: excluded Sundays and holidays, emergency clauses, dates in the bill text |
+
+It is a general rule, not this bill's deadline: never compute a date from it. The full table is in
+[governor-action.md](governor-action.md).
 
 ### `show_bill`
 
@@ -285,12 +300,13 @@ the object as text.
 
 Like the other display tools, it has no `response_format`.
 
-Renders a bill card via `ui://cicada-guide/bill-workspace-v19.html` in hosts that support MCP Apps.
+Renders a bill card via `ui://cicada-guide/bill-workspace-v20.html` in hosts that support MCP Apps.
 The card shows the state and session, the status, the bill number, and a title plate that shows your
 `headline` first; tapping the plate toggles to the official title and back. Then come four tabs.
-Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed, Enacted), the
-latest roll call with its date and tally (the recorded status when the bill has none), and your
-summary; Sponsors lists the sponsors; Documents lists each version with a Read
+Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed, Enacted, filled
+for an enacted status or a Chaptered version), the latest roll call with its date and tally (the
+recorded status when the bill has none), the state's `governor_action` summary and note under
+"After passage", and your summary; Sponsors lists the sponsors; Documents lists each version with a Read
 button that opens a viewer; Votes holds the floor votes with party splits and who voted how. The
 card calls `get_bill_dossier` and `get_rollcall_breakdown` itself for the sponsors, documents, and
 votes. The viewer draws a PDF's pages inside the card, fetching its bytes with `read_pdf_bytes`
@@ -483,7 +499,7 @@ for the rest, and never supply one from elsewhere.
 `id` (UUID, required), from `search_people` after resolving identity. It has no `response_format`.
 
 In a host that supports MCP Apps it renders a legislator record via
-`ui://cicada-guide/legislator-record-v17.html`: the seat (no contact buttons), the vote history
+`ui://cicada-guide/legislator-record-v18.html`: the seat (no contact buttons), the vote history
 with session, vote, and subject filters, and the bills they sponsored. The card loads the votes
 through `get_person_votes` itself; its session picker lists only sessions with the legislator's
 votes, newest first, and its tally counts only the votes loaded, so never quote it as a career

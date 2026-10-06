@@ -10,6 +10,23 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Added
+
+- `references/governor-action.md`: each state's governor deadline during session and after
+  adjournment, whether an unsigned bill becomes law or is pocket vetoed, and the default effective
+  date, with how to use it. `get_bill_dossier` now returns the bill's state's rule as
+  `governor_action`. The always-on skill, `research-legislation` and `bill-brief-researcher` give
+  its summary as the state's general rule when the record shows a bill passed, never as this bill's
+  deadline or outcome, and `check.mjs` fails an entry point that mentions `governor_action` without
+  saying so.
+
+### Changed
+
+- Card resource URIs `bill-workspace-v20`, `bill-results-v14` and `legislator-record-v18`. A
+  status such as Passed now reads only "Recorded status: Passed", without "not yet law". The bill
+  card's path fills Enacted for a Chaptered version, and its Overview shows the state's general
+  rule under "After passage". Earlier URIs still resolve.
+
 ## [0.11.2] - 2026-10-06
 
 ### Changed

@@ -43,6 +43,8 @@ Changing the plugin:
   parameters, pagination, and errors.
 - [Workflows](../skills/get-legislation/references/workflows.md): call sequences for multi-step
   research.
+- [Governor action](../skills/get-legislation/references/governor-action.md): each state's
+  governor deadline, default when the governor does not act, and effective date.
 - [Project settings](../skills/get-legislation/references/project-settings.md): the
   `.claude/cicada-guide.local.md` contract.
   [`cicada-guide.local.md.example`](../cicada-guide.local.md.example) is the template.

@@ -14,7 +14,9 @@ The tools only retrieve data and cannot change anything, and their descriptors s
 
 When a parameter name, constraint, or response field is unclear, read
 `references/tool-reference.md`. Before a multi-step task — a bill brief, a roll-call breakdown, a
-legislator's record — read `references/workflows.md` for the call sequence.
+legislator's record — read `references/workflows.md` for the call sequence. For what happens after
+a legislature passes a bill — the governor's deadline, a pocket veto, the effective date — read
+`references/governor-action.md`.
 
 If no cicada-guide tools are available, say the `guide-public` server isn't connected, suggest
 checking `/mcp` and starting a new session, and don't answer from general knowledge.
@@ -245,6 +247,14 @@ none were recorded, not a 0-0 vote. No tool reports whether a measure passed or 
 State passage only when the roll-call `description` or the bill's `status` says so — never from
 `yea > nay`, since thresholds vary. Report each roll call's own `counts`; never add counts across
 roll calls.
+
+**`governor_action` is the state's general rule after passage, not this bill's deadline.**
+`get_bill_dossier` returns it for the bill's state: the governor's days to act during session and
+after adjournment, whether an unsigned bill becomes law or is pocket vetoed, and the effective date.
+Give its `summary` as the state's general rule, with its `note`, when the user asks what happens
+next for a bill the record shows passed. Never compute a date from it, and never present it as the
+bill's outcome; report the bill's `status` and document versions as recorded. Where it says the
+bill text sets the effective date, the text decides. It is `null` outside the 50 states.
 
 **`get_rollcalls` needs no reconciliation through `get_votes`.** It returns roll calls linked to
 the bill directly and through their recorded votes; each item's `linked_via` says which (`"bill"`

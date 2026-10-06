@@ -274,6 +274,12 @@ const REQUIRED = [
     needs: [/`conversation_id`/, /never make one up/i],
   },
   {
+    // The rule is per state, not per bill: a computed date would be a claim no tool returned.
+    rule: "governor_action is a general rule",
+    when: (t) => t.includes("`governor_action`"),
+    needs: [/general rule/i, /never compute a date from it/i],
+  },
+  {
     rule: "load a deferred tool before calling it",
     when: () => true,
     needs: [/load its definition with the tool-search tool before the first call/],

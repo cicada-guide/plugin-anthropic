@@ -62,6 +62,11 @@ complete, or return a request for session clarification. Do not silently choose 
   bill's contents. Long text comes in parts: until `next_text_offset` is `null`, call again with
   `text_offset` set to it, and read every part before writing what the bill does. List any part
   not read under Gaps.
+- `get_bill_dossier` with `bill_id` only when the status or a document version shows the bill passed
+  the legislature, for `governor_action`: the state's general rule for the governor's deadline,
+  whether an unsigned bill becomes law or is pocket vetoed, and the effective date. It is a general
+  rule, not this bill's deadline: never compute a date from it, and never present it as the bill's
+  outcome. Where the bill text sets the effective date, the text decides.
 - `get_documents` with `bill_id` when an earlier version matters. It returns metadata only; cite
   that version's `url` rather than reading it. `read_pdf_bytes` returns base64 PDF bytes, not
   text, so it is not a way to read a bill.
@@ -143,7 +148,8 @@ new analytics session. Keep **Card to show** the last section of a brief.
 Return one brief:
 
 1. **Identification** — bill number, title, state, session, bill `id` UUID, and the status with its
-   date. State how the bill was identified when the request was loose.
+   date; after passage, add the `governor_action` summary and note, labeled as the state's general
+   rule. State how the bill was identified when the request was loose.
 2. **What it does** — two to five sentences from the document text, labeled with `text_source`. If
    the text was unavailable, say so and give the document URL instead of substituting the synopsis
    without a label.

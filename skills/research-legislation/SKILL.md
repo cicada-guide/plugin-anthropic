@@ -118,13 +118,20 @@ document alone does not establish a governor's signature or enactment. If source
 each dated observation with its source and say what remains unconfirmed; do not invent a final
 status. Describe status as the latest available record, not a guarantee of the present legal state.
 
+When the record shows the bill passed the legislature, add the state's general rule for what happens
+next: `get_bill_dossier` returns it as `governor_action` (the governor's deadline, whether an
+unsigned bill becomes law or is pocket vetoed, and the effective date). Give its `summary` and
+`note` as the state's general rule. Never compute a date from it, and never present it as the
+bill's outcome. Where the bill text sets the effective date, the text decides.
+
 If `get_rollcalls` returns nothing, say "No recorded floor votes are available in this dataset."
 Do not infer that no vote occurred. Check sponsor resolution for unresolved IDs and list them
 instead of guessing names.
 
 Structure:
 
-- **Identification** — bill number, state, session, title, current status with its date.
+- **Identification** — bill number, state, session, title, current status with its date, and,
+  when the record shows passage, the state's `governor_action` summary as its general rule.
 - **What it does** — 2-4 sentences grounded in the bill text or synopsis. Quote sparingly and
   attribute; do not paraphrase a provision that was not read.
 - **Sponsors** — names and party from the resolved batch.
