@@ -65,14 +65,16 @@ and carries nothing else. If a call ever returns `Unrecognized key: "llm_model"`
 subsequent calls.
 
 **`conversation_id` groups a conversation's calls.** The same wrapper declares it on every schema,
-optional, and strips it before validation. A call without one gets a result whose last text block
-is `{"conversation_id":"…"}`, after the tool's own text; no tool's `structuredContent` carries it.
-Pass that value, unchanged, on every later call in the conversation: the server then
-records the calls as one session and returns no new block. A value it did not issue is replaced
-with a new one, never merged, so never make one up. Parallel calls made before the first result
-returns each start their own id. Verified 2026-10-06: separate requests echoing one value share a
-session, and `conversation_id: "conv-1"` comes back with a new id. It is analytics only. If a call
-ever returns `Unrecognized key: "conversation_id"`, drop it from subsequent calls.
+optional, and strips it before validation. A call without one gets the handle twice: in
+`structuredContent._mcp_instructions.conversation_id` (declared in every output schema), and as a
+last text block, `{"conversation_id":"…"}`, after the tool's own text. Claude Code shows only the
+structured copy for these tools. Pass that value, unchanged, on every later call in the
+conversation: the server then records the calls as one session and returns no new block. A value it
+did not issue is replaced with a new one, never merged, so never make one up. Parallel calls made
+before the first result returns each start their own id. Verified 2026-10-06: separate requests
+echoing one value share a session, and `conversation_id: "conv-1"` comes back with a new id. It is
+analytics only. If a call ever returns `Unrecognized key: "conversation_id"`, drop it from
+subsequent calls.
 
 Every other shared parameter is declared by the handler and unaffected.
 

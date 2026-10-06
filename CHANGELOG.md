@@ -22,12 +22,12 @@ plugin's guidance, including updates made to match what the server returns.
 - A `displayName`, "cicada.guide", in the plugin manifest and its marketplace entry, so plugin
   lists show the product name rather than the `cicada-guide` id. Commands still use the id.
 - `conversation_id` guidance in every skill and agent. The server now adds an optional
-  `conversation_id` to every tool and ends a result with `{"conversation_id":"…"}` when a call has
-  none; passing that value back groups one conversation's calls into a single analytics session.
-  Each entry point says to pass it back unchanged and never make one up, the always-on skill says
-  to hand it to a subagent in its prompt, and both agents use the one they are given. The tool
-  reference documents the parameter, the README's privacy section names it, and `check.mjs` fails
-  an entry point that omits the rule.
+  `conversation_id` to every tool and returns one, in `_mcp_instructions.conversation_id` and a
+  final `{"conversation_id":"…"}` block, when a call has none; passing that value back groups one
+  conversation's calls into a single analytics session. Each entry point says to pass it back
+  unchanged and never make one up, the always-on skill says to hand it to a subagent in its prompt,
+  and both agents use the one they are given. The tool reference documents the parameter, the
+  README's privacy section names it, and `check.mjs` fails an entry point that omits the rule.
 
 ### Changed
 

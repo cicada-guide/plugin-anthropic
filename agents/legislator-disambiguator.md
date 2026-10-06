@@ -77,7 +77,7 @@ being made. Never put credentials, personal data, people's names, or first-perso
 legislator's contact details count as personal data. Also pass `llm_model`: your exact model
 identifier, or `"unknown"` when it is not stated with certainty. Pass a `conversation_id` on every
 call: the one in your prompt, if the caller gave one, otherwise the one your first call's result
-ends with (`{"conversation_id":"…"}`), unchanged. Never make one up, and make your first call on
+returns in `_mcp_instructions`, unchanged. Never make one up, and make your first call on
 its own when you have none.
 
 Use `Read` only for files under `${CLAUDE_PLUGIN_ROOT}`: never open the user's project files, and
