@@ -15,7 +15,7 @@ there rather than repeating them. Why the plugin ends answers with a card is in
 | Tool | Card | Resource URI | The card fetches | The model receives |
 | --- | --- | --- | --- | --- |
 | `search_bills` | Bill results | `ui://cicada-guide/bill-results-v13.html` | More pages of the same search | The full result list, as text or JSON, as usual |
-| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v18.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
+| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v19.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
 | `show_official` | Contact card | `ui://cicada-guide/official-card-v13.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
 | `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v17.html` | Vote history (`get_person_votes`), sessions (`list_sessions`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
 
@@ -87,8 +87,10 @@ Parameters: `id`, `headline`, and `summary`, all required —
 - **Header:** the state and session, the status, the bill number, and a title plate showing the
   `headline` first (see [below](#the-title-plate)). Tapping the plate toggles to the official title
   and back.
-- **Overview:** the path to becoming law (Introduced, Engrossed, Enrolled, Enacted), the recorded
-  status, and the summary box (see [below](#the-summary-box)).
+- **Overview:** the path to becoming law (Introduced, Engrossed, Enrolled, Passed, Enacted), the
+  latest roll call with its date and tally (the same one the Votes tab opens on, noting when others
+  share its date; the recorded status when the bill has none), and the summary box (see
+  [below](#the-summary-box)).
 - **Sponsors:** the bill's sponsors.
 - **Documents:** each version, with a **Read** button that shows its pages inside the card (a
   non-PDF latest version as text), or the document's link with **Copy link** where the card can't

@@ -10,6 +10,12 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Card resource URI `bill-workspace-v19`, after the bill card's Overview gained a Passed step
+  between Enrolled and Enacted, and its status line became the latest roll call with its date and
+  tally (the recorded status when the bill has none). Earlier URIs still resolve.
+
 ## [0.11.1] - 2026-10-06
 
 ### Changed
