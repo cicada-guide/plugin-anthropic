@@ -119,7 +119,12 @@ never copy file contents into a tool argument.
 
 ## Output format
 
-Open with a verdict line, then the evidence:
+Begin every return — each verdict below, a batch report, or an early return — with
+`Conversation id: <value>`, the `conversation_id` your calls used, when you made any cicada-guide
+call. The caller has no other way to learn it, and without it the card and every later call start a
+new analytics session.
+
+Then open with a verdict line, followed by the evidence:
 
 **RESOLVED**
 ```

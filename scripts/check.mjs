@@ -279,6 +279,12 @@ const REQUIRED = [
     needs: [/load its definition with the tool-search tool before the first call/],
   },
   {
+    // A subagent's calls are invisible to the caller, so only its report can hand the id back.
+    rule: "agents report the conversation_id",
+    when: (_t, file) => file.startsWith("agents/"),
+    needs: [/Begin every return[^.]*with `Conversation id: <value>`/],
+  },
+  {
     rule: "agents read only plugin files",
     when: (_t, file) => file.startsWith("agents/"),
     needs: [/Use `Read` only for files under `\$\{CLAUDE_PLUGIN_ROOT\}`/],

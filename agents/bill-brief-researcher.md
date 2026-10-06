@@ -135,6 +135,11 @@ never copy file contents into a tool argument.
 
 ## Output format
 
+Begin every return — a brief, `AMBIGUOUS`, a no-match report, or an early return — with
+`Conversation id: <value>`, the `conversation_id` your calls used, when you made any cicada-guide
+call. The caller has no other way to learn it, and without it the card and every later call start a
+new analytics session. Keep **Card to show** the last section of a brief.
+
 Return one brief:
 
 1. **Identification** — bill number, title, state, session, bill `id` UUID, and the status with its

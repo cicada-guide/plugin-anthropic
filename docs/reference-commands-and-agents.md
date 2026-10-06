@@ -36,8 +36,9 @@ These hold for all seven files, and each file states them itself rather than poi
   with `context_prefix` when the project sets one. `llm_model` is the exact model identifier, or
   `"unknown"`.
 - **The `conversation_id` passed back.** Every call after the first carries the
-  `conversation_id` an earlier result ended with, unchanged; none is ever made up. An agent uses
-  the one in its prompt when the caller gave one.
+  `conversation_id` an earlier result returned, unchanged; none is ever made up. An agent uses the
+  one in its prompt when the caller gave one, and reports the one it used on a `Conversation id:`
+  line at the start of every return, which the caller then uses.
 - **Deferred tools are loaded first.** When a tool is listed by name only, its definition is loaded
   with the tool-search tool before the first call.
 - **The tool reference on hand.** Each file points to the tool reference when a parameter or
@@ -280,7 +281,8 @@ the intermediate calls don't fill the conversation. Not for a topic sweep across
    to read the seat; `get_rollcalls`, every page; `get_rollcall_breakdown` for individual
    positions.
 
-**Output format.** One brief in seven parts:
+**Output format.** Every return starts with a `Conversation id: <value>` line once the agent has
+called a tool, so the caller keeps one analytics session. Then one brief in seven parts:
 
 1. **Identification** — number, title, state, session, bill `id`, and status with its date.
 2. **What it does** — two to five sentences from the document text, labeled with `text_source`.
@@ -327,7 +329,8 @@ someone's votes. It returns identifications, never a voting record.
 7. In batch mode, `search_people` with `ids` in batches of up to 100, accounting for every id in
    `unresolved_ids`.
 
-**Output format.** A verdict line, then evidence:
+**Output format.** Every return starts with a `Conversation id: <value>` line once the agent has
+called a tool, so the caller keeps one analytics session. Then a verdict line, then evidence:
 
 - `VERDICT: RESOLVED` with `PERSON`, `ID`, `EVIDENCE` (state and session, and which call produced
   them), `SEAT`, `UNVERIFIED`, `RULED OUT`, and `CARD TO SHOW: show_official {id: <person uuid>}`
