@@ -127,9 +127,9 @@ at from the update without a tool call; for details, call `get_person_votes` wit
 
 Tapping a vote in the record, or a sponsored bill's "Show in the conversation" button, posts a user
 turn like `Show HB 314 (bill id <uuid>) with show_bill. First read its text with
-get_latest_bill_document, or its synopsis, and pass a short plain-language headline as headline and
-a plain-language summary for a voter as summary: what it does, who it affects, and where it stands.`
-Read the text with `get_latest_bill_document` (or the synopsis), then call `show_bill` with that
+get_latest_bill_document, and pass a short plain-language headline as headline and a plain-language
+summary for a voter as summary: what it does, who it affects, and where it stands.` Read the text
+with `get_latest_bill_document`, then call `show_bill` with that
 `id`, a `headline`, and a `summary` under the Path C rules. A short chat answer alongside is
 optional.
 
@@ -184,16 +184,15 @@ Report each roll call's own `counts`; never add counts across roll calls.
    by that legislator on that bill — not that they abstained.
 6. Call `show_bill` with the bill's `id`, a `headline`, and a `summary`, without asking. Always
    pass both: a call without either fails with -32602. Read the bill's text with
-   `get_latest_bill_document`, or its `synopsis` from `search_bills`, then write for a voter, in
-   plain text with no markdown:
+   `get_latest_bill_document`, then write for a voter, in plain text with no markdown:
    - `headline`: 1-120 characters saying what the bill does, e.g. "Bans buying soda and candy
      with SNAP benefits". No trailing period needed. The card's title plate shows it first, with
      a tap to the official title.
    - `summary`: 1-1,500 characters of prose on what it does, who it affects, and where it stands
      as recorded.
 
-   When neither text nor synopsis is on record, say so in the summary rather than guess, and write
-   the headline from the official title alone. Build the summary only from what the tools returned —
+   When the text could not be read, say so in the summary rather than guess, and write the
+   headline from the official title alone. Build the summary only from what the tools returned —
    the title, status, sponsors, and recorded votes — and point to the document URL for the text.
    Never fill it from news coverage, web search, or general knowledge, even with a note saying so:
    the card presents the summary as the bill's. Never infer or claim passage in either. The card

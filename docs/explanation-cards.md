@@ -49,8 +49,7 @@ know whether the host rendered anything.
 A card tool returns two things, and the host decides which one the model receives:
 
 - **The text fallback.** A short Markdown body. For `show_bill` it holds the bill number, state
-  and session, title, status, the synopsis (cut at 300 characters), subjects, the newest
-  document's link, the document count, and the `id`. For `show_official` it holds the seat line,
+  and session, title, status, subjects, the newest document's link, the document count, and the `id`. For `show_official` it holds the seat line,
   the term when recorded, party, and one email, phone and website each.
 - **`structuredContent`.** The typed JSON the card renders from. For `show_bill` it is the bill
   row plus `_display`, which echoes the `headline` and `summary` passed. For `show_official` it
@@ -80,8 +79,8 @@ opened would render nowhere, and would spend a rate-limited call on nothing. So 
 report with the card that fits its result, and the main conversation makes the call:
 
 - `bill-brief-researcher` ends with `show_bill {id, headline, summary}` and a `headline` and
-  `summary` the caller must pass, written under the same rules as the skills' own; when neither
-  text nor synopsis is on record, the summary says so.
+  `summary` the caller must pass, written under the same rules as the skills' own; when the text
+  could not be read, the summary says so.
 - `legislator-disambiguator` names `show_official` or `show_person_record`, and only for a
   `RESOLVED` verdict. An ambiguous result names no card, because showing one would present a
   guess as an identification.
@@ -104,8 +103,8 @@ Three rules shape it, each for a reason:
   a status such as `Passed` can record one chamber or a committee. The summary states the recorded
   `status` and stops there. A prediction on a card that looks official would read as a fact.
 - **It comes from text the model read.** The model reads the bill before calling, and bases the
-  summary on `get_latest_bill_document` text or the synopsis. When neither text nor synopsis is on
-  record, the summary says so rather than guess.
+  summary on `get_latest_bill_document` text. When the text could not be read, the summary says so
+  rather than guess.
 
 The server trims the value and rejects an empty one; Markdown doesn't render, because the card
 shows it as text.
@@ -121,7 +120,7 @@ No card opens a bill by itself. Tapping a bill in the `search_bills` results car
 legislator record posts an ordinary user turn, `Show HB 314 (bill id <uuid>) with show_bill. …`,
 asking the model to read the bill and call `show_bill` with a headline and a summary. Routing the
 tap through the conversation is what keeps both required: only the model can write them. The skills
-handle that turn as a small workflow of its own: read the text or synopsis, then call `show_bill`
+handle that turn as a small workflow of its own: read the text, then call `show_bill`
 with the headline and summary, with a short chat answer optional.
 
 ## Model-context updates carry names, not ids

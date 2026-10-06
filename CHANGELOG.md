@@ -38,6 +38,13 @@ plugin's guidance, including updates made to match what the server returns.
 - A `null` `text_source` is reported as text that could not be read, not text that does not exist,
   and points to the bill card's Documents tab, which can display the document.
 
+### Removed
+
+- Every use of a bill's synopsis. The skills, agents, references and docs describe a bill from its
+  title and its text only, and no longer offer the synopsis as a fallback, a search field or a card
+  label. The server stopped reading it in the same release window. `check.mjs` fails any runtime or
+  project doc that mentions one.
+
 ## [0.11.2] - 2026-10-06
 
 ### Changed

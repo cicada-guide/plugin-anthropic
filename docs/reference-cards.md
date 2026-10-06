@@ -109,8 +109,8 @@ Parameters: `id`, `headline`, and `summary`, all required —
 
 **The model receives** none of that.
 
-- **Text fallback:** the bill number, state and session, title, status, type, date, synopsis (cut
-  at 300 characters), subjects, the newest document's link, the document count, and the `id`.
+- **Text fallback:** the bill number, state and session, title, status, type, date, subjects, the
+  newest document's link, the document count, and the `id`.
 - **`structuredContent`:** the bill row, plus `_display.divisionName`, `_display.sessionName`,
   `_display.aiHeadline` (the `headline` passed), and `_display.aiSummary` (the `summary` passed).
 - A missing id returns `No bill found with id=<id>.`, and the card shows an unavailable state.
@@ -123,9 +123,8 @@ for a voter after reading the bill.
 - **What the headline says:** what the bill does, in one short line, such as "Bans buying soda and
   candy with SNAP benefits". It never claims passage or an outcome.
 - **What the summary says:** what the bill does, who it affects, and where it stands as recorded.
-- **What they rest on:** the text from `get_latest_bill_document`, or the synopsis. When neither
-  text nor synopsis is on record, the summary says so rather than guess, and the headline comes
-  from the official title alone.
+- **What they rest on:** the text from `get_latest_bill_document`. When the text could not be read,
+  the summary says so rather than guess, and the headline comes from the official title alone.
 - **What they never do:** infer passage or an outcome. The summary states the recorded status.
 - **Form:** plain text. The headline is 1-120 characters, with no trailing period needed; the
   summary is 1-1,500 characters of prose. Both are trimmed, and an empty string is rejected. The
@@ -143,7 +142,8 @@ official title, and tapping again toggles back.
 ### The summary box
 
 The box is labeled "Summary · your AI assistant" and shows the `summary`, with no note under it.
-Without a `summary`, it shows the bill's synopsis under "Official synopsis". The box has no button; the bill card posts no user turn.
+Without a `summary`, it reads "No summary was provided for HB 314." The box has no button; the bill
+card posts no user turn.
 
 ### The show-bill request
 
@@ -152,7 +152,7 @@ bill's **Show in the conversation** button posts a user turn. These are the only
 card that post one. The turn reads:
 
 ```text
-Show HB 314 (bill id <uuid>) with show_bill. First read its text with get_latest_bill_document, or its synopsis, and pass a short plain-language headline as headline and a plain-language summary for a voter as summary: what it does, who it affects, and where it stands.
+Show HB 314 (bill id <uuid>) with show_bill. First read its text with get_latest_bill_document, and pass a short plain-language headline as headline and a plain-language summary for a voter as summary: what it does, who it affects, and where it stands.
 ```
 
 After it is sent, the card's status line says the bill will appear in the conversation. If the host
@@ -161,8 +161,7 @@ cannot send the turn, the card asks the user to ask for the bill in the conversa
 **How the skills react** (`get-legislation`, `research-legislation`, `voting-record`, and the
 [workflow](../skills/get-legislation/references/workflows.md#show-bill-request-from-a-card)):
 
-1. Read the text with `get_latest_bill_document`, every part, or use the synopsis when no text is
-   available.
+1. Read the text with `get_latest_bill_document`, every part.
 2. Call `show_bill` with that `id`, a `headline`, and a `summary`, under the rules above. A short
    chat answer alongside is optional.
 

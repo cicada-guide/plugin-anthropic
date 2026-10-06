@@ -192,7 +192,7 @@ descending, nulls last.
 | Parameter | Type | Notes |
 | --- | --- | --- |
 | `bill` | string, max 50 | Bill number with its chamber prefix ("HB 314"); exact match ignoring case, spaces and dots. A number alone ("314") returns no bills and a prompt to add the prefix |
-| `query` | string, max 500 | Each word a separate title/synopsis substring, ORed, plus full-text search over attached documents |
+| `query` | string, max 500 | Each word a separate title substring, ORed, plus full-text search over attached documents |
 | `subject` | string | Exact match against an entry in the `subjects` array |
 | `status` | string, max 100 | Partial, case-insensitive match on the recorded status text |
 | `session_id` | UUID | From `list_sessions` |
@@ -200,7 +200,7 @@ descending, nulls last.
 | `division_id` | UUID | From `list_states` |
 | `sponsor_id` | UUID | From `search_people`; matches the `sponsors` array |
 
-Items carry `id`, `bill`, `title`, `synopsis`, `status`, `type`, `date`, `subjects`, `headline`,
+Items carry `id`, `bill`, `title`, `status`, `type`, `date`, `subjects`, `headline`,
 `session_id`, `division_id`, `sponsors`, `count_documents`, `documents`.
 
 **Count a bill's documents with `get_documents`.** Report its `total`, not `count_documents`.
@@ -223,10 +223,10 @@ full-text search, capped at 200 document rows resolving to at most 50 distinct b
 `division_id`, `session_id`, or `session_name` is set, that search is scoped to the state or session
 before the cap, so the 200 rows come from inside it. Separately the string is split on whitespace;
 `or`, `and`, `not` and single characters are dropped, and up to 8 remaining terms become
-`title ILIKE` / `synopsis ILIKE` clauses.
+`title ILIKE` clauses.
 
-The ILIKE terms are ORed, so each extra word widens the title/synopsis matches rather than
-narrowing them: `"school choice"` matches every bill with "school" in its title or synopsis. Prefer
+The ILIKE terms are ORed, so each extra word widens the title matches rather than narrowing them:
+`"school choice"` matches every bill with "school" in its title. Prefer
 one distinctive word.
 
 With no `division_id`, `session_id`, or `session_name`, the full-text rows are drawn from every
@@ -321,7 +321,7 @@ the document URL as a link with a "Copy link" button. None of what the viewer
 fetches reaches you: read a bill's text with `get_latest_bill_document`.
 
 **The result carries none of that.** The text fallback holds the bill number, state and session,
-title, status, type, date, synopsis (cut at 300 characters), subjects, the newest document's link,
+title, status, type, date, subjects, the newest document's link,
 the document count, and the `id` — no votes, no sponsors, and no echo of your `headline` or
 `summary`. `structuredContent` is the bill row plus `_display.divisionName`, `_display.sessionName`,
 `_display.aiHeadline` (your `headline`), and `_display.aiSummary` (your `summary`). A missing id
@@ -338,9 +338,8 @@ then write them.
   soda and candy with SNAP benefits". Plain text, no markdown, no trailing period needed. Never
   claim passage or an outcome. Write your own rather than copying the bill row's `headline` field.
 - `summary`: say what the bill does, who it affects, and where it stands as recorded.
-- Base both on `get_latest_bill_document` text or the synopsis. When neither text nor synopsis is on
-  record, say so in the summary rather than guess, and write the headline from the official
-  title alone.
+- Base both on `get_latest_bill_document` text. When the text could not be read, say so in the
+  summary rather than guess, and write the headline from the official title alone.
 - Never infer passage or an outcome; state the recorded `status`.
 - Plain prose only. The card renders both as text, so markdown does not render.
 - The card labels the summary "Summary · your AI assistant".
@@ -348,9 +347,9 @@ then write them.
 **"Show HB 314 … with show_bill" requests.** Tapping a bill in the `search_bills` results card, a
 vote in the `show_person_record` card, or a sponsored bill's "Show in the conversation" button
 posts a user turn: `Show HB 314 (bill id <uuid>) with show_bill. First read its text with
-get_latest_bill_document, or its synopsis, and pass a short plain-language headline as headline
-and a plain-language summary for a voter as summary: what it does, who it affects, and where it
-stands.` Handle it in order: read the text with `get_latest_bill_document` (or the synopsis), then
+get_latest_bill_document, and pass a short plain-language headline as headline and a
+plain-language summary for a voter as summary: what it does, who it affects, and where it
+stands.` Handle it in order: read the text with `get_latest_bill_document`, then
 call `show_bill` with that `id`, your `headline`, and your `summary`. A short chat answer is
 optional.
 

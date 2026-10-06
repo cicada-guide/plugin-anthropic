@@ -139,7 +139,7 @@ calling anything. Not for a topic sweep across states.
 `get_rollcall_breakdown`, `show_bill`.
 
 **The answer.** For one bill, a brief with these sections: **Identification** (number, state,
-session, title, status with its date), **What it does** (2-4 sentences from the text or synopsis),
+session, title, status with its date), **What it does** (2-4 sentences from the text),
 **Sponsors**, **Legislative history** (roll calls in date order with counts), **How members
 voted** (only when asked), and **Sources**. In a card host it trims sponsors, history, and sources
 to what answers the request, because the card lists them. It closes with what the brief could not
@@ -148,16 +148,16 @@ the query that ran, "at least N" when `has_more` is true, and an offer to brief 
 
 **Card.** `show_bill` `{ id, headline, summary }`, with both always passed. The headline is plain
 text of 1-120 characters and the summary plain prose of 1-1,500 characters, both for a voter and
-drawn from the text or synopsis the brief read; when neither is on record, the summary says so. The
+drawn from the text the brief read; when it could not be read, the summary says so. The
 card's title plate shows the headline first, with a tap to the official title. A topic list skips
 the card until the user picks a bill.
 
 **Card requests.** It handles the `Show HB 314 (bill id <uuid>) with show_bill. …` turn a tapped
-bill posts without a full brief — read the text or synopsis, then call `show_bill` with the headline
+bill posts without a full brief — read the text, then call `show_bill` with the headline
 and summary — and answers "which vote am I looking at" from a model-context update without a tool
 call.
 
-**Notable rules.** A synopsis or headline is not statutory language. An enrolled document is not
+**Notable rules.** A headline is not statutory language. An enrolled document is not
 proof of signature. No passage claim from `yea > nay`. `read_pdf_bytes` is not a way to read a
 bill. No predictions and no characterizing the bill's politics.
 
@@ -198,7 +198,7 @@ chosen roll call. Path C lists each of the legislator's votes on the bill in dat
 answer states the window covered and the filters applied.
 
 **Card.** `show_person_record` for Path A, called before the votes are read. `show_bill` for Paths B
-and C, always with a `headline` and `summary` written from the bill's text or synopsis. A vote or
+and C, always with a `headline` and `summary` written from the bill's text. A vote or
 sponsored bill tapped in the record posts a show-bill turn, handled the same way.
 
 **Notable rules.** Same-name rows are different people, and picking one silently is the worst
@@ -296,7 +296,7 @@ called a tool, so the caller keeps one analytics session. Then one brief in seve
 7. **Card to show** — `show_bill {id: <bill uuid>, headline: <text>, summary: <text>,
    conversation_id: <value>}`, with a `headline` and `summary` the caller must pass: plain text for
    a voter, no markdown, the headline at most 120 characters and the summary at most 1,500. When
-   neither text nor synopsis is on record, the summary says so.
+   the text could not be read, the summary says so.
 
 **Edge cases.** Several plausible bills returns `AMBIGUOUS` with the candidates and stops. Nothing
 matching lists the searches that ran. A bill with no documents or no roll calls is reported as

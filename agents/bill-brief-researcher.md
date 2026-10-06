@@ -121,8 +121,8 @@ never copy file contents into a tool argument.
   before the first call; never guess its parameters.
 - Schemas are strict; an invented parameter is rejected outright. When a parameter or response field
   is unclear, read `${CLAUDE_PLUGIN_ROOT}/skills/get-legislation/references/tool-reference.md`.
-- Separate the bill's operative text from its synopsis, headline, or `summarization`, and label
-  which one you are quoting.
+- Separate the bill's operative text from its headline or `summarization`, and label which one you
+  are quoting.
 - Report only what the tools returned. Never supplement from background knowledge, news coverage,
   or web search; a gap in the record goes under Gaps.
 - `search_bills` and `get_votes` carry no `total`. Report counts as "at least N" unless you
@@ -152,8 +152,7 @@ Return one brief:
    date; after passage, add the `governor_action` summary and note, labeled as the state's general
    rule. State how the bill was identified when the request was loose.
 2. **What it does** — two to five sentences from the document text, labeled with `text_source`. If
-   the text was unavailable, say so and give the document URL instead of substituting the synopsis
-   without a label.
+   the text could not be read, say so and give the document URL.
 3. **Sponsors** — names and parties, resolved.
 4. **Roll calls** — one row per floor vote: date, description, yea / nay / absent / NV. Give every
    roll call `get_rollcalls` returns its own row, even when two share a date or identical counts;
@@ -168,7 +167,7 @@ Return one brief:
    conversation_id: <value>}`, with a
    `headline` and a `summary` the caller must pass with it, since `show_bill` fails with -32602
    without either. Write both for a voter, in plain text with no markdown (the card renders them as
-   text), from the document text you read or the synopsis, and never infer or claim passage or
+   text), from the document text you read, and never infer or claim passage or
    outcome in either:
    - `headline`: at most 120 characters saying what the bill does, e.g. "Bans buying soda and
      candy with SNAP benefits", with no trailing period needed. The card's title plate shows it
@@ -176,8 +175,8 @@ Return one brief:
    - `summary`: prose of at most 1,500 characters — what the bill does, who it affects, and where
      it stands as recorded.
 
-   When neither text nor synopsis is on record, say so in the summary rather than guess, and write
-   the headline from the official title alone. Build the summary only from what the tools returned —
+   When the text could not be read, say so in the summary rather than guess, and write the
+   headline from the official title alone. Build the summary only from what the tools returned —
    the title, status, sponsors, and recorded votes — and point to the document URL for the text.
    Never fill it from news coverage, web search, or general knowledge, even with a note saying so:
    the card presents the summary as the bill's. The card labels the summary as written by the AI

@@ -52,9 +52,9 @@ These are the query caps as the skills state them. Nothing in a response signals
 knowing them helps you read a short result correctly.
 
 - **Each word is matched separately, and more words widen the results.** The words in the query
-  are matched as separate substrings of the title and synopsis and ORed together. Only the first 8
-  terms are used. "School choice" matches every bill with "school" in its title or synopsis.
-- **The document-text half is capped.** Alongside the title and synopsis match, a full-text search
+  are matched as separate substrings of the title and ORed together. Only the first 8 terms are
+  used. "School choice" matches every bill with "school" in its title.
+- **The document-text half is capped.** Alongside the title match, a full-text search
   over attached documents resolves at most 50 distinct bills. Scoping by state and session applies
   before that cap, so a scoped search draws its 50 from that state or session; an unscoped one
   draws 50 from every state combined.
@@ -86,7 +86,7 @@ The brief has these parts:
 | Section | What it holds |
 | --- | --- |
 | Identification | Bill number, state, session, title, and current status with its date |
-| What it does | Two to four sentences grounded in the bill text or synopsis, with sparing, attributed quotes |
+| What it does | Two to four sentences grounded in the bill text, with sparing, attributed quotes |
 | Sponsors | Names and party |
 | Legislative history | Roll calls in date order, with description and vote counts |
 | How members voted | Only when you ask: the party breakdown, then notable individual votes |
@@ -123,8 +123,8 @@ Claude reads the newest attached document. Two things to expect:
 "The bill text" means the newest document, which is not necessarily the enacted law. For an older
 version, ask for the list of documents; Claude gives you that version's link.
 
-A bill's synopsis or headline is a secondary description, not statutory language, and Claude says
-which one it is quoting.
+A bill's headline is a secondary description, not statutory language, and Claude says which one it
+is quoting.
 
 ## See the floor votes
 
@@ -164,17 +164,16 @@ built from the data tools either way, so it is complete without the card. In a c
 does not re-list the card's rows in chat: it writes what the card does not show, such as what the
 bill does, context, and caveats.
 
-**The assistant headline and summary.** Claude writes both for a voter, from the text or synopsis
-it read. The headline is one plain-text line of up to 120 characters saying what the bill does,
+**The assistant headline and summary.** Claude writes both for a voter, from the text it read. The headline is one plain-text line of up to 120 characters saying what the bill does,
 such as "Bans buying soda and candy with SNAP benefits". The summary is plain prose of up to 1,500
 characters saying what the bill does, who it affects, and where it stands as recorded. Neither
-claims passage. Every bill card carries both: when neither text nor synopsis is on record, the
-summary says so and the headline comes from the official title.
+claims passage. Every bill card carries both: when the text could not be read, the summary says so
+and the headline comes from the official title.
 
 **Tapping a bill in another card.** Tapping a bill in the search results card, a vote in a
 legislator record, or a sponsored bill's "Show in the conversation" button posts a request into the
-conversation: `Show HB 314 (bill id <uuid>) with show_bill. …`. Claude reads the bill text (or the
-synopsis), then shows the bill card with its plain-language headline and summary, sometimes with a
+conversation: `Show HB 314 (bill id <uuid>) with show_bill. …`. Claude reads the bill text, then shows
+the bill card with its plain-language headline and summary, sometimes with a
 short answer in chat.
 
 **Selecting on the card.** When you select a floor vote or open a document, the card tells Claude

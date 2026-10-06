@@ -91,7 +91,7 @@ number recurs across states and sessions, and a search for `HB 591` in 2026 alon
 in more than one state.
 
 **Done looks like:** an answer that names the bill by number, state, and session, gives its title
-and its status as recorded, says what the bill does based on the text or synopsis it read, and
+and its status as recorded, says what the bill does based on the text it read, and
 links the source document. If Claude comes back with a question about which bill or session you
 mean, that is expected when a request leaves room for more than one match: answer it.
 
