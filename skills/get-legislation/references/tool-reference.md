@@ -285,11 +285,12 @@ the object as text.
 
 Like the other display tools, it has no `response_format`.
 
-Renders a bill card via `ui://cicada-guide/bill-workspace-v18.html` in hosts that support MCP Apps.
+Renders a bill card via `ui://cicada-guide/bill-workspace-v19.html` in hosts that support MCP Apps.
 The card shows the state and session, the status, the bill number, and a title plate that shows your
 `headline` first; tapping the plate toggles to the official title and back. Then come four tabs.
-Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Enacted), the recorded
-status, and your summary; Sponsors lists the sponsors; Documents lists each version with a Read
+Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed, Enacted), the
+latest roll call with its date and tally (the recorded status when the bill has none), and your
+summary; Sponsors lists the sponsors; Documents lists each version with a Read
 button that opens a viewer; Votes holds the floor votes with party splits and who voted how. The
 card calls `get_bill_dossier` and `get_rollcall_breakdown` itself for the sponsors, documents, and
 votes. The viewer draws a PDF's pages inside the card, fetching its bytes with `read_pdf_bytes`

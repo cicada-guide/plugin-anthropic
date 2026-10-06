@@ -151,7 +151,7 @@ After the written answer, Claude calls `show_bill` for the bill without being as
 renders MCP Apps, the card shows the bill number, a title plate with Claude's plain-language
 headline (tap it to toggle to the official title and back), and the status, above four tabs:
 
-- **Overview:** the path to becoming law, the recorded status, and a summary box holding Claude's
+- **Overview:** the path to becoming law, the latest roll call, and a summary box holding Claude's
   plain-language summary, labeled "Summary · your AI assistant";
 - **Sponsors:** the bill's sponsors;
 - **Documents:** each version with a "Read" button. A PDF shows its pages inside the card, and the
