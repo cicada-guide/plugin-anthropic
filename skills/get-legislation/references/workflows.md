@@ -82,7 +82,9 @@ exactly `Passed` is the bill's final status, dated when it became law.
 
 Check `text_source`. A `null` means no stored text and no successful fetch — report that the text
 could not be read and offer `item.url` (the bill card's Documents tab can display the document),
-rather than treating the empty string as the bill's contents.
+rather than treating the empty string as the bill's contents. `text_unavailable.reason` says why:
+`refused` (the state's site turned away the automated request — the text is on that site at
+`item.url`), `not_text` (most often a PDF), `no_url`, `too_large` or `fetch_failed`.
 
 Long text comes in parts that fit under 25,000 characters. Pass each response's `next_text_offset`
 as `text_offset` until it is `null`, and read every part before describing what the bill does.
