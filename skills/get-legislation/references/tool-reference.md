@@ -243,7 +243,7 @@ status of exactly `Passed` is the bill's final status, dated when it became law,
 shows it as Enacted; one that only contains the word, such as `Passed Senate`, is not.
 
 **Every call also renders a results card** in a host that supports MCP Apps, via
-`ui://cicada-guide/bill-results-v15.html`. It lists the results with a "Show more" button that
+`ui://cicada-guide/bill-results-v16.html`. It lists the results with a "Show more" button that
 pages with the same arguments. Tapping a result posts a user turn asking you to show that bill with
 `show_bill` (see [`show_bill`](#show_bill)); the card opens no bill itself. You still receive
 the full list as text or JSON, so read results from it as usual. Where the card renders, summarize
@@ -302,7 +302,7 @@ It is a general rule, not this bill's deadline: never compute a date from it. Th
 
 Like the other display tools, it has no `response_format`.
 
-Renders a bill card via `ui://cicada-guide/bill-workspace-v21.html` in hosts that support MCP Apps.
+Renders a bill card via `ui://cicada-guide/bill-workspace-v22.html` in hosts that support MCP Apps.
 The card shows the state and session, the status with its date, the bill number, and a title plate
 that shows your `headline` first; tapping the plate toggles to the official title and back. Then
 come four tabs. Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed,
@@ -502,7 +502,7 @@ for the rest, and never supply one from elsewhere.
 `id` (UUID, required), from `search_people` after resolving identity. It has no `response_format`.
 
 In a host that supports MCP Apps it renders a legislator record via
-`ui://cicada-guide/legislator-record-v19.html`: the seat (no contact buttons), the vote history
+`ui://cicada-guide/legislator-record-v20.html`: the seat (no contact buttons), the vote history
 with session, vote, and subject filters, and the bills they sponsored. The card loads the votes
 through `get_person_votes` itself; its session picker lists only sessions with the legislator's
 votes, newest first, and its tally counts only the votes loaded, so never quote it as a career

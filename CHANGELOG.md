@@ -25,8 +25,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ### Changed
 
-- Card resource URIs `bill-workspace-v21`, `bill-results-v15` and `legislator-record-v19`. Earlier
-  URIs still resolve. On the bill card:
+- Card resource URIs `bill-workspace-v22`, `bill-results-v16` and `legislator-record-v20`. Earlier
+  URIs still resolve. No card shows a synopsis. On the bill card:
   - The line under the path shows the latest passage vote rather than the latest roll call.
   - "After passage" folds the state's governor rule behind a button.
   - Every status tag carries its date.
