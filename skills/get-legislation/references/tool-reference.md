@@ -238,10 +238,12 @@ or narrow with `subject` rather than lengthening the query string, and say which
 
 **`status` matches any status containing the string.** `status: "Passed"` matches every status
 whose text contains "Passed", which can record one chamber's passage rather than enactment. Report
-each bill's `status` as recorded, and never treat a `status` filter as proof a bill became law.
+each bill's `status` as recorded, and never treat a `status` filter as proof a bill became law. A
+status of exactly `Passed` is the bill's final status, dated when it became law, and the bill card
+shows it as Enacted; one that only contains the word, such as `Passed Senate`, is not.
 
 **Every call also renders a results card** in a host that supports MCP Apps, via
-`ui://cicada-guide/bill-results-v14.html`. It lists the results with a "Show more" button that
+`ui://cicada-guide/bill-results-v15.html`. It lists the results with a "Show more" button that
 pages with the same arguments. Tapping a result posts a user turn asking you to show that bill with
 `show_bill` (see [`show_bill`](#show_bill)); the card opens no bill itself. You still receive
 the full list as text or JSON, so read results from it as usual. Where the card renders, summarize
@@ -300,13 +302,15 @@ It is a general rule, not this bill's deadline: never compute a date from it. Th
 
 Like the other display tools, it has no `response_format`.
 
-Renders a bill card via `ui://cicada-guide/bill-workspace-v20.html` in hosts that support MCP Apps.
-The card shows the state and session, the status, the bill number, and a title plate that shows your
-`headline` first; tapping the plate toggles to the official title and back. Then come four tabs.
-Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed, Enacted, filled
-for an enacted status or a Chaptered version), the latest roll call with its date and tally (the
-recorded status when the bill has none), the state's `governor_action` summary and note under
-"After passage", and your summary; Sponsors lists the sponsors; Documents lists each version with a Read
+Renders a bill card via `ui://cicada-guide/bill-workspace-v21.html` in hosts that support MCP Apps.
+The card shows the state and session, the status with its date, the bill number, and a title plate
+that shows your `headline` first; tapping the plate toggles to the official title and back. Then
+come four tabs. Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed,
+Enacted; Enacted fills, and the status reads "Enacted", for an enacted or signed status, a status
+of exactly `Passed`, or a Chaptered version), one roll call with its date and tally (the latest
+whose description names passage, else the latest; the recorded status when the bill has none), an
+"After passage" button that unfolds the state's `governor_action` summary and note, and your
+summary; Sponsors lists the sponsors; Documents lists each version with a Read
 button that opens a viewer; Votes holds the floor votes with party splits and who voted how. The
 card calls `get_bill_dossier` and `get_rollcall_breakdown` itself for the sponsors, documents, and
 votes. The viewer draws a PDF's pages inside the card, fetching its bytes with `read_pdf_bytes`
@@ -499,7 +503,7 @@ for the rest, and never supply one from elsewhere.
 `id` (UUID, required), from `search_people` after resolving identity. It has no `response_format`.
 
 In a host that supports MCP Apps it renders a legislator record via
-`ui://cicada-guide/legislator-record-v18.html`: the seat (no contact buttons), the vote history
+`ui://cicada-guide/legislator-record-v19.html`: the seat (no contact buttons), the vote history
 with session, vote, and subject filters, and the bills they sponsored. The card loads the votes
 through `get_person_votes` itself; its session picker lists only sessions with the legislator's
 votes, newest first, and its tally counts only the votes loaded, so never quote it as a career

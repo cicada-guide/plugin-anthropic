@@ -49,7 +49,9 @@ Then search:
   `subject`, and say which query ran.
 - `status` is a partial match on the recorded status text: `"Passed"` matches every status
   containing it, which can record one chamber's passage rather than enactment. Report each bill's
-  status as recorded; a `status` filter is not proof a bill became law.
+  status as recorded; a `status` filter is not proof a bill became law. A status of exactly
+  `Passed` is the bill's final status, dated when it became law, and the bill card shows it as
+  Enacted; one that only contains the word is not.
 
 Bill-number matching is exact in either stored spelling (`HB 314` or `HB314`), but the same number
 repeats across sessions and states. When the user gave a year but no session, `session_name` with
@@ -91,8 +93,9 @@ Otherwise call in this order, skipping what the request does not need:
    schema-enforced. Never loop `get_person`. Skip this when `sponsors` is null or empty; `ids`
    requires at least one entry and rejects an empty array.
 3. `get_latest_bill_document` — the newest available document, not necessarily enacted law, with
-   its text. Check `text_source`; a `null` means the text is unavailable, not empty — say so and
-   give `item.url`. Long text comes in parts: until `next_text_offset` is `null`, call again with
+   its text. Check `text_source`; a `null` means the text could not be read, not that it is empty
+   or missing — say you could not read it and give `item.url`, and when you show the bill card,
+   say its Documents tab can display the document. Long text comes in parts: until `next_text_offset` is `null`, call again with
    `text_offset` set to it, and read every part before writing what the bill does. For an older
    version, list it with `get_documents` and report its URL. `read_pdf_bytes` returns base64 PDF
    bytes, not text; do not use it to read a bill.

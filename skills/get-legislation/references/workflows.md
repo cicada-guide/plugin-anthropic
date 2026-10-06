@@ -67,7 +67,8 @@ session, try another distinctive word, and say which query ran.
 To narrow further, add `status`, `subject` (exact match against the `subjects` array), or
 `sponsor_id`. `status` is a partial match on the recorded status text: `"Passed"` matches every
 status containing that word, which can record one chamber's passage rather than enactment. Report
-each bill's status as recorded; a `status` filter is not proof a bill became law.
+each bill's status as recorded; a `status` filter is not proof a bill became law. A status of
+exactly `Passed` is the bill's final status, dated when it became law.
 
 ## Read what a bill actually says
 
@@ -81,7 +82,8 @@ each bill's status as recorded; a `status` filter is not proof a bill became law
 ```
 
 Check `text_source`. A `null` means no stored text and no successful fetch — report that the text
-is unavailable and offer `item.url`, rather than treating the empty string as the bill's contents.
+could not be read and offer `item.url` (the bill card's Documents tab can display the document),
+rather than treating the empty string as the bill's contents.
 
 Long text comes in parts that fit under 25,000 characters. Pass each response's `next_text_offset`
 as `text_offset` until it is `null`, and read every part before describing what the bill does.

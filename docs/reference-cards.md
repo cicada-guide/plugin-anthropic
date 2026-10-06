@@ -14,10 +14,10 @@ there rather than repeating them. Why the plugin ends answers with a card is in
 
 | Tool | Card | Resource URI | The card fetches | The model receives |
 | --- | --- | --- | --- | --- |
-| `search_bills` | Bill results | `ui://cicada-guide/bill-results-v14.html` | More pages of the same search | The full result list, as text or JSON, as usual |
-| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v20.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
+| `search_bills` | Bill results | `ui://cicada-guide/bill-results-v15.html` | More pages of the same search | The full result list, as text or JSON, as usual |
+| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v21.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
 | `show_official` | Contact card | `ui://cicada-guide/official-card-v13.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
-| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v18.html` | Vote history (`get_person_votes`), sessions (`list_sessions`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
+| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v19.html` | Vote history (`get_person_votes`), sessions (`list_sessions`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
 
 The URIs are the ones the live `tools/list` advertises in each tool's `_meta.ui.resourceUri`. The
 `-vN` suffix changes when the server changes a card's HTML shell, so a host that caches by URI
@@ -87,11 +87,14 @@ Parameters: `id`, `headline`, and `summary`, all required —
 - **Header:** the state and session, the status, the bill number, and a title plate showing the
   `headline` first (see [below](#the-title-plate)). Tapping the plate toggles to the official title
   and back.
-- **Overview:** the path to becoming law (Introduced, Engrossed, Enrolled, Passed, Enacted; Enacted
-  fills for an enacted status or a Chaptered version), the latest roll call with its date and tally
-  (the same one the Votes tab opens on, noting when others share its date; the recorded status when
-  the bill has none), the state's general rule after passage under "After passage" (the
-  `governor_action` summary and its caveat), and the summary box (see
+- **Overview:** the path to becoming law (Introduced, Engrossed, Enrolled, Passed, Enacted). Enacted
+  fills, and the status tag reads "Enacted" with its date, for an enacted or signed status, a
+  status of exactly `Passed` (the final status, dated when the bill became law), or a Chaptered
+  version. Past Enrolled, an Enacted step the record does not support is dashed and read as "not
+  on record". Below the path: one roll call with its date and tally, the same one the Votes tab
+  opens on (the latest whose description names passage, else the latest; the recorded status
+  when the bill has none). Then an **After passage** button that unfolds the state's general rule
+  (the `governor_action` summary and its caveat), and the summary box (see
   [below](#the-summary-box)).
 - **Sponsors:** the bill's sponsors.
 - **Documents:** each version, with a **Read** button that shows its pages inside the card (a

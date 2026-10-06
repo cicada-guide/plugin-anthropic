@@ -10,6 +10,18 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Card resource URIs `bill-workspace-v21`, `bill-results-v15` and `legislator-record-v19`. The bill
+  card's line under the path shows the latest passage vote, "After passage" folds behind a button,
+  every status tag carries its date, and a status of exactly `Passed` shows as Enacted. Earlier
+  URIs still resolve.
+- A status of exactly `Passed` is described as the bill's final status, dated when it became law,
+  in the always-on skill, `research-legislation`, the tool reference and the workflows, so Claude
+  and the bill card agree.
+- A `null` `text_source` is reported as text that could not be read, not text that does not exist,
+  and points to the bill card's Documents tab, which can display the document.
+
 ### Added
 
 - `references/governor-action.md`: each state's governor deadline during session and after
