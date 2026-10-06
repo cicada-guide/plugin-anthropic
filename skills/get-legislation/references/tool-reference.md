@@ -282,10 +282,10 @@ outside the 50 states:
 | --- | --- |
 | `state` | State name |
 | `during_session_days`, `during_session_default` | Days the governor has to act in session, and what happens if the governor does not: `"law"` or `"pocket_veto"` |
-| `after_session_days`, `after_session_default` | The same after the legislature adjourns |
+| `after_session_days`, `after_session_default` | The same once the legislature has adjourned |
 | `effective_date` | When a bill that becomes law takes effect, as stated, such as `"In bill text"` |
 | `summary` | The rule as one sentence |
-| `note` | What it leaves out: excluded Sundays and holidays, emergency clauses, dates in the bill text |
+| `note` | What it leaves out: when each deadline starts, excluded weekends and holidays, emergency clauses, dates in the bill text |
 
 It is a general rule, not this bill's deadline: never compute a date from it. The full table is in
 [governor-action.md](governor-action.md).

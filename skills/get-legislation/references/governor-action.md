@@ -9,7 +9,7 @@ For one bill, use what `get_bill_dossier` returns rather than this table. Its `g
 holds the bill's state's rule:
 
 - `during_session_days` and `during_session_default`;
-- `after_session_days` and `after_session_default`;
+- `after_session_days` and `after_session_default`, for once the legislature has adjourned;
 - `effective_date`;
 - a one-sentence `summary`;
 - a `note` naming what the rule leaves out.
@@ -23,8 +23,8 @@ be loaded.
 ## How to use it
 
 - **It is a general rule, not a deadline for this bill.** Present it as the state's general rule,
-  and pass on the `note`: excluded Sundays and holidays, emergency clauses and dates in the bill
-  text can change it. Never compute a date from it, and never say when a particular bill became or
+  and pass on the `note`: when each deadline starts, excluded weekends and holidays, emergency
+  clauses and dates in the bill text can change it. Never compute a date from it, and never say when a particular bill became or
   will become law. The tools do not record when the governor received the bill, and they often do
   not record the session's adjournment date.
 - **The bill text wins.** Where a state's effective date reads "In bill text", or "unless otherwise
@@ -40,9 +40,11 @@ be loaded.
 ## The table
 
 "During session" and "After session" are the days the governor has to act while the legislature
-is in session and after it adjourns. "Default" is what happens when the governor does not act in
-time. This is a broad overview: details such as excluded Sundays and holidays, and emergency
-clauses, are left out for brevity.
+is in session and once it has adjourned. "Default" is what happens when the governor does not act
+in time. This is a broad overview: it leaves out when each deadline starts (presentment, delivery
+or adjournment, by state), excluded weekends and holidays, and emergency clauses. Illinois, Maine,
+Michigan, New Hampshire, Oregon, Pennsylvania and Utah were checked against their constitutions or
+statutes on 2026-10-06.
 
 | State | During session | Default | After session | Default | Effective date |
 | --- | --- | --- | --- | --- | --- |
@@ -58,23 +60,23 @@ clauses, are left out for brevity.
 | Georgia | 6 days | Law | 40 days | Law | July 1 after enacted, unless otherwise specified |
 | Hawaii | 10 days | Law | 45 days | Law | In bill text |
 | Idaho | 5 days | Law | 10 days | Law | July 1 after enacted |
-| Illinois | 60 days | Law | 60 days | Law | In bill text, or January 1 / June 1 following enactment before / after May 31 respectively |
+| Illinois | 60 days | Law | 60 days | Law | In bill text, otherwise January 1 of the next year if passed before June 1, or June 1 of the next year if passed after May 31 |
 | Indiana | 7 days | Law | 7 days | Law | In bill text |
 | Iowa | 3 days | Law | 30 days | Pocket veto | July 1 after enacted, unless otherwise specified |
 | Kansas | 10 days | Law | 10 days | Law | July 1 after enacted, unless otherwise specified |
 | Kentucky | 10 days | Law | 10 days | Law | 90 days after adjournment, unless otherwise specified |
 | Louisiana | 10 days | Law | 20 days | Law | August 1 after enacted, unless otherwise specified |
-| Maine | 10 days | Law | 3 days | Law | 90 days after adjournment, unless otherwise specified |
+| Maine | 10 days | Law | 3 days after the same Legislature next meets; if it does not meet again, the bill does not become law | Law | 90 days after adjournment, unless otherwise specified |
 | Maryland | 6 days | Law | 30 days | Law | In bill text |
 | Massachusetts | 10 days | Law | 10 days | Pocket veto | In bill text, otherwise 90 days after enacted |
-| Michigan | 14 days | Law | 14 days | Pocket veto | In bill text, otherwise 90 days after enacted |
+| Michigan | 14 days | Law | 14 days | Pocket veto | 90 days after the session ends, unless given immediate effect |
 | Minnesota | 3 days | Law | 14 days | Pocket veto | In bill text, otherwise August 1 after enacted |
 | Mississippi | 5 days | Law | 15 days | Law | In bill text, otherwise 60 days after enacted |
 | Missouri | 15 days | Law | 45 days | Law | In bill text, otherwise August 28 after enacted |
 | Montana | 10 days | Law | 10 days | Law | In bill text, otherwise October 1 after enacted |
 | Nebraska | 5 days | Law | 5 days | Law | In bill text, otherwise 90 days after adjournment |
 | Nevada | 5 days | Law | 10 days | Law | In bill text, otherwise October 1 after enacted |
-| New Hampshire | 5 days | Law | 5 days | Law | In bill text |
+| New Hampshire | 5 days | Law | 5 days | Pocket veto | In bill text |
 | New Jersey | 45 days | Law | 7 days | Pocket veto | In bill text, otherwise July 4 after enacted |
 | New Mexico | 3 days | Law | 20 days | Pocket veto | In bill text, otherwise 90 days after adjournment |
 | New York | 10 days | Law | 30 days | Pocket veto | In bill text |
@@ -82,14 +84,14 @@ clauses, are left out for brevity.
 | North Dakota | 3 days | Law | 15 days | Law | In bill text, otherwise August 1 after enacted |
 | Ohio | 10 days | Law | 10 days | Law | In bill text, otherwise 91 days after enrollment |
 | Oklahoma | 5 days | Law | 15 days | Pocket veto | In bill text, otherwise 90 days after adjournment |
-| Oregon | 5 days | Law | 15 days | Pocket veto | January 1 after enacted, unless otherwise specified |
-| Pennsylvania | 10 days | Law | 10 days | Law | In bill text |
+| Oregon | 5 days | Law | 30 days | Law | January 1 after enacted, unless otherwise specified |
+| Pennsylvania | 10 days | Law | 30 days | Law | In bill text |
 | Rhode Island | 6 days | Law | 10 days | Law | In bill text |
 | South Carolina | 5 days | Law | 5 days | Law | In bill text, otherwise 20 days after enacted |
 | South Dakota | 5 days | Law | 15 days | Law | July 1 after enacted, unless otherwise specified |
 | Tennessee | 10 days | Law | 10 days | Law | 40 days after enacted, unless otherwise specified |
 | Texas | 10 days | Law | 20 days | Law | 90 days after adjournment |
-| Utah | 20 days | Law | 20 days | Law | 60 days after adjournment, unless otherwise specified |
+| Utah | 10 days | Law | 20 days | Law | 60 days after adjournment, unless otherwise specified |
 | Vermont | 5 days | Law | 3 days | Pocket veto | July 1 after enacted, unless otherwise specified |
 | Virginia | 7 days | Law | 30 days | Law | July 1 after enacted, unless otherwise specified |
 | Washington | 5 days | Law | 20 days | Law | 90 days after adjournment, unless otherwise specified |

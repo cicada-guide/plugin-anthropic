@@ -250,7 +250,7 @@ roll calls.
 
 **`governor_action` is the state's general rule after passage, not this bill's deadline.**
 `get_bill_dossier` returns it for the bill's state: the governor's days to act during session and
-after adjournment, whether an unsigned bill becomes law or is pocket vetoed, and the effective date.
+once the legislature has adjourned, whether an unsigned bill becomes law or is pocket vetoed, and the effective date.
 Give its `summary` as the state's general rule, with its `note`, when the user asks what happens
 next for a bill the record shows passed. Never compute a date from it, and never present it as the
 bill's outcome; report the bill's `status` and document versions as recorded. Where it says the
