@@ -1,7 +1,7 @@
 # cicada-guide tool reference
 
 Verified against the live endpoint's `tools/list`, MCP protocol revision `2025-06-18`, on
-2026-09-27. The endpoint is unversioned, so re-check this document against a live `tools/list` if
+2026-10-06. The endpoint is unversioned, so re-check this document against a live `tools/list` if
 tool behavior appears to disagree with it. Older behavioral observations below retain their dates.
 
 The tools below match the live `tools/list` as of that date. Check the live list before concluding
