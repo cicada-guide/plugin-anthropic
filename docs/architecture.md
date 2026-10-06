@@ -54,7 +54,7 @@ reaches the model differently:
 
 | Kind | Where | How it loads |
 | --- | --- | --- |
-| Always-on skill | `skills/get-legislation/` | Loads automatically on any state-legislation question. Its `references/` hold the tool reference, workflows and project-settings contract |
+| Always-on skill | `skills/get-legislation/` | Loads automatically on any state-legislation question. Its `references/` hold the tool reference, workflows, the governor-action table and project-settings contract |
 | Slash-command skills | `skills/research-legislation/`, `skills/voting-record/`, `skills/contact-legislator/` | Run as `/cicada-guide:<name>`, or when Claude judges a request needs the full workflow |
 | Subagents | `agents/*.md`: `bill-brief-researcher`, `legislator-disambiguator` | Dispatched by Claude for long, autonomous jobs; each returns one consolidated report |
 
