@@ -135,8 +135,8 @@ EVIDENCE: <state and session from bill.division_id / bill.session_id, and which 
 SEAT: <the seat as show_official returned it, or "not recorded">
 UNVERIFIED: <chamber, district, or other request constraints no recorded seat confirms — or "none">
 RULED OUT: <other candidates, one line each, with why>
-CARD TO SHOW: show_official {id: <person uuid>} for who they are or how to reach them;
-  show_person_record {id: <person uuid>} for their votes
+CARD TO SHOW: show_official {id: <person uuid>, conversation_id: <value>} for who they are or how
+  to reach them; show_person_record {id: <person uuid>, conversation_id: <value>} for their votes
 ```
 
 **AMBIGUOUS**
