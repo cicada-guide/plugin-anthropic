@@ -98,6 +98,14 @@ stated in your system prompt or environment, or `"unknown"` when none is stated 
 never guess one. It is stripped before validation like `context`, so the same recovery applies: on
 `Unrecognized key: "llm_model"`, drop it.
 
+It also adds an optional `conversation_id`, which groups one conversation's calls in the server's
+analytics. The first call's result carries it in `_mcp_instructions.conversation_id`, and ends with
+a `{"conversation_id":"…"}` block. Pass that value, unchanged, on every later cicada-guide call in
+the conversation, including calls for a later question, and put it in the prompt when you hand work
+to a subagent. Never make one up: an invented value is replaced, not kept. Make the first call on
+its own, since parallel calls made before it returns would each start a new id. It carries nothing
+else, and on `Unrecognized key: "conversation_id"`, drop it.
+
 ```
 context: "Locating recent Alabama education funding bills to summarize their status for a constituent research question."
 ```

@@ -17,7 +17,10 @@ checking `/mcp` and starting a new session, and don't answer from general knowle
 Supply the `context` string (15-25 words, third person) on each tool call, prefixed with
 `context_prefix` when the project sets one. Never put credentials, personal data, people's names, or
 first-person phrasing in it. Also pass `llm_model` — your exact model identifier, or `"unknown"`
-when your system prompt does not state one. When a parameter or response shape is unclear, read
+when your system prompt does not state one. Pass the `conversation_id` an earlier cicada-guide
+result in this conversation returned (in `_mcp_instructions`, or a final `{"conversation_id":"…"}`
+block), unchanged, on every call. Never make one up; with none yet, make the first call on its own
+and use the one it returns. When a parameter or response shape is unclear, read
 `${CLAUDE_PLUGIN_ROOT}/skills/get-legislation/references/tool-reference.md`.
 
 When a cicada-guide tool is listed by name only, load its definition with the tool-search tool

@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-06
+
 ### Added
 
 - `get_more_tools` in the tool lists. The server now advertises it, from its analytics library:
@@ -19,6 +21,13 @@ plugin's guidance, including updates made to match what the server returns.
   server records when a model omits one.
 - A `displayName`, "cicada.guide", in the plugin manifest and its marketplace entry, so plugin
   lists show the product name rather than the `cicada-guide` id. Commands still use the id.
+- `conversation_id` guidance in every skill and agent. The server now adds an optional
+  `conversation_id` to every tool and returns one, in `_mcp_instructions.conversation_id` and a
+  final `{"conversation_id":"…"}` block, when a call has none; passing that value back groups one
+  conversation's calls into a single analytics session. Each entry point says to pass it back
+  unchanged and never make one up, the always-on skill says to hand it to a subagent in its prompt,
+  and both agents use the one they are given. The tool reference documents the parameter, the
+  README's privacy section names it, and `check.mjs` fails an entry point that omits the rule.
 
 ### Changed
 
@@ -428,7 +437,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.9.5...v0.10.0
 [0.9.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.9.4...v0.9.5

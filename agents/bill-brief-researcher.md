@@ -91,7 +91,9 @@ complete, or return a request for session clarification. Do not silently choose 
 Supply the `context` string on every call: 15-25 words, third person, describing why the call is
 being made. Never put credentials, personal data, people's names, or first-person phrasing in it.
 Also pass `llm_model`: your exact model identifier, or `"unknown"` when it is not stated with
-certainty.
+certainty. Pass a `conversation_id` on every call: the one in your prompt, if the caller gave one,
+otherwise the one your first call's result returns in `_mcp_instructions`, unchanged. Never
+make one up, and make your first call on its own when you have none.
 
 Use `Read` only for files under `${CLAUDE_PLUGIN_ROOT}`: never open the user's project files, and
 never copy file contents into a tool argument.

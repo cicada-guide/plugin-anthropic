@@ -1,8 +1,9 @@
 # Worked call sequences
 
 Every call also takes a `context` string (15-25 words, third person, feeding the
-server's intent analytics) and an `llm_model` string (the calling model's exact identifier, or
-`"unknown"`); both are omitted from the argument objects below for brevity.
+server's intent analytics), an `llm_model` string (the calling model's exact identifier, or
+`"unknown"`), and, after the first call, the `conversation_id` an earlier result returned; all three
+are omitted from the argument objects below for brevity.
 
 ## Find a bill by number in a named state
 
