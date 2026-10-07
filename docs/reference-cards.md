@@ -220,7 +220,8 @@ views:
   Absent), and by subject, with older votes loaded on request. The session picker lists only
   sessions the legislator has recorded votes in, newest first; older sessions appear after a short
   "Checking older sessions…" while the card confirms each with a one-vote lookup. The Yea / Nay /
-  No vote / Absent counts cover the votes loaded so far.
+  No vote / Absent counts cover the votes loaded so far, and a caption under them says how many and
+  whether more are on record.
 - **Sponsored legislation**, the bills they sponsored. A bill's **Show in the conversation**
   button, like tapping a vote, posts the [show-bill request](#the-show-bill-request).
 
