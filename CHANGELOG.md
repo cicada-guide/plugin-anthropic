@@ -10,6 +10,12 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Added
+
+- A `text-unavailable` eval case: Hawaii HB 420 (2025), whose text Hawaii's site will not serve to
+  an automated request. The reply must say the text could not be read and why, point to where it
+  is, and add nothing beyond the title.
+
 ## [0.11.4] - 2026-10-06
 
 ### Changed
