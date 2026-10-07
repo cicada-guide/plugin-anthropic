@@ -113,14 +113,16 @@ Ask what the bill says:
 What does the text of that bill actually say about eligibility?
 ```
 
-Claude reads the newest attached document. Two things to expect:
+Claude reads the newest attached version. Versions are ordered by date; a version with no date is
+placed by its stage (Introduced, then Engrossed, then Enrolled). Two things to expect:
 
 - **Long text comes in parts.** Claude reads every part before describing what the bill does. If it
   stops early, it says which part the answer rests on.
-- **Sometimes the text is not available,** for example a scanned document. Claude says so and
-  gives you the document's link rather than treating the empty text as the bill's contents.
+- **Sometimes the text is not available,** for example a scanned document or a newer version with no
+  stored text. Claude says so and gives you the document's link rather than treating the empty text
+  as the bill's contents, and it does not fall back to an older version's text.
 
-"The bill text" means the newest document, which is not necessarily the enacted law. For an older
+"The bill text" means the newest version, which is not necessarily the enacted law. For an older
 version, ask for the list of documents; Claude gives you that version's link.
 
 A bill's headline is a secondary description, not statutory language, and Claude says which one it
