@@ -520,8 +520,8 @@ In a host that supports MCP Apps it renders a legislator record via
 `ui://cicada-guide/legislator-record-v21.html`: the seat (no contact buttons), the vote history
 with session, vote, and subject filters, and the bills they sponsored. The card loads the votes
 through `get_person_votes` itself; its session picker lists only sessions with the legislator's
-votes, newest first, and its tally counts only the votes loaded, so never quote it as a career
-total. Tapping a vote, or a sponsored bill's "Show in the conversation"
+votes, newest first, and its tally counts only the votes loaded (a caption under it says how many, and whether more are on
+record), so never quote it as a career total. Tapping a vote, or a sponsored bill's "Show in the conversation"
 button, posts the same show-bill request as the results card (see [`show_bill`](#show_bill)); the
 card opens no bill itself.
 
