@@ -3,7 +3,7 @@
 A Claude Code **plugin**, not an application. Every file here is Markdown or JSON read by a
 plugin loader: there is no build step, no dependencies, and nothing to compile. The
 MCP server the plugin points at is a separate, private repo (`cicada-guide/mcp-anthropic`) — its
-source is not in this tree and cannot be changed from here.
+source is not in this tree; change it in that repo, then update the tool docs here after it deploys.
 
 This file covers working *on* the repo. User-facing behavior is [README.md](../README.md); release
 process and already-settled decisions are [PUBLISHING.md](../PUBLISHING.md). Neither is duplicated
