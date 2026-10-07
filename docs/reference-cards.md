@@ -17,7 +17,7 @@ there rather than repeating them. Why the plugin ends answers with a card is in
 | `search_bills` | Bill results | `ui://cicada-guide/bill-results-v17.html` | More pages of the same search, once every loaded result is shown | The full result list, as text or JSON, as usual |
 | `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v23.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
 | `show_official` | Contact card | `ui://cicada-guide/official-card-v14.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
-| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v21.html` | Vote history (`get_person_votes`), sessions (`list_sessions`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
+| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v22.html` | Vote history (`get_person_votes`), sessions (`list_sessions`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
 
 The URIs are the ones the live `tools/list` advertises in each tool's `_meta.ui.resourceUri`. The
 `-vN` suffix changes when the server changes a card's HTML shell, so a host that caches by URI
@@ -220,8 +220,10 @@ views:
   Absent), and by subject, with older votes loaded on request. The session picker lists only
   sessions the legislator has recorded votes in, newest first; older sessions appear after a short
   "Checking older sessions…" while the card confirms each with a one-vote lookup. The Yea / Nay /
-  No vote / Absent counts cover the votes loaded so far, and a caption under them says how many and
-  whether more are on record.
+  No vote / Absent counts are the legislator's whole recorded record when the card could fetch it
+  (`get_person_votes` with `include_totals`), and a caption under them says so. With a vote filter
+  or session chosen, or when the totals are unavailable, they cover the votes loaded so far, and
+  the caption says how many and whether more are on record.
 - **Sponsored legislation**, the bills they sponsored. A bill's **Show in the conversation**
   button, like tapping a vote, posts the [show-bill request](#the-show-bill-request).
 

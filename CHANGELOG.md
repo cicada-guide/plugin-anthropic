@@ -10,6 +10,13 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Card URI follows the server's new shell: `legislator-record-v22`. The record card's tally shows the
+  legislator's whole recorded record, with a caption saying what it covers.
+- `get_person_votes` documents `include_totals`, which returns `totals` across all sessions (`null`
+  under a category, session or date filter, or when the count is unavailable).
+
 ## [0.11.5] - 2026-10-07
 
 ### Added

@@ -517,11 +517,13 @@ for the rest, and never supply one from elsewhere.
 `id` (UUID, required), from `search_people` after resolving identity. It has no `response_format`.
 
 In a host that supports MCP Apps it renders a legislator record via
-`ui://cicada-guide/legislator-record-v21.html`: the seat (no contact buttons), the vote history
+`ui://cicada-guide/legislator-record-v22.html`: the seat (no contact buttons), the vote history
 with session, vote, and subject filters, and the bills they sponsored. The card loads the votes
 through `get_person_votes` itself; its session picker lists only sessions with the legislator's
-votes, newest first, and its tally counts only the votes loaded (a caption under it says how many, and whether more are on
-record), so never quote it as a career total. Tapping a vote, or a sponsored bill's "Show in the conversation"
+votes, newest first. Its tally shows the legislator's whole recorded record when the card could
+fetch `totals` (a caption says so), and otherwise counts only the votes loaded, with a caption
+saying how many and whether more are on record. Quote the card's tally only with the scope its
+caption states. Tapping a vote, or a sponsored bill's "Show in the conversation"
 button, posts the same show-bill request as the results card (see [`show_bill`](#show_bill)); the
 card opens no bill itself.
 
@@ -631,6 +633,7 @@ already joined.
 | `latest` | boolean, default `false` | Return one vote from the newest rollcall date, no cursor. Ignores `cursor` |
 | `limit` | integer 1-100 | |
 | `cursor` | string, max 512 | Opaque `next_cursor` from the previous response, passed back exactly |
+| `include_totals` | boolean, default `false` | Also return `totals`, the legislator's recorded votes per category across all sessions |
 
 The envelope adds `retrieved_at`, `source_freshness`, `ordering`, and `active_filters` to `count`,
 `has_more`, `next_cursor`, and `items`. Each item is nested (verified 2026-09-24):
@@ -645,6 +648,11 @@ The envelope adds `retrieved_at`, `source_freshness`, `ordering`, and `active_fi
             "subjects": ["Education"] } }
 ```
 
+- **`totals` is present only with `include_totals: true`.** It is `{ yea, nay, absent, nv, total }`
+  across every recorded vote the legislator has, not just the page. It is `null` when `category`,
+  `session_id`, `start_date` or `end_date` narrows the list, when the legislator has no recorded
+  votes, or when the count could not be read; the markdown then says the total is not available for
+  the request. Use it, not a sum of the pages read, to state how many votes are on record.
 - **`bill.subjects` is in JSON only.** It is a string array, `[]` when none is recorded, and it
   appears in `structuredContent` and `response_format: "json"` but not in the markdown text. Pass
   `response_format: "json"` to group or filter a legislator's votes by subject.
