@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.5] - 2026-10-07
+
 ### Added
 
 - A `text-unavailable` eval case: Hawaii HB 420 (2025), whose text Hawaii's site will not serve to
@@ -513,7 +515,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.4...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.5...HEAD
+[0.11.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.4...v0.11.5
 [0.11.4]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.3...v0.11.4
 [0.11.3]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.2...v0.11.3
 [0.11.2]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.1...v0.11.2
