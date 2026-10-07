@@ -138,7 +138,7 @@ and passes its `id` to `get_rollcall_breakdown`.
 
 ## Legislator cards and the no-grading rule
 
-The legislator record shows a tally of the recorded votes it has loaded; the contact card shows none.
+The legislator record shows a tally, of the legislator's whole record when it could be fetched and otherwise of the votes loaded; the contact card shows none.
 The tally labels what it covers, and the guidance never uses one to grade, score, or rank a legislator. A
 tally over a handful of votes is a view of those votes, nothing more. See
 [why legislators are never graded](explanation-dataset-rules.md#why-legislators-are-never-graded).
