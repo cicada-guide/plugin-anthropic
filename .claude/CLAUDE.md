@@ -105,6 +105,12 @@ Avoid writing a tool *count* into prose; it is the first thing to go stale.
 reject unknown keys outright rather than ignoring them, so a plausible invented name is not a
 harmless doc error — it is a runtime failure for every user who follows it.
 
+**Card input limits are restated too, and nothing checks them.** `show_bill`'s 120-character
+`headline` cap (and, until 2026-11-01, a 1,500-character `summary` cap) appears in the four entry
+points, `tool-reference.md`, `workflows.md`, five `docs/` pages and the changelog. `scripts/check.mjs`
+does not cover these numbers, and `check-live-tools.mjs` compares parameter names, not lengths. When
+the server changes a limit, grep the repo for the number and update every copy.
+
 **Dataset rules are restated in every entry point, not referenced.** Subagents never load the
 `get-legislation` skill, and a slash command can run without it, so each skill and agent carries
 its own copy of whichever of these rules it relies on: `search_bills`' exact bill-number matching
