@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.6] - 2026-11-01
+
 ### Changed
 
 - Card URI follows the server's new shell: `legislator-record-v22`. The record card's tally shows the
@@ -524,7 +526,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.5...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.6...HEAD
+[0.11.6]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.5...v0.11.6
 [0.11.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.4...v0.11.5
 [0.11.4]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.3...v0.11.4
 [0.11.3]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.2...v0.11.3
