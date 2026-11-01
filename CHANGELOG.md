@@ -16,6 +16,8 @@ plugin's guidance, including updates made to match what the server returns.
   legislator's whole recorded record, with a caption saying what it covers.
 - `get_person_votes` documents `include_totals`, which returns `totals` across all sessions (`null`
   under a category, session or date filter, or when the count is unavailable).
+- Updated to match the server: `show_bill`'s `summary` has no length cap. A summary over 1,500
+  characters used to fail with `-32602`; the headline keeps its 120-character cap.
 
 ## [0.11.5] - 2026-10-07
 

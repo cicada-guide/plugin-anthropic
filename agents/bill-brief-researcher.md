@@ -174,7 +174,7 @@ Return one brief:
    - `headline`: at most 120 characters saying what the bill does, e.g. "Bans buying soda and
      candy with SNAP benefits", with no trailing period needed. The card's title plate shows it
      first, with a tap to the official title.
-   - `summary`: prose of at most 1,500 characters — what the bill does, who it affects, and where
+   - `summary`: prose, with no length cap — what the bill does, who it affects, and where
      it stands as recorded.
 
    When the text could not be read, say so in the summary rather than guess, and write the

@@ -34,7 +34,7 @@ summary" below:
 
 ```jsonc
 // 4. end with the card, carrying your plain-language headline and summary
-{ "tool": "show_bill", "arguments": { "id": "<bill uuid>", "headline": "<plain text, at most 120 characters>", "summary": "<plain prose, at most 1500 characters>" } }
+{ "tool": "show_bill", "arguments": { "id": "<bill uuid>", "headline": "<plain text, at most 120 characters>", "summary": "<plain prose>" } }
 ```
 
 ## Research a topic
@@ -206,7 +206,7 @@ ask.
 { "tool": "get_latest_bill_document", "arguments": { "bill_id": "<bill uuid>" } }
 
 // 3. show the card with your headline and summary
-{ "tool": "show_bill", "arguments": { "id": "<bill uuid>", "headline": "<plain text, at most 120 characters>", "summary": "<plain prose, at most 1500 characters>" } }
+{ "tool": "show_bill", "arguments": { "id": "<bill uuid>", "headline": "<plain text, at most 120 characters>", "summary": "<plain prose>" } }
 ```
 
 Always pass both `headline` and `summary`: a call without either fails with `-32602`. Write both
@@ -215,7 +215,7 @@ for a voter, from the document text:
 - `headline`: 1–120 characters of plain text saying what the bill does, e.g. "Bans buying soda and
   candy with SNAP benefits". No markdown, no trailing period needed. The card's title plate shows
   it first; tapping the plate toggles to the official title and back.
-- `summary`: 1–1500 characters of plain prose: what the bill does, who it affects, and where it
+- `summary`: plain prose, with no length cap: what the bill does, who it affects, and where it
   stands as recorded. The card labels it as written by the AI assistant.
 
 The card renders both as text, so markdown does not render. When the text could not be read, say so in
@@ -347,7 +347,7 @@ The reverse direction — every bill a legislator sponsored — goes through `se
 | A sitting legislator appears to have no votes | The chosen row may be a different legislator with the same name | Surface other rows with the same name as candidates and ask |
 | Right bill number, wrong bill | The same number exists in another session or state | Scope by `division_id` and `session_id` (or `session_name`); read each result's session |
 | Names missing from a vote breakdown | `get_votes` returns UUIDs only | Use `get_rollcall_breakdown`, whose `members` carry names and party |
-| `headline` or `summary` rejected by `show_bill` | Missing, empty, or too long: over 120 characters for `headline`, 1500 for `summary` | Always pass both, as plain text: a headline of at most 120 characters and a summary under 1500; when the text could not be read, say so in the summary |
+| `headline` or `summary` rejected by `show_bill` | Missing or empty, or a `headline` over 120 characters | Always pass both, as plain text: a headline of at most 120 characters and a non-empty summary; when the text could not be read, say so in the summary |
 | Asked for a legislator's chamber or district | `search_people` and `get_person` return neither | Use the `show_official` seat line; when it has none, say they are not recorded |
 | A count looks wrong | `search_bills` / `search_people` / `get_votes` / `get_person_votes` have no `total` | Report "at least N", or paginate to exhaustion |
 | A topic search finds nothing, or suspiciously little | `search_bills` full-text caps at 50 bills — nationwide unless scoped by `division_id` or a session — and uses 8 terms, silently | Try one distinctive word, scope by `division_id` and `session_id` / `session_name`; do not report absence from one query |

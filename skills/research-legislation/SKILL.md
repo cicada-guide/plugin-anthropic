@@ -175,7 +175,7 @@ render.
 - `headline`: plain text, 1-120 characters, saying what the bill does, e.g. "Bans buying soda and
   candy with SNAP benefits". No trailing period needed. The card's title plate shows it first;
   tapping the plate toggles to the official title and back.
-- `summary`: plain prose, 1-1,500 characters: what the bill does, who it affects, and where it
+- `summary`: plain prose, with no length cap: what the bill does, who it affects, and where it
   stands as recorded.
 - Never infer or claim passage or an outcome in either; give the status as recorded. Leave out
   anything the brief could not establish rather than guess. When the text could not be read, say so

@@ -194,7 +194,7 @@ does not render. Read the bill first, then write them from `get_latest_bill_docu
 - `headline`: 1–120 characters of plain text saying what the bill does, e.g. "Bans buying soda and
   candy with SNAP benefits". No trailing period needed. The card's title plate shows it first;
   tapping the plate toggles to the official title and back.
-- `summary`: 1–1500 characters of plain prose: what the bill does, who it affects, and where it
+- `summary`: plain prose, with no length cap: what the bill does, who it affects, and where it
   stands as recorded. The card labels it as written by the AI assistant.
 
 When the text could not be read, say so in the summary rather than guess, and write the headline
