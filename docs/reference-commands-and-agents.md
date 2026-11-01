@@ -147,7 +147,7 @@ establish and the date of the latest status. For a topic, it lists one line per 
 the query that ran, "at least N" when `has_more` is true, and an offer to brief one.
 
 **Card.** `show_bill` `{ id, headline, summary }`, with both always passed. The headline is plain
-text of 1-120 characters and the summary plain prose of 1-1,500 characters, both for a voter and
+text of 1-120 characters and the summary plain prose with no length cap, both for a voter and
 drawn from the text the brief read; when it could not be read, the summary says so. The
 card's title plate shows the headline first, with a tap to the official title. A topic list skips
 the card until the user picks a bill.
@@ -295,7 +295,7 @@ called a tool, so the caller keeps one analytics session. Then one brief in seve
    means it checked.
 7. **Card to show** — `show_bill {id: <bill uuid>, headline: <text>, summary: <text>,
    conversation_id: <value>}`, with a `headline` and `summary` the caller must pass: plain text for
-   a voter, no markdown, the headline at most 120 characters and the summary at most 1,500. When
+   a voter, no markdown, the headline at most 120 characters. When
    the text could not be read, the summary says so.
 
 **Edge cases.** Several plausible bills returns `AMBIGUOUS` with the candidates and stops. Nothing

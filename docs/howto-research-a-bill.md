@@ -167,8 +167,8 @@ does not re-list the card's rows in chat: it writes what the card does not show,
 bill does, context, and caveats.
 
 **The assistant headline and summary.** Claude writes both for a voter, from the text it read. The headline is one plain-text line of up to 120 characters saying what the bill does,
-such as "Bans buying soda and candy with SNAP benefits". The summary is plain prose of up to 1,500
-characters saying what the bill does, who it affects, and where it stands as recorded. Neither
+such as "Bans buying soda and candy with SNAP benefits". The summary is plain prose, with no length
+cap, saying what the bill does, who it affects, and where it stands as recorded. Neither
 claims passage. Every bill card carries both: when the text could not be read, the summary says so
 and the headline comes from the official title.
 

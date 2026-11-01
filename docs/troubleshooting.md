@@ -83,13 +83,13 @@ contract is in [project-settings.md](../skills/get-legislation/references/projec
 
 ## The bill card's headline or summary is rejected
 
-`show_bill` requires a `headline` of 1 to 120 characters and a `summary` of 1 to 1,500 characters.
-The server trims both first, so a value that is missing, empty, or only whitespace is rejected, and
-so is one over its limit. Either way the call fails with `MCP error -32602: Input validation
+`show_bill` requires a `headline` of 1 to 120 characters and a non-empty `summary`, which has no
+length cap. The server trims both first, so a value that is missing, empty, or only whitespace is
+rejected, and so is a headline over 120 characters. Either way the call fails with `MCP error -32602: Input validation
 error:` naming `headline` or `summary`, and no card appears.
 
-Ask Claude to read the bill, write a plain-language headline under 120 characters and a summary
-under 1,500, and show the bill again with both. When the bill's text could not be read, the
+Ask Claude to read the bill, write a plain-language headline under 120 characters and a summary,
+and show the bill again with both. When the bill's text could not be read, the
 summary says so. If calls without a headline or summary keep happening, update the plugin:
 versions through 0.8.0 treated `summary` as optional, and later ones before the `headline` change
 never passed a headline.

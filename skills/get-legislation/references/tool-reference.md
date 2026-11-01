@@ -298,7 +298,7 @@ It is a general rule, not this bill's deadline: never compute a date from it. Th
 | --- | --- | --- |
 | `id` | UUID, required | From `search_bills` or `get_bill` |
 | `headline` | string, 1-120 characters, required | Your short plain-language headline for a voter, shown first on the card's title plate. Trimmed; a missing or empty one fails with `-32602` |
-| `summary` | string, 1-1500 characters, required | Your plain-language summary for a voter, shown on the card. Trimmed; a missing or empty one fails with `-32602` |
+| `summary` | string, required, no length cap | Your plain-language summary for a voter, shown on the card. Trimmed; a missing or empty one fails with `-32602` |
 
 Like the other display tools, it has no `response_format`.
 

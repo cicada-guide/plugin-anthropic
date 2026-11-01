@@ -128,7 +128,7 @@ for a voter after reading the bill.
   the summary says so rather than guess, and the headline comes from the official title alone.
 - **What they never do:** infer passage or an outcome. The summary states the recorded status.
 - **Form:** plain text. The headline is 1-120 characters, with no trailing period needed; the
-  summary is 1-1,500 characters of prose. Both are trimmed, and an empty string is rejected. The
+  summary is prose with no length cap. Both are trimmed, and an empty string is rejected. The
   card renders both as text, so markdown does not render.
 
 Which entry points pass them: `get-legislation`, `research-legislation`, and `voting-record`

@@ -188,8 +188,7 @@ Report each roll call's own `counts`; never add counts across roll calls.
    - `headline`: 1-120 characters saying what the bill does, e.g. "Bans buying soda and candy
      with SNAP benefits". No trailing period needed. The card's title plate shows it first, with
      a tap to the official title.
-   - `summary`: 1-1,500 characters of prose on what it does, who it affects, and where it stands
-     as recorded.
+   - `summary`: prose on what it does, who it affects, and where it stands as recorded.
 
    When the text could not be read, say so in the summary rather than guess, and write the
    headline from the official title alone. Build the summary only from what the tools returned —

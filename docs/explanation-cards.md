@@ -90,7 +90,7 @@ seat, never to display it. That is the one exception, and the agent's prose says
 
 ## The assistant summary
 
-`show_bill` requires a `summary`: plain prose for a voter, 1 to 1,500 characters, saying what the
+`show_bill` requires a `summary`: plain prose for a voter, with no length cap, saying what the
 bill does, who it affects, and where it stands as recorded. The card puts it in a summary box, so
 a bill card never appears without one.
 
