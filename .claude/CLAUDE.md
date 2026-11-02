@@ -111,6 +111,12 @@ points, `tool-reference.md`, `workflows.md`, five `docs/` pages and the changelo
 does not cover these numbers, and `check-live-tools.mjs` compares parameter names, not lengths. When
 the server changes a limit, grep the repo for the number and update every copy.
 
+**A card URI bump lands here only after the server serves it.** When the server moves a card to a
+new `-vN` URI, update `references/tool-reference.md`, `docs/reference-cards.md` and the changelog,
+and merge that PR only once the live `tools/list` links the new URI. `check-live-tools.mjs` fails on
+a documented URI no live tool links, so an early merge turns the nightly run red. Older URIs keep
+resolving on the server, so installed copies that name them still get the current card.
+
 **Dataset rules are restated in every entry point, not referenced.** Subagents never load the
 `get-legislation` skill, and a slash command can run without it, so each skill and agent carries
 its own copy of whichever of these rules it relies on: `search_bills`' exact bill-number matching
