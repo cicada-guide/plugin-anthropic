@@ -256,7 +256,7 @@ node scripts/check-live-tools.mjs --endpoint <url>    # another server, such as 
 
 Without `--file`, it posts `initialize` (protocol revision `2025-06-18`), then
 `notifications/initialized`, then `tools/list`, each with a 30-second timeout and the User-Agent
-`cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin)`. It reads a JSON body or
+`cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin-anthropic)`. It reads a JSON body or
 a server-sent event stream. If `initialize` returns an `Mcp-Session-Id`, it sends it on the later
 requests and ends the session with a `DELETE`; the current server is stateless and issues none.
 
