@@ -36,7 +36,7 @@ The automated nightly CI workflow (`check-live-tools.mjs`) failed when querying 
 
 ## Solution
 1. **Added diagnostic response introspection:** Implemented a `describe(response)` helper that inspects diagnostic headers (`server`, `cf-ray`, `cf-mitigated`, `content-type`) and captures the first 300 characters of the response body.
-2. **Configured descriptive `User-Agent`:** Explicitly identified requests with `User-Agent: cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin)` to satisfy bot protection requirements and establish client provenance.
+2. **Configured descriptive `User-Agent`:** Explicitly identified requests with `User-Agent: cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin)` to satisfy bot protection requirements and establish client provenance. (The URL names the repository's name at the time. It became `cicada-guide/plugin-anthropic` on 2026-11-02; `scripts/check-live-tools.mjs` holds the current string.)
 3. **Added `--endpoint <url>` override flag:** Allowed redirection of `check-live-tools.mjs` to local mock servers or staging environments for deterministic testing without relying exclusively on the live endpoint.
 
 ```javascript

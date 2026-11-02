@@ -57,7 +57,7 @@ async function describe(response) {
 }
 
 const headers = {
-  "User-Agent": "cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin)",
+  "User-Agent": "cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin-anthropic)",
   "Content-Type": "application/json",
   Accept: "application/json, text/event-stream",
   "MCP-Protocol-Version": PROTOCOL_VERSION,

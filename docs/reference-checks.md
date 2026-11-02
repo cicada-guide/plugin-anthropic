@@ -82,6 +82,13 @@ and `metadata.version` and `plugins[0].version` in `.claude-plugin/marketplace.j
   and a transition period, and then the `ENDPOINT` constant in the script changes in the same
   commit.
 
+**This page quotes the live-tools User-Agent.** The `"User-Agent"` header value in
+`scripts/check-live-tools.mjs` must appear, word for word, in this page's
+[`check-live-tools.mjs`](#check-live-toolsmjs) section.
+- Message: `docs/reference-checks.md: does not quote the live-tools User-Agent "<value>"`, or
+  `scripts/check-live-tools.mjs: no "User-Agent" header found` when the script sets none
+- Fix: update the quoted string here to match the script, in the same commit as the script.
+
 ### Frontmatter
 
 Applies to entry points.
@@ -256,9 +263,10 @@ node scripts/check-live-tools.mjs --endpoint <url>    # another server, such as 
 
 Without `--file`, it posts `initialize` (protocol revision `2025-06-18`), then
 `notifications/initialized`, then `tools/list`, each with a 30-second timeout and the User-Agent
-`cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin)`. It reads a JSON body or
-a server-sent event stream. If `initialize` returns an `Mcp-Session-Id`, it sends it on the later
-requests and ends the session with a `DELETE`; the current server is stateless and issues none.
+`cicada-guide-plugin-live-tools (+https://github.com/cicada-guide/plugin-anthropic)`. It reads a
+JSON body or a server-sent event stream. If `initialize` returns an `Mcp-Session-Id`, it sends it on
+the later requests and ends the session with a `DELETE`; the current server is stateless and issues
+none.
 
 With `--file`, the path is relative to your current directory. The file must be JSON: a JSON-RPC
 response `{"result": {"tools": [...]}}` or a bare `{"tools": [...]}`. Save one with the command in
