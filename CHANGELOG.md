@@ -13,7 +13,7 @@ plugin's guidance, including updates made to match what the server returns.
 ### Changed
 
 - Card URI follows the server's new shell: `bill-results-v19`. Each bill result names its session
-  after its state, and its path to becoming law as a progress track, both as the bill card does.
+  after its state and shows its path to becoming law as a progress track, both as the bill card does.
 
 ## [0.11.7] - 2026-11-02
 
