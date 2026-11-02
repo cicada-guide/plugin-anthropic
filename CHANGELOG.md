@@ -10,6 +10,12 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Both subagents' system prompts are shorter, each now under 10,000 characters, with repeated
+  explanations removed. Every restated dataset rule, the output formats, and the edge cases are
+  unchanged.
+
 ## [0.11.10] - 2026-11-02
 
 ### Changed
