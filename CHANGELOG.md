@@ -10,6 +10,15 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Card URI follows the server's new shell: `legislator-record-v23`. The record card fills its session
+  picker from one `get_person_votes` call instead of one per session of the state, so opening a
+  record costs two tool calls rather than about 27 and no longer runs into the 60-a-minute limit.
+- `get_person_votes` documents `include_sessions`, which returns `sessions`, every session the
+  legislator has a recorded vote in (`null` under a category, session or date filter, or when the
+  lookup failed).
+
 ## [0.11.8] - 2026-11-02
 
 ### Changed
