@@ -159,7 +159,7 @@ claude plugin eval . --trust-plugin --allow-real-servers \
   that note alone.
 - **`--allow-real-servers`** runs the cases against the live public server, since there are no
   mocks. Nothing in them writes, but they count toward the 60-a-minute rate limit.
-- **Cost.** Every run and every `llm` grader is a model call on your account. The full suite is 36
+- **Cost.** Every run and every `llm` grader is a model call on your account. The full suite is 42
   runs; `--ablation none` skips the no-plugin baseline and halves that.
 
 Read the `WITH` column against `--threshold`. Without the plugin there are no cicada-guide tools,
@@ -170,8 +170,18 @@ tools did not return. `text-unavailable` asks about Hawaii HB 420 (2025), whose 
 will not serve to an automated request. It passes a reply that says the text could not be read,
 says why, points to the link, and adds nothing beyond the title. If Hawaii's site starts serving the
 page, the reply will describe the bill and this case will fail; choose another bill whose
-`get_latest_bill_document` returns `text_unavailable`. Results go to `evals/results/`, which
-is ignored. The [plugin eval docs](https://code.claude.com/docs/en/plugin-evals) cover the case
+`get_latest_bill_document` returns `text_unavailable`.
+
+`legislator-disambiguation` asks for the `legislator-disambiguator` subagent by name, because a
+question that gives a party often leaves only two candidates, which Claude settles itself without
+dispatching the agent. It asks for the Democratic state senator named Hatcher: Kirk Hatcher (D,
+Alabama Senate District 26) is the only fit, against Tom Hatcher (R, Tennessee Senate) and Ragen
+Hatcher (D, Indiana House). The reply must name him from his recorded seat, not from contact links
+or email domains, and no `context` string may carry a name. `dispatches-disambiguator` shows
+whether the agent ran; it is marked `with-only`, so it is not scored. If a Hatcher's recorded seat
+changes, update the grader text to match.
+
+Results go to `evals/results/`, which is ignored. The [plugin eval docs](https://code.claude.com/docs/en/plugin-evals) cover the case
 and grader format.
 
 ### 6. Check the cards in a host that renders them

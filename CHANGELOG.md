@@ -10,6 +10,13 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Added
+
+- A `legislator-disambiguation` eval case, the first to dispatch `legislator-disambiguator`: it
+  must resolve the Democratic state senator named Hatcher to Kirk Hatcher (Alabama Senate District
+  26) from his recorded seat, against a Tennessee senator and an Indiana representative of the
+  same surname, with no name in any `context` string.
+
 ### Changed
 
 - Both subagents' system prompts are shorter, each now under 10,000 characters, with repeated
