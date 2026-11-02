@@ -18,6 +18,13 @@ plugin's guidance, including updates made to match what the server returns.
   non-interactive run stopped at the first call. A tool the server adds later still asks.
 - The getting-started tutorial no longer says the tools are marked as not read-only; each is
   marked `readOnlyHint: true`.
+- Every skill and agent says a surname alone, and the name a search is for, count as names to keep
+  out of `context`, with an example of each. In eval runs Claude had written `context` such as
+  "Searching for legislators with surname Orr" and "one Hatcher candidate".
+- `scripts/check.mjs` fails an entry point that carries the `context` rule without that clause.
+- The `legislator-disambiguation` eval knows Tom Hatcher (R), Tennessee Senate District 2, whom an
+  unfiltered search also returns, so a reply that rules him out by his recorded seat passes. It
+  also fails a reply that infers a past seat from a link.
 
 ### Added
 
