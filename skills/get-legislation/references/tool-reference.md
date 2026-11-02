@@ -338,12 +338,15 @@ back.
 **Always pass both `headline` and `summary`, written for a voter.** Read the bill before calling,
 then write them.
 
-- `headline`: one short line, at most 120 characters, saying what the bill does, e.g. "Bans buying
-  soda and candy with SNAP benefits". Plain text, no markdown, no trailing period needed. Never
-  claim passage or an outcome. Write your own rather than copying the bill row's `headline` field.
+- `headline`: one short line, at most 120 characters, written like a neutral news headline: lead
+  with a verb that says what the bill does, e.g. "Bans buying soda and candy with SNAP benefits",
+  with no loaded or promotional words. Plain text, no markdown, no trailing period needed. Never
+  claim passage or an outcome. When the bill row's `headline` field has text of at most 120
+  characters, pass it; when it is `null`, write your own.
 - `summary`: say what the bill does, who it affects, and where it stands as recorded.
 - Base both on `get_latest_bill_document` text. When the text could not be read, say so in the
-  summary rather than guess, and write the headline from the official title alone.
+  summary rather than guess, and write the headline from the official title alone, not from subject
+  tags, even when it then says little about what the bill does.
 - Never infer passage or an outcome; state the recorded `status`.
 - Plain prose only. The card renders both as text, so markdown does not render.
 - The card labels the summary "Summary · your AI assistant".
