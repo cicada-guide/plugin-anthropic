@@ -16,7 +16,7 @@ there rather than repeating them. Why the plugin ends answers with a card is in
 | --- | --- | --- | --- | --- |
 | `search_bills` | Bill results | `ui://cicada-guide/bill-results-v19.html` | More pages of the same search, once every loaded result is shown | The full result list, as text or JSON, as usual |
 | `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v23.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
-| `show_official` | Contact card | `ui://cicada-guide/official-card-v14.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
+| `show_official` | Contact card | `ui://cicada-guide/official-card-v15.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
 | `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v23.html` | Vote history and sessions (`get_person_votes`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
 
 The URIs are the ones the live `tools/list` advertises in each tool's `_meta.ui.resourceUri`. The
@@ -184,7 +184,8 @@ Parameter: `id` (required), from `search_people` after identity is resolved —
   location toggle on mobile, where hosts grant none; when the viewer turns location on, the map places them and, below the map, reads "You're in this
   district." or "You're not in this district." until dismissed; from outside, a dashed line runs to
   the nearest edge. The location stays in the card: it never reaches the server or the model;
-- a Recent votes panel listing the last recorded votes. The card shows no vote tally; how a
+- a Recent votes panel listing the last recorded votes, each with its date, the bill and the roll
+  call's motion, so several votes on one bill read apart. The card shows no vote tally; how a
   legislator voted is the record's job.
 
 It does not show the term or other seats held; the text and `structuredContent` do.

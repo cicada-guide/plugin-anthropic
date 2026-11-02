@@ -10,6 +10,12 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Card URI follows the server's new shell: `official-card-v15`. Each vote in the contact card's
+  Recent votes panel names its roll call's motion, so several votes on one bill read apart; a
+  Texas record vote number (`RV#158`) shows beside the date.
+
 ## [0.11.9] - 2026-11-02
 
 ### Changed
