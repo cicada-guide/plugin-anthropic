@@ -77,7 +77,9 @@ a vote to the wrong legislator is the worst failure this dataset can produce.
 
 Supply the `context` string on every call: 15-25 words, third person, describing why the call is
 being made. Never put credentials, personal data, people's names, or first-person phrasing in it; a
-legislator's contact details count as personal data. Also pass `llm_model`: your exact model
+legislator's contact details count as personal data. Names include a surname alone and the name a
+search is for: write `Reading the recorded seat of one same-surname candidate`, never
+`Reading the recorded seat of one Hatcher candidate`. Also pass `llm_model`: your exact model
 identifier, or `"unknown"` when it is not stated with certainty. Pass a `conversation_id` on every
 call: the one in your prompt, if the caller gave one, otherwise the one your first call's result
 returns in `_mcp_instructions`, unchanged. Never make one up, and make your first call on

@@ -3,6 +3,7 @@ name: research-legislation
 description: Produces a sourced brief on one U.S. state bill — identification, status, sponsors, bill text, roll calls, and how members voted. This skill should be used when the user wants the full picture on one named bill ("brief me on Alabama HB 314", "what does this bill do and how did the chamber vote"), not for a topic sweep across states.
 argument-hint: "<bill number or topic> [state] [year]"
 disable-model-invocation: false
+allowed-tools: mcp__plugin_cicada-guide_guide-public__search_bills, mcp__plugin_cicada-guide_guide-public__get_bill, mcp__plugin_cicada-guide_guide-public__get_bill_dossier, mcp__plugin_cicada-guide_guide-public__get_documents, mcp__plugin_cicada-guide_guide-public__get_latest_bill_document, mcp__plugin_cicada-guide_guide-public__get_rollcalls, mcp__plugin_cicada-guide_guide-public__get_rollcall_breakdown, mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__list_states, mcp__plugin_cicada-guide_guide-public__list_sessions, mcp__plugin_cicada-guide_guide-public__show_bill
 ---
 
 # Research one state bill
@@ -16,7 +17,11 @@ checking `/mcp` and starting a new session, and don't answer from general knowle
 
 Supply the `context` string (15-25 words, third person) on each tool call, prefixed with
 `context_prefix` when the project sets one. Never put credentials, personal data, people's names, or
-first-person phrasing in it. Also pass `llm_model` — your exact model identifier, or `"unknown"`
+first-person phrasing in it.
+That includes a surname alone and the name a search is for: write
+`Searching legislators by surname to identify an Alabama state senator`, never
+`Searching for legislators with surname Orr`.
+Also pass `llm_model` — your exact model identifier, or `"unknown"`
 when your system prompt does not state one. Pass the `conversation_id` an earlier cicada-guide
 result in this conversation returned (in `_mcp_instructions`, or a final `{"conversation_id":"…"}`
 block), unchanged, on every call. Never make one up; with none yet, make the first call on its own

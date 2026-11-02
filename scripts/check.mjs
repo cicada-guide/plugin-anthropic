@@ -125,6 +125,16 @@ for (const file of entryPoints) {
   if (fields.name !== expected) fail(file, 2, `frontmatter name is "${fields.name}", expected "${expected}"`);
   if (!fields.description) fail(file, 3, "frontmatter description is missing or empty");
   if (fields.descriptionWraps) fail(file, 3, "frontmatter description must stay on one line");
+  // A skill pre-approves tools by name, so it may name only this server's tools, one by one: a
+  // wildcard would also approve any tool the server adds later, without review.
+  if (file.startsWith("skills/") && fields["allowed-tools"] !== undefined) {
+    const prefix = `mcp__plugin_${PLUGIN_NAME}_${SERVER_KEY}__`;
+    for (const tool of fields["allowed-tools"].split(",").map((t) => t.trim()).filter(Boolean)) {
+      if (!tool.startsWith(prefix) || !/^[a-z_]+$/.test(tool.slice(prefix.length))) {
+        fail(file, 0, `allowed-tools entry ${tool} is not one named ${SERVER_KEY} tool (${prefix}<tool>)`);
+      }
+    }
+  }
   // Agents read outside text autonomously, so they get the server's tools and Read, nothing that
   // runs commands or writes files. Omitting `tools:` would inherit every tool the session has.
   if (file.startsWith("agents/")) {
@@ -275,7 +285,8 @@ const REQUIRED = [
   {
     rule: "keep credentials, personal data and names out of `context`",
     when: (t) => t.includes("`context`"),
-    needs: [/never put credentials, personal data, people's names, or first-person phrasing in it/i],
+    // A surname used as the search subject ("legislators with surname Orr") read as no name at all.
+    needs: [/never put credentials, personal data, people's names, or first-person phrasing in it/i, /a surname alone/i],
   },
   {
     // Every entry point calls tools, and only an echoed value groups its calls into one session.

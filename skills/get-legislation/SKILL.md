@@ -90,7 +90,11 @@ client with "has not been loaded yet" and never reaches the server; load it, the
 
 Every tool's schema declares a required `context` string: 15-25 words, third person, saying why the
 call is being made. It feeds the server's intent analytics. Supply it, and never put credentials,
-personal data, people's names, or first-person phrasing in it. The analytics wrapper adds it to each
+personal data, people's names, or first-person phrasing in it.
+That includes a surname alone and the name a search is for: write
+`Searching legislators by surname to identify an Alabama state senator`, never
+`Searching for legislators with surname Orr`.
+The analytics wrapper adds it to each
 schema and strips it before validation, so a call without it still succeeds — and if a call ever
 returns `Unrecognized key: "context"`, the wrapper is gone: drop it from subsequent calls and carry
 on.

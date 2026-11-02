@@ -3,6 +3,7 @@ name: contact-legislator
 description: Shows who one U.S. state legislator is and how to reach them — office, chamber, district, party, and the email, phone, and website on record — as a contact card. This skill should be used when the user asks how to contact a named state legislator or who someone is ("how do I reach Senator Reynolds", "show me Rep. Ortiz's contact info"), not for how they voted.
 argument-hint: "<name> [state]"
 disable-model-invocation: false
+allowed-tools: mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__get_person_votes, mcp__plugin_cicada-guide_guide-public__list_states, mcp__plugin_cicada-guide_guide-public__show_official
 ---
 
 # Contact a state legislator
@@ -23,7 +24,11 @@ checking `/mcp` and starting a new session, and don't answer from general knowle
 
 Supply the `context` string (15-25 words, third person) on each tool call, prefixed with
 `context_prefix` when the project sets one. Never put credentials, personal data, people's names, or
-first-person phrasing in it. Also pass `llm_model` — your exact model identifier, or `"unknown"`
+first-person phrasing in it.
+That includes a surname alone and the name a search is for: write
+`Searching legislators by surname to identify an Alabama state senator`, never
+`Searching for legislators with surname Orr`.
+Also pass `llm_model` — your exact model identifier, or `"unknown"`
 when your system prompt does not state one. Pass the `conversation_id` an earlier cicada-guide
 result in this conversation returned (in `_mcp_instructions`, or a final `{"conversation_id":"…"}`
 block), unchanged, on every call. Never make one up; with none yet, make the first call on its own

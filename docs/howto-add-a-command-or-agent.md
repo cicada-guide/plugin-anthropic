@@ -33,7 +33,8 @@ No manifest lists the skills one by one. The Claude plugin loader picks up the n
 
 ### 2. Write the frontmatter
 
-The existing command skills use four keys. `contact-legislator`'s:
+The existing command skills use five keys. `contact-legislator`'s (its `allowed-tools` line
+shortened here):
 
 ```yaml
 ---
@@ -41,6 +42,7 @@ name: contact-legislator
 description: Shows who one U.S. state legislator is and how to reach them — office, chamber, district, party, and the email, phone, and website on record — as a contact card. This skill should be used when the user asks how to contact a named state legislator or who someone is ("how do I reach Senator Reynolds", "show me Rep. Ortiz's contact info"), not for how they voted.
 argument-hint: "<name> [state]"
 disable-model-invocation: false
+allowed-tools: mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__show_official
 ---
 ```
 
@@ -50,6 +52,7 @@ disable-model-invocation: false
 | `description` | One line, however long. `check.mjs` fails if it wraps onto a second line, so no YAML folded or multi-line strings. Say what it produces, then "This skill should be used when..." with quoted example requests, then what it is not for |
 | `argument-hint` | Quoted. `<required>` and `[optional]` arguments, the same string you quote in README and the always-on skill |
 | `disable-model-invocation` | `false` in every existing command, so Claude can reach for the workflow on its own as well as when the user types it. `true` would make it user-invoked only |
+| `allowed-tools` | One line. The `guide-public` tools the body tells Claude to call, each as `mcp__plugin_cicada-guide_guide-public__<tool>`, comma-separated. They run without a permission prompt. No wildcard and no other tool: `check.mjs` fails otherwise, and `check-live-tools.mjs` fails on a name the server lacks. Leave out a tool the body only warns against |
 
 The file must start with `---` on its first line and use LF line endings; `check.mjs` reads the
 frontmatter with a pattern that expects both. It recognizes lowercase, hyphenated keys only.

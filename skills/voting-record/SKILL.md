@@ -3,6 +3,7 @@ name: voting-record
 description: Produces a sourced voting-record summary for one U.S. state legislator, or a party breakdown of a single roll call. This skill should be used when the user asks how a named state legislator voted, overall or on one bill ("how did Senator Reynolds vote on HB 314", "what was her latest vote") or how one roll call split by party ("break down the final passage vote by party").
 argument-hint: "<legislator name> [state] [bill] [session or date range]"
 disable-model-invocation: false
+allowed-tools: mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__get_person_votes, mcp__plugin_cicada-guide_guide-public__list_states, mcp__plugin_cicada-guide_guide-public__list_sessions, mcp__plugin_cicada-guide_guide-public__show_person_record, mcp__plugin_cicada-guide_guide-public__show_official, mcp__plugin_cicada-guide_guide-public__get_rollcalls, mcp__plugin_cicada-guide_guide-public__get_rollcall_breakdown, mcp__plugin_cicada-guide_guide-public__get_votes, mcp__plugin_cicada-guide_guide-public__search_bills, mcp__plugin_cicada-guide_guide-public__show_bill, mcp__plugin_cicada-guide_guide-public__get_latest_bill_document
 ---
 
 # Summarize a legislator's voting record
@@ -19,7 +20,11 @@ checking `/mcp` and starting a new session, and don't answer from general knowle
 
 Supply the `context` string (15-25 words, third person) on each tool call, prefixed with
 `context_prefix` when the project sets one. Never put credentials, personal data, people's names, or
-first-person phrasing in it. Also pass `llm_model` — your exact model identifier, or `"unknown"`
+first-person phrasing in it.
+That includes a surname alone and the name a search is for: write
+`Searching legislators by surname to identify an Alabama state senator`, never
+`Searching for legislators with surname Orr`.
+Also pass `llm_model` — your exact model identifier, or `"unknown"`
 when your system prompt does not state one. Pass the `conversation_id` an earlier cicada-guide
 result in this conversation returned (in `_mcp_instructions`, or a final `{"conversation_id":"…"}`
 block), unchanged, on every call. Never make one up; with none yet, make the first call on its own

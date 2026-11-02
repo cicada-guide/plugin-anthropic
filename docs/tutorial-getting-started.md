@@ -82,9 +82,9 @@ Ask in plain language, naming the state and the session:
 What does Alabama HB 591 from the 2026 Regular Session do?
 ```
 
-Claude may ask for approval before each tool runs. The tools only read legislative data, so you
-can allow them for the session. (They are marked as not read-only only because every call records
-an analytics event on the server.)
+Claude may ask for approval before each tool runs. The tools only read legislative data, and
+each is marked read-only, so you can allow them for the session. The slash commands pre-approve the
+tools they call and do not ask.
 
 Behind the scenes Claude resolves Alabama to its jurisdiction, searches for the bill number within
 it, and reads the bill's record and its newest document. Naming the state matters: the same bill

@@ -100,6 +100,8 @@ complete, or return a request for session clarification. Do not silently choose 
 
 Supply the `context` string on every call: 15-25 words, third person, describing why the call is
 being made. Never put credentials, personal data, people's names, or first-person phrasing in it.
+That includes a surname alone, such as a sponsor's: write `Resolving the bill's sponsor ids to names and
+parties`, never `Looking up sponsor Orr`.
 Also pass `llm_model`: your exact model identifier, or `"unknown"` when it is not stated with
 certainty. Pass a `conversation_id` on every call: the one in your prompt, if the caller gave one,
 otherwise the one your first call's result returns in `_mcp_instructions`, unchanged. Never
