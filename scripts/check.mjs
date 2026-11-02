@@ -105,6 +105,15 @@ if (mcp) {
   }
 }
 
+// The checks reference quotes the live-tools User-Agent, so the two change together.
+{
+  const ua = read("scripts/check-live-tools.mjs").match(/"User-Agent":\s*"([^"]+)"/)?.[1];
+  if (!ua) fail("scripts/check-live-tools.mjs", 0, 'no "User-Agent" header found');
+  else if (!flat(read("docs/reference-checks.md")).includes(ua)) {
+    fail("docs/reference-checks.md", 0, `does not quote the live-tools User-Agent "${ua}"`);
+  }
+}
+
 // ── Frontmatter ──────────────────────────────────────────────────────────────────────────────────
 
 for (const file of entryPoints) {
