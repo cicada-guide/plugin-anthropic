@@ -155,6 +155,6 @@ For everything each card shows, see [Cards reference](reference-cards.md).
 
 - Name the state, and a session or date range. A narrower window is faster and easier to read.
 - Long histories come in pages fitted under 25,000 characters; Claude pages on before tallying.
-- Calls are rate limited to 60 a minute. Past that a call fails with `Rate limit exceeded. Retry in
+- Calls are rate limited to 600 a minute. Past that a call fails with `Rate limit exceeded. Retry in
   60 seconds.` Claude tells you and resumes after a minute.
 - To reach the legislator instead, see [Contact a legislator](howto-contact-a-legislator.md).

@@ -225,7 +225,7 @@ response ending in that hint was cut, so say what it lacks.
 An `offset` past the end of `get_rollcalls` returns `Error: Offset past end.` or `No roll calls at
 offset <n>; bill <id> has <total>.` The list ended; page only while `has_more` is true.
 
-Calls are rate limited to 60 a minute. Past that a call fails with `Rate limit exceeded. Retry in 60
+Calls are rate limited to 600 a minute. Past that a call fails with `Rate limit exceeded. Retry in 60
 seconds.` Tell the user the rate limit was hit and that you will resume after a minute. Wait a full
 minute before the next call rather than retrying straight away.
 

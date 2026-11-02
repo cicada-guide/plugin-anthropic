@@ -226,7 +226,7 @@ const CANONICAL = [
   { pattern: /at most (\d+) distinct bill/g, value: "50", rule: "search_bills full-text bill cap" },
   { pattern: /first (\d+) terms/g, value: "8", rule: "search_bills ILIKE term cap" },
   { pattern: /(\d+) document rows/g, value: "200", rule: "search_bills full-text row cap" },
-  { pattern: /rate limited to (\d+) a minute/g, value: "60", rule: "rate limit" },
+  { pattern: /rate limited to (\d+) a minute/g, value: "600", rule: "rate limit" },
   { pattern: /Retry in (\d+) seconds/g, value: "60", rule: "rate-limit retry window" },
   { pattern: /batches of (?:up to |at most )(\d+)/g, value: "100", rule: "search_people ids batch cap" },
   // `\d[\d,]*\d` so a sentence-ending comma ("at 25,000, so ...") is not read as part of the number.
@@ -257,7 +257,7 @@ const REQUIRED = [
   {
     rule: "rate limit",
     when: () => true,
-    needs: [/rate limited to 60 a minute/, /Retry in 60 seconds/],
+    needs: [/rate limited to 600 a minute/, /Retry in 60 seconds/],
   },
   {
     rule: "never add counts across roll calls",

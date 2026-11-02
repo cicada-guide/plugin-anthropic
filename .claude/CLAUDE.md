@@ -43,7 +43,7 @@ claude --plugin-dir /path/to/plugin
 ```
 
 `/mcp` should list `guide-public` as connected, and `/help` should show the plugin's slash
-commands. `curl https://public.cicada.guide/health` reports server health.
+commands. `curl https://anthropic.cicada.guide/health` reports server health.
 
 After changing a skill or agent, also run the eval suite in `evals/` with `claude plugin eval`,
 passing `--judge-model sonnet`: the small default judge has failed correct answers. The command
@@ -122,7 +122,7 @@ resolving on the server, so installed copies that name them still get the curren
 `get-legislation` skill, and a slash command can run without it, so each skill and agent carries
 its own copy of whichever of these rules it relies on: `search_bills`' exact bill-number matching
 and query caps, `get_rollcalls` including vote-linked roll calls, never adding counts across roll
-calls, the 100-id `search_people` batch cap, the two error shapes, the 60-a-minute rate limit,
+calls, the 100-id `search_people` batch cap, the two error shapes, the 600-a-minute rate limit,
 25,000-character truncation, keeping credentials, personal data and names out of `context`,
 passing back the `conversation_id` an earlier result returned and never making one up, treating
 `governor_action` as the state's general rule and never computing a date from it, and loading a

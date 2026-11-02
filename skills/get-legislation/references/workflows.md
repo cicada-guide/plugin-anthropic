@@ -358,7 +358,7 @@ The reverse direction — every bill a legislator sponsored — goes through `se
 | A topic search finds nothing, or suspiciously little | `search_bills` full-text caps at 50 bills — nationwide unless scoped by `division_id` or a session — and uses 8 terms, silently | Try one distinctive word, scope by `division_id` and `session_id` / `session_name`; do not report absence from one query |
 | A topic search returns many off-topic bills | Each `query` word is matched separately and ORed | Use one distinctive word rather than a phrase |
 | `ids` rejected on a big batch | `search_people` `ids` caps at 100 | Chunk into batches of 100 |
-| `Rate limit exceeded. Retry in 60 seconds.` | More than 60 calls in a minute | Tell the user the limit was hit and that you will resume after a minute; wait a full minute, then continue at a slower pace |
+| `Rate limit exceeded. Retry in 60 seconds.` | More than 600 calls in a minute | Tell the user the limit was hit and that you will resume after a minute; wait a full minute, then continue at a slower pace |
 | Fewer items than `limit`, with `_Showing N of the requested M to stay under the 25,000-character limit` | The page was fitted under 25,000 characters | Nothing was lost: follow `next_offset` / `next_cursor` while `has_more` is true |
 | Response ends in a truncation hint | 25,000-character truncation of a single oversized item or a tool that returns no list | That response was cut; say what it lacks. For bill text, use `text_offset` instead |
 | `_Characters X–Y of N. Continue with text_offset=Y._` | `get_latest_bill_document` returned one part of a long text | Pass `next_text_offset` as `text_offset` until it is `null` |

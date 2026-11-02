@@ -108,5 +108,5 @@ What happens then:
   which ends with the legislator record card. See
   [Check a voting record](howto-check-a-voting-record.md).
 - For everything the contact card shows and sends back, see [Cards reference](reference-cards.md).
-- Calls are rate limited to 60 a minute. Past that a call fails with `Rate limit exceeded. Retry in
+- Calls are rate limited to 600 a minute. Past that a call fails with `Rate limit exceeded. Retry in
   60 seconds.` Claude tells you and resumes after a minute.

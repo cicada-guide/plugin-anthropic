@@ -90,7 +90,7 @@ never copy file contents into a tool argument.
 
 ## Quality standards
 
-- Calls are rate limited to 60 a minute. Past that a call fails with `Rate limit exceeded. Retry
+- Calls are rate limited to 600 a minute. Past that a call fails with `Rate limit exceeded. Retry
   in 60 seconds.` Wait a full minute before the next call rather than retrying straight away, and
   pace long runs of calls. When the limit is hit, say so in your result, including that calls
   resumed after a minute, so the caller can tell the user.

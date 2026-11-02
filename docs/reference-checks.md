@@ -199,7 +199,7 @@ one of these phrases appears, its number must be the server's value:
 | `search_bills full-text bill cap` | "at most N distinct bill" | 50 |
 | `search_bills ILIKE term cap` | "first N terms" | 8 |
 | `search_bills full-text row cap` | "N document rows" | 200 |
-| `rate limit` | "rate limited to N a minute" | 60 |
+| `rate limit` | "rate limited to N a minute" | 600 |
 | `rate-limit retry window` | "Retry in N seconds" | 60 |
 | `search_people ids batch cap` | "batches of up to N" or "batches of at most N" | 100 |
 | `truncation` | "truncat... at N", "N-character truncation", "N character truncation", or "truncated response (N characters)" | 25,000 |
@@ -219,7 +219,7 @@ file; the file then needs every listed phrase.
 
 | Rule name in the message | Trigger | Needs |
 | --- | --- | --- |
-| `rate limit` | Always | "rate limited to 60 a minute" and "Retry in 60 seconds" |
+| `rate limit` | Always | "rate limited to 600 a minute" and "Retry in 60 seconds" |
 | `never add counts across roll calls` | `` `get_rollcalls` `` in backticks | "never add counts across roll calls", any case |
 | `search_people ids batch cap of 100` | `` `search_people` `` and `` `ids` `` in backticks, in either order, with no full stop between | "batches of up to 100", "batches of at most 100", "1-100", or "up to 100" |
 | `search_bills query caps` | `` `search_bills` `` and `` `query` `` in backticks, anywhere in the file | "at most 50 distinct bill" and "first 8 terms" |
@@ -269,7 +269,7 @@ prefix.
 
 | Message | Cause | Fix |
 | --- | --- | --- |
-| `Could not read tools/list from <endpoint or file>: <reason>` | The fetch failed, timed out, or returned an HTTP error, or the file is missing or not JSON | Read the reason. `initialize returned HTTP <status>` or `tools/list returned HTTP <status>` includes the `server`, `cf-ray`, `cf-mitigated`, and `content-type` headers and the first 300 characters of the body, to tell whether the Worker or something in front of it answered. `no response with id 2 among N event(s)` means the stream carried no answer. Check `curl https://public.cicada.guide/health` |
+| `Could not read tools/list from <endpoint or file>: <reason>` | The fetch failed, timed out, or returned an HTTP error, or the file is missing or not JSON | Read the reason. `initialize returned HTTP <status>` or `tools/list returned HTTP <status>` includes the `server`, `cf-ray`, `cf-mitigated`, and `content-type` headers and the first 300 characters of the body, to tell whether the Worker or something in front of it answered. `no response with id 2 among N event(s)` means the stream carried no answer. Check `curl https://anthropic.cicada.guide/health` |
 | `tools/list returned JSON-RPC error <code>: <message>` | The server answered with an error, not a list | Report it; the server is not this repo's code |
 | `tools/list returned <N> tool(s) with a malformed name` | A name is not 1-64 letters, digits, `_`, or `-` | Report it. Names are printed into the Actions log, so anything else is refused outright |
 | `tools/list returned no tools` | An empty list | Report it |

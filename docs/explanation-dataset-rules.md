@@ -108,7 +108,7 @@ means the argument set is wrong, so retrying with the same arguments fails again
 
 ### The rate limit
 
-Calls are rate limited to 60 a minute per IP address. Past that a call fails with
+Calls are rate limited to 600 a minute per IP address. Past that a call fails with
 `Rate limit exceeded. Retry in 60 seconds.` A model that retries straight away spends the next
 window too, and a subagent sweeping several states can fail every remaining call. The rule makes
 the model tell the user, wait a full minute, and pace long sweeps.
