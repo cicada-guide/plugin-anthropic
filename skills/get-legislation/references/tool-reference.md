@@ -519,7 +519,7 @@ for the rest, and never supply one from elsewhere.
 `id` (UUID, required), from `search_people` after resolving identity. It has no `response_format`.
 
 In a host that supports MCP Apps it renders a legislator record via
-`ui://cicada-guide/legislator-record-v22.html`: the seat (no contact buttons), the vote history
+`ui://cicada-guide/legislator-record-v23.html`: the seat (no contact buttons), the vote history
 with session, vote, and subject filters, and the bills they sponsored. The card loads the votes
 through `get_person_votes` itself; its session picker lists only sessions with the legislator's
 votes, newest first. Its tally shows the legislator's whole recorded record when the card could
@@ -636,6 +636,7 @@ already joined.
 | `limit` | integer 1-100 | |
 | `cursor` | string, max 512 | Opaque `next_cursor` from the previous response, passed back exactly |
 | `include_totals` | boolean, default `false` | Also return `totals`, the legislator's recorded votes per category across all sessions |
+| `include_sessions` | boolean, default `false` | Also return `sessions`, every session the legislator has a recorded vote in, newest first |
 
 The envelope adds `retrieved_at`, `source_freshness`, `ordering`, and `active_filters` to `count`,
 `has_more`, `next_cursor`, and `items`. Each item is nested (verified 2026-09-24):
@@ -655,6 +656,11 @@ The envelope adds `retrieved_at`, `source_freshness`, `ordering`, and `active_fi
   `session_id`, `start_date` or `end_date` narrows the list, when the legislator has no recorded
   votes, or when the count could not be read; the markdown then says the total is not available for
   the request. Use it, not a sum of the pages read, to state how many votes are on record.
+- **`sessions` is present only with `include_sessions: true`.** Each is `{ id, name, convenes,
+  adjourns }`, newest first, with `sessions_complete` false when the lookup stopped before reaching the
+  oldest session. It is `null` under the same filters as `totals`, or when the lookup failed. Votes with
+  no bill, or a bill with no session, belong to no session and are not counted toward one. Use it
+  to say which sessions a legislator voted in, instead of one `session_id` call per session.
 - **`bill.subjects` is in JSON only.** It is a string array, `[]` when none is recorded, and it
   appears in `structuredContent` and `response_format: "json"` but not in the markdown text. Pass
   `response_format: "json"` to group or filter a legislator's votes by subject.
