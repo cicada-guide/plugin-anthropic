@@ -200,13 +200,16 @@ Report each roll call's own `counts`; never add counts across roll calls.
 6. Call `show_bill` with the bill's `id`, a `headline`, and a `summary`, without asking. Always
    pass both: a call without either fails with -32602. Read the bill's text with
    `get_latest_bill_document`, then write for a voter, in plain text with no markdown:
-   - `headline`: 1-120 characters saying what the bill does, e.g. "Bans buying soda and candy
-     with SNAP benefits". No trailing period needed. The card's title plate shows it first, with
-     a tap to the official title.
+   - `headline`: 1-120 characters written like a neutral news headline: lead with a verb that
+     says what the bill does, e.g. "Bans buying soda and candy with SNAP benefits", with no loaded
+     or promotional words. No trailing period needed. When the bill row's `headline` field has
+     text of at most 120 characters, pass it; when it is `null`, write your own. The card's title
+     plate shows it first, with a tap to the official title.
    - `summary`: prose on what it does, who it affects, and where it stands as recorded.
 
    When the text could not be read, say so in the summary rather than guess, and write the
-   headline from the official title alone. Build the summary only from what the tools returned —
+   headline from the official title alone, not from subject tags, even when it then says little
+   about what the bill does. Build the summary only from what the tools returned —
    the title, status, sponsors, and recorded votes — and point to the document URL for the text.
    Never fill it from news coverage, web search, or general knowledge, even with a note saying so:
    the card presents the summary as the bill's. Never infer or claim passage in either. The card

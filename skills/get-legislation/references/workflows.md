@@ -217,14 +217,19 @@ ask.
 Always pass both `headline` and `summary`: a call without either fails with `-32602`. Write both
 for a voter, from the document text:
 
-- `headline`: 1–120 characters of plain text saying what the bill does, e.g. "Bans buying soda and
-  candy with SNAP benefits". No markdown, no trailing period needed. The card's title plate shows
-  it first; tapping the plate toggles to the official title and back.
+- `headline`: 1–120 characters of plain text, written like a neutral news headline: lead with a
+  verb that says what the bill does, e.g. "Bans buying soda and candy with SNAP benefits", with no
+  loaded or promotional words and no claim of passage. No markdown, no trailing period needed.
+  When the bill row's `headline` field has text of at most 120 characters, pass it; when it is
+  `null`, write your own. The card's title plate shows it first; tapping the plate toggles to the
+  official title and back.
 - `summary`: plain prose, with no length cap: what the bill does, who it affects, and where it
   stands as recorded. The card labels it as written by the AI assistant.
 
 The card renders both as text, so markdown does not render. When the text could not be read, say so in
-the summary rather than guess, and write the headline from the official title alone. Build the summary only from what the tools returned — the title, status, sponsors, and
+the summary rather than guess, and write the headline from the official title alone, not from
+subject tags, even when it then says little about what the bill does. Build the summary only from
+what the tools returned — the title, status, sponsors, and
 recorded votes — and point to the document URL for the text. Never fill it from news coverage, web
 search, or general knowledge, even with a note saying so: the card presents the summary as the
 bill's. Never infer or claim passage or an outcome in either.

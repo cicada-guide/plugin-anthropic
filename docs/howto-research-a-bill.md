@@ -166,11 +166,13 @@ built from the data tools either way, so it is complete without the card. In a c
 does not re-list the card's rows in chat: it writes what the card does not show, such as what the
 bill does, context, and caveats.
 
-**The assistant headline and summary.** Claude writes both for a voter, from the text it read. The headline is one plain-text line of up to 120 characters saying what the bill does,
-such as "Bans buying soda and candy with SNAP benefits". The summary is plain prose, with no length
-cap, saying what the bill does, who it affects, and where it stands as recorded. Neither
-claims passage. Every bill card carries both: when the text could not be read, the summary says so
-and the headline comes from the official title.
+**The assistant headline and summary.** Claude writes both for a voter, from the text it read. The
+headline is one plain-text line of up to 120 characters, written like a neutral news headline that
+says what the bill does, such as "Bans buying soda and candy with SNAP benefits". When the bill
+already carries a stored headline of that length, Claude uses it; otherwise it writes one. The
+summary is plain prose, with no length cap, saying what the bill does, who it affects, and where it
+stands as recorded. Neither claims passage. Every bill card carries both: when the text could not be
+read, the summary says so and the headline comes from the official title.
 
 **Tapping a bill in another card.** Tapping a bill in the search results card, a vote in a
 legislator record, or a sponsored bill's "Show in the conversation" button posts a request into the

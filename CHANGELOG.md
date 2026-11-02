@@ -10,6 +10,22 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Every skill and agent that calls `show_bill` writes the `headline` like a neutral news headline:
+  a verb saying what the bill does, with no loaded or promotional words and no claim of passage.
+  When the bill row's `headline` field has text of at most 120 characters, Claude passes it;
+  when it is `null`, Claude writes one. The guidance used to say never to copy that field.
+- When a bill's text could not be read, the headline comes from the official title alone, not
+  from subject tags, even when it then says little about the bill. In eval runs Claude had written
+  "Addresses construction defect claims and repair remedies" for a bill titled only "Relating To
+  Remedies."
+
+### Added
+
+- Eval graders for the headline: `bill-brief` fails one that is loaded, claims passage or only
+  repeats the title, and `text-unavailable` fails one built from subject tags.
+
 ## [0.12.1] - 2026-11-02
 
 Server changes only. The plugin's guidance already describes what the server now returns, so no

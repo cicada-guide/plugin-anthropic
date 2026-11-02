@@ -110,7 +110,9 @@ The server trims the value and rejects an empty one; Markdown doesn't render, be
 shows it as text.
 
 `show_bill` also requires a `headline`: one plain-text line for a voter, 1 to 120 characters,
-saying what the bill does, such as "Bans buying soda and candy with SNAP benefits". The card's title
+written like a neutral news headline that says what the bill does, such as "Bans buying soda and
+candy with SNAP benefits", with no loaded or promotional words. A bill's stored headline is used
+when it has one that fits; otherwise Claude writes it. The card's title
 plate shows it first, and tapping the plate toggles to the official title and back. Official
 titles are written for the statute book, so a short line in plain language comes first and the
 legislature's wording is one tap away. The headline follows the same rules as the summary: it
