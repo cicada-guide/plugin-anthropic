@@ -10,6 +10,28 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.11] - 2026-11-02
+
+### Changed
+
+- A legislator's state, chamber, and district come only from `show_official` or
+  `show_person_record`. Every skill and agent that carries this rule now says the links, email
+  addresses, and web pages in `get_person`'s `contact_details` are not a source for them. Asked for
+  "the Democratic state senator named Hatcher", Claude had read the chamber off a page named
+  `ALSenator.aspx` and an `@alsenate.gov` address rather than the recorded seat.
+- `get-legislation`, `voting-record`, and `contact-legislator` dispatch `legislator-disambiguator`
+  when several candidates must be told apart by chamber or district. They previously ruled out
+  `show_official` per candidate and named no other way to read a seat. With one candidate left,
+  the card call they already end with returns the seat.
+- `get-legislation` and `legislator-disambiguator` trigger on a surname given with a chamber or
+  party. Before, that question loaded neither, so none of the rules above reached the conversation.
+
+### Added
+
+- An eval case, `legislator-disambiguation`, that fails a seat taken from contact details.
+- `scripts/check.mjs` fails an entry point that carries the "never infer" seat rule without the
+  `contact_details` clause.
+
 ## [0.11.10] - 2026-11-02
 
 ### Changed
@@ -559,7 +581,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.10...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.11...HEAD
+[0.11.11]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.10...v0.11.11
 [0.11.10]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.9...v0.11.10
 [0.11.9]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.8...v0.11.9
 [0.11.8]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.7...v0.11.8

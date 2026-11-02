@@ -159,12 +159,16 @@ claude plugin eval . --trust-plugin --allow-real-servers \
   that note alone.
 - **`--allow-real-servers`** runs the cases against the live public server, since there are no
   mocks. Nothing in them writes, but they count toward the 60-a-minute rate limit.
-- **Cost.** Every run and every `llm` grader is a model call on your account. The full suite is 36
+- **Cost.** Every run and every `llm` grader is a model call on your account. The full suite is 42
   runs; `--ablation none` skips the no-plugin baseline and halves that.
 
 Read the `WITH` column against `--threshold`. Without the plugin there are no cicada-guide tools,
 so the baseline mostly measures data access on the bill, voting-record, and contact cases;
-`no-ranking` and `contact-without-name` show what the guidance itself adds. `contact-recorded-only`
+`no-ranking` and `contact-without-name` show what the guidance itself adds. `legislator-disambiguation`
+asks for "the Democratic state senator named Hatcher", which matches an Alabama senator and an
+Indiana representative. It passes a reply that reads their seats from `show_official`, directly or
+through the `legislator-disambiguator` agent, and fails one that takes a chamber or state from a
+contact link or email domain. `contact-recorded-only`
 fails a reply that doubts a recorded address, says what another site lists, or adds a role the
 tools did not return. `text-unavailable` asks about Hawaii HB 420 (2025), whose text Hawaii's site
 will not serve to an automated request. It passes a reply that says the text could not be read,

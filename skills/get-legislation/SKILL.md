@@ -1,6 +1,6 @@
 ---
 name: get-legislation
-description: This skill should be used for questions about U.S. STATE legislation — finding or reading a state bill ("look up HB 314", "what bills mention school funding", "what does this bill do", "what's the status of this bill"), state legislators ("who sponsored this bill", "find state representative Jane Smith", "what party is she", "how do I contact Senator X"), or roll calls and voting records ("how did Senator X vote", "show me the roll call", "how did the chamber split", "list Alabama's legislative sessions"). Not for the U.S. Congress or federal bills, city or county ordinances, ballot measures, regulations, or non-U.S. legislatures — the dataset covers state legislatures only. Also use it before acting on any request to rank, grade, score, or rate state legislators (for example by ideology) or to predict how they will vote: those are declined, and only recorded votes are reported.
+description: This skill should be used for questions about U.S. STATE legislation — finding or reading a state bill ("look up HB 314", "what bills mention school funding", "what does this bill do", "what's the status of this bill"), state legislators ("who sponsored this bill", "which legislator is the Democratic state senator named Hatcher", "what party is she", "how do I contact Senator X"), or roll calls and voting records ("how did Senator X vote", "show me the roll call", "how did the chamber split", "list Alabama's legislative sessions"). Not for the U.S. Congress or federal bills, city or county ordinances, ballot measures, regulations, or non-U.S. legislatures — the dataset covers state legislatures only. Use it before stating any legislator's state, chamber, or district, which only the recorded seat gives, and before acting on any request to rank, grade, score, or rate legislators (for example by ideology) or to predict a vote: those are declined, and only recorded votes are reported.
 ---
 
 # Researching U.S. state legislation with cicada-guide
@@ -126,7 +126,7 @@ context: "Locating recent Alabama education funding bills to summarize their sta
 | List every document on a bill | `get_documents` |
 | Stream a PDF's raw bytes in base64 chunks (not text) | `read_pdf_bytes` |
 | Find legislators by name or party | `search_people` |
-| Read one legislator's stored record by id (no state, chamber, district, or role) | `get_person` |
+| Read one legislator's stored record by id (no state, chamber, district, or role; not for identifying them) | `get_person` |
 | Who a resolved legislator is, their seat, and how to reach or contact them | `show_official` |
 | Show a resolved legislator's record: votes, filters, sponsored bills | `show_person_record` |
 | Resolve many person UUIDs to names at once | `search_people` with `ids` |
@@ -280,16 +280,29 @@ is `null` for procedural roll calls attached to no bill. Within one date, rows s
 `latest: true` picks arbitrarily among same-day votes: page while the newest date continues and
 report every vote on it.
 
-**`search_people` cannot filter or report by jurisdiction, and neither can `get_person`.** Both
-return name and party only — no state, chamber, district, or role. A common surname will match
-legislators across many states. The only jurisdiction evidence is vote history: call
-`get_person_votes` on each candidate and read `bill.division_id`, resolved through `list_states`.
+**`search_people` cannot filter or report by jurisdiction, and neither can `get_person`.** Neither
+returns a state, chamber, district, or role. A common surname will match legislators across many
+states. To narrow candidates by jurisdiction, call `get_person_votes` on each and read
+`bill.division_id`, resolved through `list_states`; that shows where they voted, not their seat.
 When two candidates remain plausible, list them and ask rather than picking one.
 
-**State chamber and district only as `show_official` or `show_person_record` returns them** — the
-seat line in text, or `office.chamber` and `office.district` in `structuredContent`. When the seat
-line has none, or `office` is `null`, say they are not recorded. Never infer them from
-`search_people` or `get_person`.
+**State a legislator's state, chamber, and district only as `show_official` or
+`show_person_record` returns them** — the seat line in text, or `office.state`, `office.chamber`,
+and `office.district` in `structuredContent`. When the seat line has none, or `office` is `null`,
+say they are not recorded. Never infer them from `search_people`, `get_person`, or the bills a
+legislator voted on. The links, email addresses, and web pages in `get_person`'s `contact_details`
+are not a source for their state, chamber, or district: a page such as `ALSenator.aspx` or
+`iga.in.gov`, or an email domain such as `@alsenate.gov`, is not their seat, and one record can hold
+both House and Senate pages. Do not call `get_person` to identify a legislator.
+
+**When the seat decides who is meant, read it from `show_official`.** "The Democratic state senator
+named Hatcher" matches two Democrats whom only their recorded seats tell apart. With two or more
+candidates to separate by state, chamber, or district, dispatch the `legislator-disambiguator`
+agent with the request and your `conversation_id`; it reads each candidate's seat through
+`show_official` and returns it with its verdict, so you do not put a card on screen per candidate.
+With one candidate left, call `show_official` on that `id` and read the seat before stating it: a
+"who is this" answer ends with that card anyway. Reading the seat is not a reason to report the
+contact details; give those only when asked.
 
 **"My senator" needs a name.** When the user asks about "my senator" or "my representative"
 without naming them, ask for the legislator's name and state before calling anything. No tool maps

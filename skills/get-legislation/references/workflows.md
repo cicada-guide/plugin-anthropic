@@ -151,15 +151,20 @@ Each `get_person_votes` item nests `vote` (category), `rollcall` (date, descript
 `division_id`, `source_url`) — no enrichment step needed beyond resolving ids to names. `bill` is
 `null` for procedural roll calls attached to no bill. Page with `cursor`.
 
-`search_people` and `get_person` return name and party only — no state, chamber, or district — so
-several matches for a common surname cannot be separated from those results. Check which candidate
-has votes whose `bill.division_id` is the expected jurisdiction. Ask rather than guessing when two
-remain equally plausible.
+`search_people` and `get_person` return no state, chamber, or district, so several matches for a
+common surname cannot be separated from those results. Check which candidate has votes whose
+`bill.division_id` is the expected jurisdiction. Ask rather than guessing when two remain equally
+plausible.
 
-State chamber and district only as `show_official` or `show_person_record` returns them: the seat
-line in text, or `office.chamber` and `office.district` in `structuredContent`. When the seat line
-has none, or `office` is `null`, say they are not recorded. Never infer them from `search_people` or
-`get_person`.
+State a legislator's state, chamber, and district only as `show_official` or `show_person_record`
+returns them: the seat line in text, or `office.state`, `office.chamber`, and `office.district` in
+`structuredContent`. When the seat line has none, or `office` is `null`, say they are not recorded.
+Never infer them from `search_people` or `get_person`: the links, email addresses, and web pages in
+its `contact_details` are not a source for state, chamber, or district. When the request names a
+chamber or district ("the Democratic state senator named Hatcher") and more than one candidate
+remains, dispatch the `legislator-disambiguator` agent with the request and the `conversation_id`.
+It reads each candidate's seat through `show_official` and returns its verdict, the seat as
+recorded, and the card to show, so no card goes on screen per candidate.
 
 Write the answer from `get_person_votes`, then end with the legislator's record card. It returns
 identity and seat only, so it does not replace the votes you read:
@@ -348,7 +353,7 @@ The reverse direction — every bill a legislator sponsored — goes through `se
 | Right bill number, wrong bill | The same number exists in another session or state | Scope by `division_id` and `session_id` (or `session_name`); read each result's session |
 | Names missing from a vote breakdown | `get_votes` returns UUIDs only | Use `get_rollcall_breakdown`, whose `members` carry names and party |
 | `headline` or `summary` rejected by `show_bill` | Missing or empty, or a `headline` over 120 characters | Always pass both, as plain text: a headline of at most 120 characters and a non-empty summary; when the text could not be read, say so in the summary |
-| Asked for a legislator's chamber or district | `search_people` and `get_person` return neither | Use the `show_official` seat line; when it has none, say they are not recorded |
+| Asked for a legislator's chamber or district | `search_people` and `get_person` return neither, and `get_person`'s contact links are not a seat | Use the `show_official` seat line; when it has none, say they are not recorded. To separate several candidates by seat, dispatch `legislator-disambiguator` |
 | A count looks wrong | `search_bills` / `search_people` / `get_votes` / `get_person_votes` have no `total` | Report "at least N", or paginate to exhaustion |
 | A topic search finds nothing, or suspiciously little | `search_bills` full-text caps at 50 bills — nationwide unless scoped by `division_id` or a session — and uses 8 terms, silently | Try one distinctive word, scope by `division_id` and `session_id` / `session_name`; do not report absence from one query |
 | A topic search returns many off-topic bills | Each `query` word is matched separately and ORed | Use one distinctive word rather than a phrase |

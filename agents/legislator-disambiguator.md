@@ -1,6 +1,6 @@
 ---
 name: legislator-disambiguator
-description: Use this agent when a U.S. state legislator has been named but not pinned to one person, and confirming who they are means probing several candidates. Typical triggers include a common surname that matches legislators nationwide, a name that must be tied to a specific state before their votes can be reported, and a batch of vote records whose person ids must be resolved to the right individuals. Do not use it to report the votes themselves; it returns identifications, not a voting record. See "When to invoke" in the agent body for worked scenarios.
+description: Use this agent when a U.S. state legislator has been named but not pinned to one person, and confirming who they are means probing several candidates. Typical triggers include a common surname that matches legislators nationwide, a surname given with a chamber or party ("which legislator is the Democratic state senator named Hatcher") where only the recorded seats tell the matches apart, a name that must be tied to a specific state before their votes can be reported, and a batch of vote records whose person ids must be resolved to the right individuals. Do not use it to report the votes themselves; it returns identifications, not a voting record. See "When to invoke" in the agent body for worked scenarios.
 model: inherit
 tools: Read, mcp__plugin_cicada-guide_guide-public__*
 color: yellow
@@ -56,7 +56,10 @@ a vote to the wrong legislator is the worst failure this dataset can produce.
    structured content (`office.state`, `office.chamber`, `office.district`, with earlier seats in
    `other_offices`). `Office and district: not recorded.` or a `null` `office` means no seat is on
    record. State chamber and district only as `show_official` or `show_person_record` returns them;
-   otherwise they are not recorded. Never infer them from `search_people` or `get_person`. Call
+   otherwise they are not recorded. Never infer them from `search_people` or `get_person`: the
+   links, email addresses, and web pages in its `contact_details` are not a source for state,
+   chamber, or district. A page such as `ALSenator.aspx` or an email domain such as `@alsenate.gov`
+   is not a seat, and one record can hold both House and Senate pages. Call
    `show_official` here only to read the seat, not to display it: your output is not rendered to
    the user, so the caller shows the card. Report the seat and nothing else from that call; contact
    details are the card's job, and they never go into `context`.

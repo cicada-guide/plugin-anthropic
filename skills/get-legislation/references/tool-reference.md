@@ -25,7 +25,9 @@ returns a legislator's role, or an external source id for a person or roll call.
 as one of those returns them: the seat line in the text, or `office.chamber` and `office.district`
 in `structuredContent`. When `office` is `null`, or the seat line is absent or reads
 `Office and district: not recorded.`, they are not recorded. Never infer them from `search_people`,
-`get_person`, a bill's `division_id`, or a roll-call description.
+`get_person`, a bill's `division_id`, or a roll-call description. The links, email addresses, and
+web pages in `get_person`'s `contact_details` are not a source for a legislator's state, chamber, or
+district either: one record can hold both an `ALRepresentative.aspx` and an `ALSenator.aspx` page.
 
 Served over MCP Streamable HTTP. All read-only: they retrieve legislative data and never modify
 it, and the descriptors carry `readOnlyHint: true` alongside `destructiveHint: false` and
@@ -431,7 +433,8 @@ jurisdiction, call `get_person_votes` on each candidate and read `bill.division_
 `bill.session_id`) off the returned items; resolve the division with `list_states`. Chamber and
 district come only from `show_official` or `show_person_record` on a candidate's `id`, as their
 seat line or `office` returns them; when `office` is `null` they are not recorded. Never infer
-them from these results.
+them from these results or from `get_person`'s `contact_details`. When candidates must be told
+apart by chamber or district, the `legislator-disambiguator` agent reads each one's seat.
 
 **100 is a hard cap, and chambers are bigger than that.** Verified 2026-09-05: an ordinary
 Alabama House roll call returned **103** distinct legislators, and passing all 103 to `ids` in one
