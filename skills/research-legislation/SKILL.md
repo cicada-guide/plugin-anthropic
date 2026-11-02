@@ -3,6 +3,7 @@ name: research-legislation
 description: Produces a sourced brief on one U.S. state bill — identification, status, sponsors, bill text, roll calls, and how members voted. This skill should be used when the user wants the full picture on one named bill ("brief me on Alabama HB 314", "what does this bill do and how did the chamber vote"), not for a topic sweep across states.
 argument-hint: "<bill number or topic> [state] [year]"
 disable-model-invocation: false
+allowed-tools: mcp__plugin_cicada-guide_guide-public__search_bills, mcp__plugin_cicada-guide_guide-public__get_bill, mcp__plugin_cicada-guide_guide-public__get_bill_dossier, mcp__plugin_cicada-guide_guide-public__get_documents, mcp__plugin_cicada-guide_guide-public__get_latest_bill_document, mcp__plugin_cicada-guide_guide-public__get_rollcalls, mcp__plugin_cicada-guide_guide-public__get_rollcall_breakdown, mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__list_states, mcp__plugin_cicada-guide_guide-public__list_sessions, mcp__plugin_cicada-guide_guide-public__show_bill
 ---
 
 # Research one state bill

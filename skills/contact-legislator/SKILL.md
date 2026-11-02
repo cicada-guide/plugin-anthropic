@@ -3,6 +3,7 @@ name: contact-legislator
 description: Shows who one U.S. state legislator is and how to reach them — office, chamber, district, party, and the email, phone, and website on record — as a contact card. This skill should be used when the user asks how to contact a named state legislator or who someone is ("how do I reach Senator Reynolds", "show me Rep. Ortiz's contact info"), not for how they voted.
 argument-hint: "<name> [state]"
 disable-model-invocation: false
+allowed-tools: mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__get_person_votes, mcp__plugin_cicada-guide_guide-public__list_states, mcp__plugin_cicada-guide_guide-public__show_official
 ---
 
 # Contact a state legislator

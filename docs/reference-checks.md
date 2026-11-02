@@ -116,6 +116,13 @@ without `.md`.
 
 The line numbers 1, 2, and 3 in these messages are fixed, whichever line the key is on.
 
+**Skill `allowed-tools` names only `guide-public` tools.** Applies to skills with an
+`allowed-tools` key. Each comma-separated entry must be `mcp__plugin_cicada-guide_guide-public__`
+followed by a tool name: no wildcard, no other server, no built-in tool.
+- Message: `<file>: allowed-tools entry <entry> is not one named guide-public tool (mcp__plugin_cicada-guide_guide-public__<tool>)`
+- Fix: name the tool in full, or remove the entry. A wildcard would pre-approve tools the server
+  adds later, unreviewed.
+
 **Agents have a `tools:` allowlist.** Applies to files under `agents/`.
 - Message: ``<file>: agent frontmatter needs a `tools:` allowlist; without one it inherits every tool``
 - Fix: add `tools: Read, mcp__plugin_cicada-guide_guide-public__*`.
@@ -318,6 +325,12 @@ card blank, so the server keeps earlier versions answering with the current card
   no card HTML`, or `failed: <reason>`
 - Fix: report it; the server is not this repo's code. An error on the older URI means the server
   stopped answering earlier card versions.
+
+**7. Every pre-approved tool is live.** Files: each `SKILL.md` with an `allowed-tools` line. The
+part of each entry after its last `__` must be a live tool name.
+- Message: ``<file>:<line>: allowed-tools pre-approves `<tool>`, which is not a tool on the live server``
+- Fix: rename the entry to the tool's new name, or remove it. A stale name pre-approves nothing,
+  so the command falls back to asking.
 
 The wrapper-added `context`, `llm_model` and `conversation_id` appear in every live schema, so they
 pass checks 3 and
