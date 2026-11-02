@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-11-02
+
 ### Changed
 
 - Calls are rate limited to 600 a minute per IP address, up from 60, and every skill, agent and
@@ -40,6 +42,9 @@ plugin's guidance, including updates made to match what the server returns.
 
 - `scripts/check.mjs` fails a skill `allowed-tools` entry that is not one named `guide-public`
   tool, and `scripts/check-live-tools.mjs` fails one the live server lacks.
+- `scripts/check.mjs` fails when `docs/reference-checks.md` does not quote the User-Agent that
+  `scripts/check-live-tools.mjs` sends. That User-Agent now names the
+  `cicada-guide/plugin-anthropic` repository.
 
 ## [0.11.11] - 2026-11-02
 
@@ -612,7 +617,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.11...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.11...v0.12.0
 [0.11.11]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.10...v0.11.11
 [0.11.10]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.9...v0.11.10
 [0.11.9]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.8...v0.11.9
