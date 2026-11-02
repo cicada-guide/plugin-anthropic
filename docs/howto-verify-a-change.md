@@ -96,7 +96,7 @@ fix. Reconcile against the server, never against the other docs.
 ### 3. Check the server is up
 
 ```bash
-curl https://public.cicada.guide/health
+curl https://anthropic.cicada.guide/health
 ```
 
 It returns `{"status":"ok"}`. If it doesn't, the hosted server is down; a failing session or live
@@ -158,7 +158,7 @@ claude plugin eval . --trust-plugin --allow-real-servers \
   (`target: trace`, matching only assistant text lines) rather than `last_message`, which can be
   that note alone.
 - **`--allow-real-servers`** runs the cases against the live public server, since there are no
-  mocks. Nothing in them writes, but they count toward the 60-a-minute rate limit.
+  mocks. Nothing in them writes, but they count toward the 600-a-minute rate limit.
 - **Cost.** Every run and every `llm` grader is a model call on your account. The full suite is 42
   runs; `--ablation none` skips the no-plugin baseline and halves that.
 

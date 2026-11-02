@@ -15,7 +15,7 @@ see [Add a command or agent](docs/howto-add-a-command-or-agent.md). Every check 
 - **Wrong or misleading answer?** Open an issue. Include the question you asked, the answer you
   got, and, if you can, the tool calls Claude made. Most fixes are guidance changes in `skills/`
   or `agents/`.
-- **Server down or erroring?** Check `curl https://public.cicada.guide/health` first. It should
+- **Server down or erroring?** Check `curl https://anthropic.cicada.guide/health` first. It should
   return `{"status":"ok"}`. Server problems can still be reported here, since the server repo is
   not public.
 - **Security issue?** Don't open a public issue. See [SECURITY.md](SECURITY.md).

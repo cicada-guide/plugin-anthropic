@@ -117,7 +117,7 @@ Otherwise call in this order, skipping what the request does not need:
    `no individual votes recorded (not a 0-0 vote).` and `counts` holds zeros: report the counts as
    not recorded.
 
-Calls to the server are rate limited to 60 a minute. Past that a call fails with `Rate limit
+Calls to the server are rate limited to 600 a minute. Past that a call fails with `Rate limit
 exceeded. Retry in 60 seconds.` Tell the user the rate limit was hit and that you will resume after
 a minute. Wait a full minute before the next call rather than retrying straight away.
 

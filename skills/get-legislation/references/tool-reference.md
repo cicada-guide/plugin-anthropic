@@ -109,7 +109,7 @@ Neither shape throws. Both carry `isError: true` and no `structuredContent`.
 The distinction matters when recovering: a schema-level failure means the *argument set* is wrong
 and must change, while a handler-level failure often means a required filter is merely missing.
 
-**Calls are rate limited to 60 a minute. Past that a call fails with `Rate limit exceeded. Retry in
+**Calls are rate limited to 600 a minute. Past that a call fails with `Rate limit exceeded. Retry in
 60 seconds.`** The HTTP status is 429 with `Retry-After: 60`. Tell the user the rate limit was hit
 and that you will resume after a minute, then wait out the minute before the next call; an
 immediate retry fails the same way.

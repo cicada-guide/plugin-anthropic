@@ -47,7 +47,7 @@ every release.
 - **Date the changelog.** Move the `Unreleased` entries in `CHANGELOG.md` under a heading for the
   new version. At the bottom, add its link (`compare/v<previous>...v<new>`) and point `Unreleased`
   at `compare/v<new>...HEAD`.
-- **Confirm the server is healthy.** `curl https://public.cicada.guide/health` returns
+- **Confirm the server is healthy.** `curl https://anthropic.cicada.guide/health` returns
   `{"status":"ok"}`.
 - **Land on `main` before announcing.** The marketplace resolver reads the default branch, not a
   feature branch. An install command shared against unmerged work resolves a stale manifest, or

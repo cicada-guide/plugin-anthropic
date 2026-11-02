@@ -47,7 +47,7 @@ Knowing the plugin's reach helps you judge whether a finding is in scope:
 ## Out of scope
 
 - The content of legislative records. Report a wrong answer as an ordinary issue.
-- Rate limiting working as designed (HTTP 429 after 60 requests a minute from one anonymous
+- Rate limiting working as designed (HTTP 429 after 600 requests a minute from one anonymous
   caller).
 - Vulnerabilities in Claude Code or other host applications. Report those to their
   vendors.

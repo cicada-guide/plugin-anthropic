@@ -7,7 +7,7 @@ use, see the [tool reference](../skills/get-legislation/references/tool-referenc
 
 Run `/mcp` in Claude Code. The plugin's server is listed as `guide-public`.
 
-1. **Check the server is up.** `curl https://public.cicada.guide/health` should return
+1. **Check the server is up.** `curl https://anthropic.cicada.guide/health` should return
    `{"status":"ok"}`. If it doesn't, the hosted server is down, and nothing on your side will
    fix it. Try again later, or open an issue.
 2. **Check the plugin is installed and enabled.** `/plugin` opens the plugin manager. To
@@ -19,9 +19,9 @@ Run `/mcp` in Claude Code. The plugin's server is listed as `guide-public`.
    ```
 
 3. **Start a new session.** A host reads plugin configuration when a session starts.
-4. **Check your network.** The host must reach `https://anthropic.cicada.guide` over HTTPS. A
-   corporate proxy or firewall that blocks it shows up as a failed connection, not as a tool
-   error.
+4. **Check your network.** The host must reach `https://anthropic.cicada.guide` over HTTPS for
+   the tools, and `https://public.cicada.guide` for card photos and the PDF viewer. A corporate
+   proxy or firewall that blocks the first shows up as a failed connection, not as a tool error.
 
 No sign-in is ever needed. If a host asks you to authenticate to `guide-public`, the host has made
 a mistake; the server accepts anonymous callers.
@@ -42,7 +42,7 @@ Claude to load the tool and retry.
 
 ## Rate limit errors (HTTP 429)
 
-Anonymous callers are rate limited to 60 a minute, counted per IP address. Past that a call fails
+Anonymous callers are rate limited to 600 a minute, counted per IP address. Past that a call fails
 with `Rate limit exceeded. Retry in 60 seconds.` and the response carries `Retry-After: 60`.
 
 - Claude tells you when the limit is hit and resumes after a minute. Retrying straight away uses

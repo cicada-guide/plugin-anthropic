@@ -348,7 +348,7 @@ starting with `Error:`, and a schema-level `MCP error -32602: Input validation e
 offending key. Both carry `isError: true`. Read either one; it names the problem. A schema-level
 failure means the argument set is wrong, not merely incomplete.
 
-**Calls are rate limited to 60 a minute. Past that a call fails with `Rate limit exceeded. Retry in
+**Calls are rate limited to 600 a minute. Past that a call fails with `Rate limit exceeded. Retry in
 60 seconds.`** Tell the user the rate limit was hit and that you will resume after a minute. Wait
 a full minute before the next call rather than retrying straight away, and pace long sweeps.
 

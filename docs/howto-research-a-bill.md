@@ -189,7 +189,7 @@ and [How cards work](explanation-cards.md).
 
 - **Name the state and the session.** It is the single biggest improvement to any bill question.
 - **Ask for one bill at a time** when you want a brief; a topic gets a list first.
-- **Big sweeps are paced.** Calls are rate limited to 60 a minute; past that a call fails with
+- **Big sweeps are paced.** Calls are rate limited to 600 a minute; past that a call fails with
   `Rate limit exceeded. Retry in 60 seconds.` Claude tells you and resumes after a minute.
 - **Long lists come in pages** fitted under 25,000 characters, and Claude pages on from where it
   stopped. An answer marked as cut short is not complete; ask Claude to continue or narrow the

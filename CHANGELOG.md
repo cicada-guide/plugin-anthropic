@@ -12,6 +12,12 @@ plugin's guidance, including updates made to match what the server returns.
 
 ### Changed
 
+- Calls are rate limited to 600 a minute per IP address, up from 60, and every skill, agent and
+  doc that restates the limit says so. Hosted clients such as claude.ai call from a few shared IP
+  addresses, so all of their users share one limit. The retry window is still 60 seconds.
+- The health checks in `PUBLISHING.md`, the docs and `CONTRIBUTING.md` call
+  `https://anthropic.cicada.guide/health`, the endpoint's own host. `public.cicada.guide/health`
+  stayed green while `anthropic.cicada.guide` did not resolve.
 - The plugin's MCP endpoint is `https://anthropic.cicada.guide/mcp`, the same server on a new
   hostname. The server still answers `https://public.cicada.guide/mcp-anthropic` and
   `https://public.cicada.guide/mcp`, so copies installed before this release keep working. Card

@@ -68,7 +68,7 @@ ask about state legislation.
 If `guide-public` is missing or disconnected, check that the server itself is up:
 
 ```bash
-curl https://public.cicada.guide/health
+curl https://anthropic.cicada.guide/health
 ```
 
 It should print `{"status":"ok"}`. If it does and the server still doesn't connect, work through
