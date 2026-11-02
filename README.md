@@ -4,7 +4,7 @@ Research U.S. state legislation in Claude: search bills, read bill text, look
 up legislators, and trace roll-call and individual voting records.
 
 The plugin connects compatible AI hosts to the hosted cicada-guide MCP server at
-`https://public.cicada.guide/mcp-anthropic`, which serves state legislative data — bills, documents,
+`https://anthropic.cicada.guide/mcp`, which serves state legislative data — bills, documents,
 legislators, sessions, roll calls, and ~5.6M individual vote records.
 
 ## Installation
@@ -216,7 +216,7 @@ Claude shows it in the conversation.
 
 ## Privacy
 
-Requests go to `https://public.cicada.guide/mcp-anthropic`. The server records anonymous usage
+Requests go to `https://anthropic.cicada.guide/mcp`. The server records anonymous usage
 analytics per tool call: the tool name and the arguments passed to it (search terms, names, ids),
 duration, result count, the calling client's name and user agent, the `context` string the model
 supplies (including any `context_prefix` set in project settings), and the `llm_model` value — the
@@ -236,7 +236,7 @@ What the plugin runs, sends, and fetches:
   ask Claude to read one optional file in your project, `.claude/cicada-guide.local.md`, for
   default settings, and values from it such as `default_division` and `context_prefix` can go into
   tool calls.
-- **Sends** each tool call, as described above, to `public.cicada.guide` over HTTPS, and nowhere
+- **Sends** each tool call, as described above, to `anthropic.cicada.guide` over HTTPS, and nowhere
   else. No credential, key, or environment variable is read or sent.
 - **Where the server sends it:** analytics go to PostHog (United States). Cloudflare, which hosts
   the server, keeps request logs that can include your IP address and applies rate limits by it.

@@ -11,7 +11,7 @@ every release.
 | License | Apache-2.0 | Permissive with an explicit patent grant. `LICENSE` at the repo root, `"license": "Apache-2.0"` in the plugin manifest. |
 | Repository | `cicada-guide/plugin-anthropic`, public | The plugin lives here; the Worker source stays private in `cicada-guide/mcp-anthropic`. |
 | Layout | Repo root is the plugin | `.claude-plugin/` holds both `marketplace.json` (`"source": "./"`) and `plugin.json`. |
-| MCP endpoint | `https://public.cicada.guide/mcp-anthropic` | Cloudflare Custom Domain on the Worker, rather than the `workers.dev` hostname. The path was `/mcp` until 0.9.0; the server still answers it for earlier installs. |
+| MCP endpoint | `https://anthropic.cicada.guide/mcp` | Cloudflare Custom Domain on the Worker, rather than the `workers.dev` hostname. Earlier releases used `https://public.cicada.guide/mcp-anthropic`, and `https://public.cicada.guide/mcp` before 0.9.0; the same Worker still answers both for earlier installs. |
 | MCP server key | `guide-public` | Tools surface as `mcp__plugin_cicada-guide_guide-public__search_bills`. The `<server>` segment is mandatory — `mcp__plugin_cicada-guide__search_bills` is not reachable by any configuration. |
 | Contact email | None | The manifests' `author` and `owner` carry a name and URL only, and issues route through the repo. |
 | Always-on skill name | `get-legislation` | Named `state-legislation` in 0.2.0, renamed from `cicada-guide`, which had produced `/cicada-guide:cicada-guide`; that pass also converted cross-component links to `${CLAUDE_PLUGIN_ROOT}`, since both touch the same sites. Renamed `get-legislation` after 0.9.5, when the `bill-research` command became `research-legislation`. |
@@ -21,7 +21,7 @@ every release.
 ## Before each release
 
 - **Reconcile the tool reference against the live server.** Run `tools/list` against
-  `https://public.cicada.guide/mcp-anthropic` and diff it against
+  `https://anthropic.cicada.guide/mcp` and diff it against
   `skills/get-legislation/references/tool-reference.md`, which records the server version it was
   verified against. The endpoint is unversioned, so nothing else signals drift. The server is
   stateless: it issues no `mcp-session-id`, and a bare `tools/list` POST is answered directly, with
@@ -33,7 +33,7 @@ every release.
   `tools-list.json` (bash):
 
   ```bash
-  E=https://public.cicada.guide/mcp-anthropic
+  E=https://anthropic.cicada.guide/mcp
   H=(-H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream'
      -H 'MCP-Protocol-Version: 2025-06-18')
   curl -s "${H[@]}" "$E" -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' |
@@ -82,10 +82,12 @@ the repo is reachable — everything else passes just as well while the repo is 
 
 ## Infrastructure dependency
 
-The plugin points at `public.cicada.guide`, a Cloudflare Custom Domain routed to the
-`cicada-guide-mcp-server` Worker. That route is configured in the private
-`cicada-guide/mcp-anthropic` repo's `wrangler.jsonc` and activated by `wrangler deploy`.
+The plugin points at `anthropic.cicada.guide`, a Cloudflare Custom Domain routed to the
+`cicada-guide-mcp-anthropic` Worker. Cards also load photos and pdf.js from `public.cicada.guide`, the
+same Worker's other custom domain, which earlier releases used as their MCP endpoint. Both routes
+are configured in the private `cicada-guide/mcp-anthropic` repo's `wrangler.jsonc` and activated by
+`wrangler deploy`.
 
-If that domain is ever retired or re-pointed, this plugin breaks for every installed user with no
+If either domain is ever retired or re-pointed, this plugin breaks for every installed user with no
 warning and no fallback. Treat the hostname as a published API surface: change it only with a
 version bump here, and keep the old hostname resolving through the transition.

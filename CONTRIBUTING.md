@@ -2,7 +2,7 @@
 
 Thanks for helping. This repo is a Claude Code **plugin**. It contains only Markdown and
 JSON, which a plugin loader reads at runtime. There is no build step, no dependencies, and no
-application code. The MCP server behind it (`https://public.cicada.guide/mcp-anthropic`) comes from a separate,
+application code. The MCP server behind it (`https://anthropic.cicada.guide/mcp`) comes from a separate,
 private repository, so this repo cannot change what the tools return.
 
 For how the pieces fit together, read [docs/architecture.md](docs/architecture.md). To check your

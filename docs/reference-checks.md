@@ -76,8 +76,8 @@ and `metadata.version` and `plugins[0].version` in `.claude-plugin/marketplace.j
   name, so changing it makes every documented tool name unreachable.
 
 **The endpoint is pinned.** `mcpServers["guide-public"].url` must be
-`https://public.cicada.guide/mcp-anthropic`.
-- Message: `.mcp.json: endpoint is <url>; the pinned endpoint is https://public.cicada.guide/mcp-anthropic (see CLAUDE.md before changing it)`
+`https://anthropic.cicada.guide/mcp`.
+- Message: `.mcp.json: endpoint is <url>; the pinned endpoint is https://anthropic.cicada.guide/mcp (see CLAUDE.md before changing it)`
 - Fix: restore the URL. The hostname is a published API surface. It moves only with a version bump
   and a transition period, and then the `ENDPOINT` constant in the script changes in the same
   commit.

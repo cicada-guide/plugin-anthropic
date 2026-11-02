@@ -19,7 +19,7 @@ Run `/mcp` in Claude Code. The plugin's server is listed as `guide-public`.
    ```
 
 3. **Start a new session.** A host reads plugin configuration when a session starts.
-4. **Check your network.** The host must reach `https://public.cicada.guide` over HTTPS. A
+4. **Check your network.** The host must reach `https://anthropic.cicada.guide` over HTTPS. A
    corporate proxy or firewall that blocks it shows up as a failed connection, not as a tool
    error.
 
@@ -193,7 +193,7 @@ connected rather than answering from general knowledge. See
 
 ## Using a host other than Claude Code
 
-The endpoint `https://public.cicada.guide/mcp-anthropic` is a standard Streamable HTTP MCP server. Any host
+The endpoint `https://anthropic.cicada.guide/mcp` is a standard Streamable HTTP MCP server. Any host
 that supports remote MCP servers can connect to it directly, with no credentials. Without the
 plugin, though, the host doesn't get the skills and agents, only the raw tools.
 

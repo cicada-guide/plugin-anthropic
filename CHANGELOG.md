@@ -12,6 +12,10 @@ plugin's guidance, including updates made to match what the server returns.
 
 ### Changed
 
+- The plugin's MCP endpoint is `https://anthropic.cicada.guide/mcp`, the same server on a new
+  hostname. The server still answers `https://public.cicada.guide/mcp-anthropic` and
+  `https://public.cicada.guide/mcp`, so copies installed before this release keep working. Card
+  photos and the PDF viewer still load from `public.cicada.guide`.
 - `/cicada-guide:research-legislation`, `/cicada-guide:voting-record`, and
   `/cicada-guide:contact-legislator` pre-approve the read-only `guide-public` tools they call, by
   name, in `allowed-tools`, so they run without a permission prompt per tool. Before, a headless or
