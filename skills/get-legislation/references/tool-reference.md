@@ -243,7 +243,8 @@ status of exactly `Passed` is the bill's final status, dated when it became law,
 shows it as Enacted; one that only contains the word, such as `Passed Senate`, is not.
 
 **Every call also renders a results card** in a host that supports MCP Apps, via
-`ui://cicada-guide/bill-results-v17.html`. Inline it lists the first three, with "Show all N"
+`ui://cicada-guide/bill-results-v18.html`. Each result names its state beside the bill number.
+Inline it lists the first three, with "Show all N"
 opening full screen; once every loaded result is shown, "Show more" pages with the same arguments. Tapping a result posts a user turn asking you to show that bill with
 `show_bill` (see [`show_bill`](#show_bill)); the card opens no bill itself. You still receive
 the full list as text or JSON, so read results from it as usual. Where the card renders, summarize
