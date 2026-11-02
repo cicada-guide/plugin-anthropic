@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.10] - 2026-11-02
+
 ### Changed
 
 - Card URI follows the server's new shell: `official-card-v15`. Each vote in the contact card's
@@ -557,7 +559,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.9...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.10...HEAD
+[0.11.10]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.9...v0.11.10
 [0.11.9]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.8...v0.11.9
 [0.11.8]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.7...v0.11.8
 [0.11.7]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.6...v0.11.7
