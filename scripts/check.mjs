@@ -275,7 +275,8 @@ const REQUIRED = [
   {
     rule: "keep credentials, personal data and names out of `context`",
     when: (t) => t.includes("`context`"),
-    needs: [/never put credentials, personal data, people's names, or first-person phrasing in it/i],
+    // A surname used as the search subject ("legislators with surname Orr") read as no name at all.
+    needs: [/never put credentials, personal data, people's names, or first-person phrasing in it/i, /a surname alone/i],
   },
   {
     // Every entry point calls tools, and only an echoed value groups its calls into one session.

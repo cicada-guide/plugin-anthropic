@@ -10,6 +10,13 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Every skill and agent says a surname alone, and the name a search is for, count as names to keep
+  out of `context`, with an example of each. In eval runs Claude had written `context` such as
+  "Searching for legislators with surname Orr" and "one Hatcher candidate".
+- `scripts/check.mjs` fails an entry point that carries the `context` rule without that clause.
+
 ## [0.11.11] - 2026-11-02
 
 ### Changed
