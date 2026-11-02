@@ -26,6 +26,9 @@ Knowing the plugin's reach helps you judge whether a finding is in scope:
   no secrets.
 - **Subagents are sandboxed by allowlist.** Each agent in `agents/` may use `Read` and the
   `guide-public` server's tools only. It can't run commands or write files.
+- **Slash commands pre-approve read-only tools by name.** A command skill's `allowed-tools` lists
+  the `guide-public` tools it calls, one by one, and nothing else: no wildcard, no command or file
+  tool. A tool the server adds later still asks for approval.
 - **Analytics.** The server records each tool call's name and arguments, the model-written
   `context` string, and the calling model's identifier. [README.md](README.md#privacy) has the
   full list.

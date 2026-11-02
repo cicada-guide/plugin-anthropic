@@ -3,6 +3,7 @@ name: voting-record
 description: Produces a sourced voting-record summary for one U.S. state legislator, or a party breakdown of a single roll call. This skill should be used when the user asks how a named state legislator voted, overall or on one bill ("how did Senator Reynolds vote on HB 314", "what was her latest vote") or how one roll call split by party ("break down the final passage vote by party").
 argument-hint: "<legislator name> [state] [bill] [session or date range]"
 disable-model-invocation: false
+allowed-tools: mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__get_person_votes, mcp__plugin_cicada-guide_guide-public__list_states, mcp__plugin_cicada-guide_guide-public__list_sessions, mcp__plugin_cicada-guide_guide-public__show_person_record, mcp__plugin_cicada-guide_guide-public__show_official, mcp__plugin_cicada-guide_guide-public__get_rollcalls, mcp__plugin_cicada-guide_guide-public__get_rollcall_breakdown, mcp__plugin_cicada-guide_guide-public__get_votes, mcp__plugin_cicada-guide_guide-public__search_bills, mcp__plugin_cicada-guide_guide-public__show_bill, mcp__plugin_cicada-guide_guide-public__get_latest_bill_document
 ---
 
 # Summarize a legislator's voting record

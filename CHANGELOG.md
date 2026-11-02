@@ -10,6 +10,20 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- `/cicada-guide:research-legislation`, `/cicada-guide:voting-record`, and
+  `/cicada-guide:contact-legislator` pre-approve the read-only `guide-public` tools they call, by
+  name, in `allowed-tools`, so they run without a permission prompt per tool. Before, a headless or
+  non-interactive run stopped at the first call. A tool the server adds later still asks.
+- The getting-started tutorial no longer says the tools are marked as not read-only; each is
+  marked `readOnlyHint: true`.
+
+### Added
+
+- `scripts/check.mjs` fails a skill `allowed-tools` entry that is not one named `guide-public`
+  tool, and `scripts/check-live-tools.mjs` fails one the live server lacks.
+
 ## [0.11.11] - 2026-11-02
 
 ### Changed
