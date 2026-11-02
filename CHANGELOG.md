@@ -10,6 +10,23 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.12.1] - 2026-11-02
+
+Server changes only. The plugin's guidance already describes what the server now returns, so no
+skill, agent or doc changed.
+
+### Changed
+
+- Bill titles and headlines come back with HTML character references decoded: `&amp;`, `&quot;`,
+  `&#39;` and `&#x27;` reach cards and answers as `&`, `"` and `'`. The search results card had
+  shown one title as "Restraint &AMP; Seclusion Act".
+- `get_person_votes` gives a vote whose own row names no bill the bill its roll call is on, so the
+  legislator record and official cards show that bill instead of "No bill linked". `bill` is
+  `null` only for roll calls attached to no bill, as the tool reference says.
+- `get_person_votes`' `session_id` filter and `include_sessions` place such a vote in its roll
+  call's bill's session. Filtering one California senator's record to 2025-2026 had left out
+  2,233 of her votes.
+
 ## [0.12.0] - 2026-11-02
 
 ### Changed
@@ -617,7 +634,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.11...v0.12.0
 [0.11.11]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.10...v0.11.11
 [0.11.10]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.9...v0.11.10
