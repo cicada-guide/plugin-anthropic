@@ -10,6 +10,11 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Card URI follows the server's new shell: `bill-results-v18`. Each bill result names its state
+  beside the bill number, so same-numbered bills from different states are told apart.
+
 ## [0.11.6] - 2026-11-01
 
 ### Changed
