@@ -83,7 +83,7 @@ the repo is reachable — everything else passes just as well while the repo is 
 ## Infrastructure dependency
 
 The plugin points at `anthropic.cicada.guide`, a Cloudflare Custom Domain routed to the
-`cicada-guide-mcp-server` Worker. Cards also load photos and pdf.js from `public.cicada.guide`, the
+`cicada-guide-mcp-anthropic` Worker. Cards also load photos and pdf.js from `public.cicada.guide`, the
 same Worker's other custom domain, which earlier releases used as their MCP endpoint. Both routes
 are configured in the private `cicada-guide/mcp-anthropic` repo's `wrangler.jsonc` and activated by
 `wrangler deploy`.
