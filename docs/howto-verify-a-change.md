@@ -12,7 +12,7 @@ your change.
 ## Prerequisites
 
 - Node 22. Nothing to install: the plugin has no dependencies and no build step.
-- Network access to `https://public.cicada.guide` for the live check and for a real session. The
+- Network access to `https://anthropic.cicada.guide` for the live check and for a real session. The
   server is public and needs no account, so this works from any fork.
 - Claude Code, for loading the checkout into a session.
 
@@ -72,7 +72,7 @@ what the server returned, save one with the command from [PUBLISHING.md](../PUBL
 (bash). The server is stateless, so this is one POST with no `initialize` first:
 
 ```bash
-E=https://public.cicada.guide/mcp-anthropic
+E=https://anthropic.cicada.guide/mcp
 H=(-H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream'
    -H 'MCP-Protocol-Version: 2025-06-18')
 curl -s "${H[@]}" "$E" -d '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' |

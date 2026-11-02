@@ -16,7 +16,7 @@ beside it.
    │                          │
    │ skills/  agents/         │ .mcp.json  ──  "guide-public"
    ▼                          ▼
- guidance loaded into    Streamable HTTP ──► https://public.cicada.guide/mcp-anthropic
+ guidance loaded into    Streamable HTTP ──► https://anthropic.cicada.guide/mcp
  the model's context                          (Cloudflare Worker, private repo
                                                cicada-guide/mcp-anthropic, read-only data)
 ```
@@ -33,7 +33,7 @@ releases. `scripts/check.mjs` fails until they agree.
 ## The MCP server
 
 `.mcp.json` declares exactly one server, keyed `guide-public`, at
-`https://public.cicada.guide/mcp-anthropic`. Two consequences follow:
+`https://anthropic.cicada.guide/mcp`. Two consequences follow:
 
 - **Tool names include the server key.** A host exposes each tool to the model as
   `mcp__plugin_cicada-guide_guide-public__<tool>`. Agent allowlists and any prose that names a

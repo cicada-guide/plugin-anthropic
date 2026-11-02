@@ -10,6 +10,13 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- The plugin's MCP endpoint is `https://anthropic.cicada.guide/mcp`, the same server on a new
+  hostname. The server still answers `https://public.cicada.guide/mcp-anthropic` and
+  `https://public.cicada.guide/mcp`, so copies installed before this release keep working. Card
+  photos and the PDF viewer still load from `public.cicada.guide`.
+
 ## [0.11.11] - 2026-11-02
 
 ### Changed

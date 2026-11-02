@@ -37,9 +37,9 @@ Knowing the plugin's reach helps you judge whether a finding is in scope:
 - Guidance that leads Claude to put credentials, personal data, or file contents into a tool
   argument, including `context`.
 - A way to point `.mcp.json` or a manifest at an endpoint other than
-  `https://public.cicada.guide/mcp-anthropic`, or to widen an agent's tool allowlist, that
+  `https://anthropic.cicada.guide/mcp`, or to widen an agent's tool allowlist, that
   `scripts/check.mjs` does not catch.
-- Vulnerabilities in the hosted server at `public.cicada.guide`.
+- Vulnerabilities in the hosted server at `anthropic.cicada.guide` or `public.cicada.guide`.
 
 ## Out of scope
 

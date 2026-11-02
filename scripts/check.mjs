@@ -10,7 +10,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 // The endpoint is a published API surface (CLAUDE.md). Changing it breaks every installed user, so
 // it moves only with a version bump and a transition period — edit this constant deliberately.
-const ENDPOINT = "https://public.cicada.guide/mcp-anthropic";
+const ENDPOINT = "https://anthropic.cicada.guide/mcp";
 const SERVER_KEY = "guide-public";
 const PLUGIN_NAME = "cicada-guide";
 

@@ -6,14 +6,15 @@ how cards appear, and run one of its slash commands. It takes about ten minutes 
 account, API key, or sign-in.
 
 The plugin connects your AI host to the hosted cicada-guide server at
-`https://public.cicada.guide/mcp-anthropic`, which serves U.S. state legislative data: bills, bill text,
+`https://anthropic.cicada.guide/mcp`, which serves U.S. state legislative data: bills, bill text,
 legislators, sessions, roll calls, and individual votes. It covers state legislatures only, and it
 is read-only: it looks things up and never contacts anyone or changes anything.
 
 ## What you'll need
 
 - Claude Code.
-- Network access to `https://public.cicada.guide` over HTTPS.
+- Network access to `https://anthropic.cicada.guide` (tools) and `https://public.cicada.guide`
+  (card photos and the PDF viewer) over HTTPS.
 - Nothing else. The server accepts anonymous callers, so there is no key to paste and no OAuth
   flow to complete.
 
