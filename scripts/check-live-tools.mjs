@@ -222,6 +222,17 @@ if (fileArg < 0) {
   }
 }
 
+// 7. Every tool a skill pre-approves in `allowed-tools` is one the server has. A renamed tool would
+// otherwise fall back to a permission prompt, with nothing failing.
+for (const file of walk("skills").filter((f) => f.endsWith("SKILL.md"))) {
+  const text = read(file);
+  const line = text.match(/^allowed-tools:\s*(.*)$/m);
+  for (const entry of line ? line[1].split(",").map((t) => t.trim()).filter(Boolean) : []) {
+    const name = entry.replace(/^mcp__.*__/, "");
+    if (!tools.has(name)) fail(file, lineOf(text, line.index), `allowed-tools pre-approves \`${name}\`, which is not a tool on the live server`);
+  }
+}
+
 if (failures.length) {
   console.error(`${failures.length} mismatch(es) with the live tools/list (${tools.size} tools):\n`);
   for (const f of failures) console.error(`  ${f}`);

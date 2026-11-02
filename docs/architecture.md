@@ -36,8 +36,8 @@ releases. `scripts/check.mjs` fails until they agree.
 `https://public.cicada.guide/mcp-anthropic`. Two consequences follow:
 
 - **Tool names include the server key.** A host exposes each tool to the model as
-  `mcp__plugin_cicada-guide_guide-public__<tool>`. Agent allowlists and any prose that names a
-  fully qualified tool must keep the `guide-public` segment. Without it the name matches nothing.
+  `mcp__plugin_cicada-guide_guide-public__<tool>`. Agent allowlists, skill `allowed-tools`, and any prose that
+  names a fully qualified tool must keep the `guide-public` segment. Without it the name matches nothing.
 - **The hostname is a published API.** Every installed copy of the plugin has it baked in. It
   moves only with a version bump and a transition period in which the old hostname still
   resolves. See [PUBLISHING.md](../PUBLISHING.md#infrastructure-dependency).
@@ -81,6 +81,10 @@ inside `skills/get-legislation/` may link their sibling `references/` relatively
 Agents are also sandboxed. Their frontmatter `tools:` allowlist names only `Read` and the
 `guide-public` server's tools, so an agent that reads bill text or a PDF cannot run commands or
 write files, whatever that text says.
+
+The three command skills pre-approve the `guide-public` tools they call, named one by one in
+`allowed-tools`, so a slash command runs without a permission prompt per tool. They name no
+wildcard: a tool the server adds later still asks first.
 
 ## Cards
 

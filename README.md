@@ -29,7 +29,8 @@ connected. If it doesn't, see [Troubleshooting](docs/troubleshooting.md). The se
 tools listed under [Tools](#tools) below; that set grows as tools are added.
 
 Claude Code may ask for approval before a tool runs. The tools only read legislative data, so you
-can allow them for the session.
+can allow them for the session. The three slash commands below pre-approve the tools they call, by
+name, so they run without asking.
 
 ## What it does
 
