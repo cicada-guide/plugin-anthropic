@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.11] - 2026-11-02
+
 ### Changed
 
 - A legislator's state, chamber, and district come only from `show_official` or
@@ -579,7 +581,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.10...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.11...HEAD
+[0.11.11]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.10...v0.11.11
 [0.11.10]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.9...v0.11.10
 [0.11.9]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.8...v0.11.9
 [0.11.8]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.7...v0.11.8
