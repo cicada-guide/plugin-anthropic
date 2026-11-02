@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.11.8] - 2026-11-02
+
 ### Changed
 
 - Card URI follows the server's new shell: `bill-results-v19`. Each bill result names its session
@@ -538,7 +540,8 @@ plugin's guidance, including updates made to match what the server returns.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.7...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.8...HEAD
+[0.11.8]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.7...v0.11.8
 [0.11.7]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.6...v0.11.7
 [0.11.6]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.5...v0.11.6
 [0.11.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.4...v0.11.5
