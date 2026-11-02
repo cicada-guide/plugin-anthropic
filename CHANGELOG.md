@@ -21,6 +21,8 @@ plugin's guidance, including updates made to match what the server returns.
   when several candidates must be told apart by chamber or district. They previously ruled out
   `show_official` per candidate and named no other way to read a seat. With one candidate left,
   the card call they already end with returns the seat.
+- `get-legislation` and `legislator-disambiguator` trigger on a surname given with a chamber or
+  party. Before, that question loaded neither, so none of the rules above reached the conversation.
 
 ### Added
 

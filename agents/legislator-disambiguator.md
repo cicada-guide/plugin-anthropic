@@ -1,6 +1,6 @@
 ---
 name: legislator-disambiguator
-description: Use this agent when a U.S. state legislator has been named but not pinned to one person, and confirming who they are means probing several candidates. Typical triggers include a common surname that matches legislators nationwide, a name that must be tied to a specific state before their votes can be reported, and a batch of vote records whose person ids must be resolved to the right individuals. Do not use it to report the votes themselves; it returns identifications, not a voting record. See "When to invoke" in the agent body for worked scenarios.
+description: Use this agent when a U.S. state legislator has been named but not pinned to one person, and confirming who they are means probing several candidates. Typical triggers include a common surname that matches legislators nationwide, a surname given with a chamber or party ("which legislator is the Democratic state senator named Hatcher") where only the recorded seats tell the matches apart, a name that must be tied to a specific state before their votes can be reported, and a batch of vote records whose person ids must be resolved to the right individuals. Do not use it to report the votes themselves; it returns identifications, not a voting record. See "When to invoke" in the agent body for worked scenarios.
 model: inherit
 tools: Read, mcp__plugin_cicada-guide_guide-public__*
 color: yellow
