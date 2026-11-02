@@ -106,8 +106,8 @@ reject unknown keys outright rather than ignoring them, so a plausible invented 
 harmless doc error — it is a runtime failure for every user who follows it.
 
 **Card input limits are restated too, and nothing checks them.** `show_bill`'s 120-character
-`headline` cap (and, until 2026-11-01, a 1,500-character `summary` cap) appears in the four entry
-points, `tool-reference.md`, `workflows.md`, five `docs/` pages and the changelog. `scripts/check.mjs`
+`headline` cap appears in the four entry points, `tool-reference.md`, `workflows.md`, five `docs/`
+pages and the changelog. `scripts/check.mjs`
 does not cover these numbers, and `check-live-tools.mjs` compares parameter names, not lengths. When
 the server changes a limit, grep the repo for the number and update every copy.
 
