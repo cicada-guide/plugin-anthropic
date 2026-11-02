@@ -10,6 +10,24 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- A legislator's state, chamber, and district come only from `show_official` or
+  `show_person_record`. Every skill and agent that carries this rule now says the links, email
+  addresses, and web pages in `get_person`'s `contact_details` are not a source for them. Asked for
+  "the Democratic state senator named Hatcher", Claude had read the chamber off a page named
+  `ALSenator.aspx` and an `@alsenate.gov` address rather than the recorded seat.
+- `get-legislation`, `voting-record`, and `contact-legislator` dispatch `legislator-disambiguator`
+  when several candidates must be told apart by chamber or district. They previously ruled out
+  `show_official` per candidate and named no other way to read a seat. With one candidate left,
+  the card call they already end with returns the seat.
+
+### Added
+
+- An eval case, `legislator-disambiguation`, that fails a seat taken from contact details.
+- `scripts/check.mjs` fails an entry point that carries the "never infer" seat rule without the
+  `contact_details` clause.
+
 ## [0.11.10] - 2026-11-02
 
 ### Changed

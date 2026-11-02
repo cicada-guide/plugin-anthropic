@@ -290,6 +290,12 @@ const REQUIRED = [
     needs: [/general rule/i, /never compute a date from it/i],
   },
   {
+    // get_person's contact links name state sites and chamber pages, and Claude read seats off them.
+    rule: "contact_details are not a seat",
+    when: (t) => /never infer them/i.test(t),
+    needs: [/`contact_details`[^.]*not a source for[^.]*chamber/],
+  },
+  {
     rule: "load a deferred tool before calling it",
     when: () => true,
     needs: [/load its definition with the tool-search tool before the first call/],

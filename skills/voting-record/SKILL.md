@@ -36,17 +36,27 @@ before the first call; never guess its parameters.
 `search_people` with `name`. Narrow with `party` when given.
 
 **`search_people` returns name and party only — no state, chamber, or district, and it has no
-jurisdiction filter.** `get_person` adds nothing on this front. A common surname matches legislators
-nationwide, and neither result can separate them. To narrow: call `get_person_votes` on each
-candidate and check whether `bill.division_id` on the returned items is the jurisdiction the request
-implies (resolve it with `list_states`). Do not call a `show_*` tool on each candidate to tell them
-apart; every call puts a card on screen.
+jurisdiction filter.** `get_person` adds nothing on this front; do not call it to identify anyone. A
+common surname matches legislators nationwide, and neither result can separate them. To narrow by
+jurisdiction: call `get_person_votes` on each candidate and check whether `bill.division_id` on the
+returned items is the jurisdiction the request implies (resolve it with `list_states`). That shows
+where they voted, not their seat. Do not call a `show_*` tool on each candidate to tell them apart;
+every call puts a card on screen.
 
-State a chamber or district only as `show_official` or `show_person_record` returns it: the seat
-line in the text (title · state chamber · District N), or `office.chamber` and `office.district`
-in `structuredContent`, depending on the host. When the seat line reads `Office and district: not
-recorded.` or `office` is `null`, they are not recorded. Never infer them from `search_people`,
-`get_person`, or the bills a legislator voted on.
+State a legislator's state, chamber, or district only as `show_official` or `show_person_record`
+returns it: the seat line in the text (title · state chamber · District N), or `office.state`,
+`office.chamber`, and `office.district` in `structuredContent`, depending on the host. When the seat
+line reads `Office and district: not recorded.` or `office` is `null`, they are not recorded. Never
+infer them from `search_people`, `get_person`, or the bills a legislator voted on. The links, email
+addresses, and web pages in `get_person`'s `contact_details` are not a source for their state,
+chamber, or district: a page such as `ALSenator.aspx` or an email domain such as `@alsenate.gov` is
+not their seat, and one record can hold both House and Senate pages.
+
+When the request names a chamber or district ("the Democratic state senator named Hatcher") and
+more than one candidate remains, dispatch the `legislator-disambiguator` agent with the request and
+your `conversation_id`. It reads each candidate's seat through `show_official` and returns it with
+its verdict, so no card goes on screen per candidate. With one candidate left, the
+`show_person_record` call in step 2 returns the seat: read it there before stating it.
 
 A `default_division` in `.claude/cicada-guide.local.md` is the jurisdiction to test candidates
 against when the request names none — see **Project settings** in

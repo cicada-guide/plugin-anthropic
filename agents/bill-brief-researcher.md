@@ -78,7 +78,9 @@ complete, or return a request for session clarification. Do not silently choose 
 - A sponsor's state chamber and district are stated only as `show_official` or
   `show_person_record` returns their seat: a seat line in text (`<title> · <state> <chamber> ·
   District N`) or `office.chamber` and `office.district` in structured content, depending on the
-  host. Otherwise they are not recorded. Never infer them from `search_people` or `get_person`.
+  host. Otherwise they are not recorded. Never infer them from `search_people` or `get_person`:
+  the links, email addresses, and web pages in its `contact_details` are not a source for a
+  sponsor's state, chamber, or district.
   Only when the request asks for a sponsor's chamber or district, call `show_official` with that
   sponsor's `id` to read the seat; a `null` `office` or `Office and district: not recorded.` means
   report it as not recorded.
