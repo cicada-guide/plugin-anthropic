@@ -15,7 +15,7 @@ there rather than repeating them. Why the plugin ends answers with a card is in
 | Tool | Card | Resource URI | The card fetches | The model receives |
 | --- | --- | --- | --- | --- |
 | `search_bills` | Bill results | `ui://cicada-guide/bill-results-v19.html` | More pages of the same search, once every loaded result is shown | The full result list, as text or JSON, as usual |
-| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v23.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
+| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v24.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
 | `show_official` | Contact card | `ui://cicada-guide/official-card-v15.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
 | `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v23.html` | Vote history and sessions (`get_person_votes`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
 
@@ -102,7 +102,9 @@ Parameters: `id`, `headline`, and `summary`, all required —
   non-PDF latest version as text), or the document's link with **Copy link** where the card can't
   show it. Inline, a PDF opens on its first page; **Read full screen** asks the host for full
   screen, which shows five pages at a time, and **Open original** opens the document through the
-  host.
+  host. When the newest version has no readable text and the server returns an older version's
+  stored text (`fallback_from`), the link panel names that version and offers **Read the … version**,
+  which shows its text under a note naming it.
 - **Votes:** the floor votes, each roll call's party split, and who voted how, filterable by party.
 
 **The card fetches** `get_bill_dossier` for sponsors, documents, and floor votes, and

@@ -10,6 +10,15 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- `references/tool-reference.md` documents `get_latest_bill_document`'s `fallback_from`. When the
+  newest version has no readable text, the server now returns the stored text of the newest older
+  version that has some: `item` is that version, and `fallback_from` names the newest and why. Claude
+  labels the text as that older version, never as the newest.
+- The bill card's URI follows the server's new shell, `bill-workspace-v24`. When the newest version
+  can't be shown, the card offers the older version's stored text under its own name.
+
 ## [0.12.3] - 2026-11-03
 
 ### Fixed

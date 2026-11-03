@@ -306,7 +306,7 @@ It is a general rule, not this bill's deadline: never compute a date from it. Th
 
 Like the other display tools, it has no `response_format`.
 
-Renders a bill card via `ui://cicada-guide/bill-workspace-v23.html` in hosts that support MCP Apps.
+Renders a bill card via `ui://cicada-guide/bill-workspace-v24.html` in hosts that support MCP Apps.
 The card shows the state and session, the status with its date, the bill number, and a title plate
 that shows your `headline` first; tapping the plate toggles to the official title and back. Then
 come four tabs. Overview holds the path to becoming law (Introduced, Engrossed, Enrolled, Passed,
@@ -406,6 +406,21 @@ It is absent whenever `text` is present.
 | `no_url` | No stored text and no link |
 | `too_large` | The linked document is over the 2 MB fetch bound |
 | `fetch_failed` | Any other status (in `http_status`), a timeout, or a network error |
+
+**When the newest version has no readable text, an older version's stored text comes back.** The
+tool then reads the newest older version with stored `clean_text` or `raw_text`: `item` is that
+older version, and `fallback_from` names the newest one and why it had no text (`reason` takes the
+`text_unavailable` values above). `text_unavailable` is absent, since `text` is present. Markdown
+opens with a line starting `_The newest version (`.
+
+```json
+"item": { "id": "...", "status": "Amended", "date": "2025-07-17", "url": "...", "format": "HTML" },
+"fallback_from": { "item": { "id": "...", "status": "Chaptered", "date": "2025-10-13", "url": "..." },
+                   "reason": "refused" }
+```
+
+Label what you read as that older version, by its status and date, and never as the newest
+version's text; the final text may differ. Give `fallback_from.item.url` for the newest version.
 
 ### `get_documents`
 
