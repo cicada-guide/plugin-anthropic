@@ -10,6 +10,33 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Fixed
+
+- The always-on `get-legislation` skill loads again. Since 0.11.11 its `description` held an
+  unquoted ": ", so its frontmatter was not valid YAML and Claude Code left the skill out of the
+  model's list. Its slash command still worked, but requests that no other skill matched ran
+  without its rules: federal bills and predictions were not declined, and ambiguous bill numbers
+  were not asked about.
+
+### Changed
+
+- `get-legislation` now loads for a question about Congress, a local ordinance, a ballot measure,
+  a regulation or a non-U.S. legislature, and declines it without answering from general
+  knowledge: no provisions, votes, dates or outcome, even with a caveat. It names where the
+  official record is and offers state legislation instead. Its description used to say "Not for"
+  those, so the skill never loaded and Claude described H.R. 1 from memory. `bill-brief-researcher`
+  carries the same rule.
+- `get-legislation` stops and asks when a bill number matches bills in more than one session and
+  the request names none, as `research-legislation` already did. It lists each one and describes
+  none until the user chooses. In eval runs, "What does Texas HB 26 do?" was answered with the
+  newest of four.
+- `get-legislation` and `legislator-disambiguator` no longer say what chamber or state a contact
+  link names, or suggest it points to an earlier seat.
+
+### Added
+
+- `scripts/check.mjs` fails on an unquoted ": " or " #" in a frontmatter value.
+
 ## [0.12.2] - 2026-11-02
 
 ### Changed
