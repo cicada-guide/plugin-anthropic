@@ -169,7 +169,7 @@ change when you make one.
 | `get_documents` | All documents attached to a bill |
 | `read_pdf_bytes` | Stream a large legislative PDF in chunks |
 | `search_people` | Find legislators by name or party, or batch-resolve up to 100 ids |
-| `get_person` | Name, party, and contact details for one legislator |
+| `get_person` | One legislator's stored record: name, party, and raw contact fields. To reach them, use `show_official` |
 | `show_person_record` | Show a legislator's record: seat, voting history with session, vote, and subject filters, and sponsored bills |
 | `show_official` | Show a legislator's contact card: photo, seat, contact options, district map, and recent votes |
 | `get_rollcalls` | Floor-vote summaries for a bill |
