@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.12.5] - 2026-11-03
+
 ### Added
 
 - `promptfoo/` runs the `evals/` cases under promptfoo, for its results viewer and side-by-side
@@ -710,7 +712,8 @@ skill, agent or doc changed.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.4...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.5...HEAD
+[0.12.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.4...v0.12.5
 [0.12.4]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.3...v0.12.4
 [0.12.3]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.2...v0.12.3
 [0.12.2]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.1...v0.12.2
