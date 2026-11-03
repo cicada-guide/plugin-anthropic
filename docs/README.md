@@ -27,6 +27,8 @@ Changing the plugin:
 
 - [Verify a change](howto-verify-a-change.md): the offline checks, the live tools check, and
   loading a checkout into a real session.
+- [Run the evals under promptfoo](howto-run-promptfoo.md): the same `evals/` cases in promptfoo,
+  for its results viewer and side-by-side model comparisons.
 - [Add a command or agent](howto-add-a-command-or-agent.md): the files, frontmatter, and rules a
   new entry point must carry.
 - [Update the tool docs](howto-update-tool-docs.md): reconcile the three tool lists when the

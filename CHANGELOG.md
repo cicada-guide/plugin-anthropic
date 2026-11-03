@@ -10,6 +10,14 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Added
+
+- `promptfoo/` runs the `evals/` cases under promptfoo, for its results viewer and side-by-side
+  model comparisons. It reads each case's `prompt.md` and graders rather than copying them, loads
+  this checkout as a plugin through the Claude Agent SDK, and keeps the no-plugin baseline arm. It
+  has its own `package.json`; the plugin still has no dependencies. See
+  [How to run the evals under promptfoo](docs/howto-run-promptfoo.md).
+
 ## [0.12.4] - 2026-11-03
 
 ### Changed

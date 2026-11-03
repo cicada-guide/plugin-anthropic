@@ -13,3 +13,7 @@ desktop.ini
 
 # Plugin eval results, written by `claude plugin eval`
 evals/results/
+
+# promptfoo runner dependencies and output (promptfoo/package.json)
+promptfoo/node_modules/
+promptfoo/package-lock.json
