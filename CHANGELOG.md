@@ -10,6 +10,11 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- The README's tool table describes `get_person` as one legislator's stored record and points
+  contact requests at `show_official`, matching the server's updated `get_person` description.
+
 ## [0.12.5] - 2026-11-03
 
 ### Added
@@ -19,11 +24,6 @@ plugin's guidance, including updates made to match what the server returns.
   this checkout as a plugin through the Claude Agent SDK, and keeps the no-plugin baseline arm. It
   has its own `package.json`; the plugin still has no dependencies. See
   [How to run the evals under promptfoo](docs/howto-run-promptfoo.md).
-
-### Changed
-
-- The README's tool table describes `get_person` as one legislator's stored record and points
-  contact requests at `show_official`, matching the server's updated `get_person` description.
 
 ## [0.12.4] - 2026-11-03
 
