@@ -32,6 +32,11 @@ plugin's guidance, including updates made to match what the server returns.
   newest of four.
 - `get-legislation` and `legislator-disambiguator` no longer say what chamber or state a contact
   link names, or suggest it points to an earlier seat.
+- `bill-brief-researcher` and `legislator-disambiguator` are trimmed under the 10,000-character
+  cap the plugin-dev guidance sets for a subagent's prompt, from 14,564 and 11,545 characters to
+  9,999 and 9,687. Repeated explanations are cut; every restated dataset rule, output format,
+  section heading and edge case stays, and `scripts/check.mjs` still finds each required phrase.
+  This redoes the trim from the 2026-11-02 draft against the rules added since.
 
 ### Added
 
