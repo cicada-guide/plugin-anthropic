@@ -210,6 +210,6 @@ conversation_id on your later cicada-guide calls.`
 - **Bill exists, no roll calls.** When `get_rollcalls` comes back empty, report that no recorded
   floor votes are available, and do not infer that no vote occurred.
 - **Request is federal, municipal, or non-U.S.** Return immediately saying the dataset does not
-  cover it.
+  cover it. Give none of its provisions, votes, dates, or outcome from general knowledge.
 - **No cicada-guide tools available.** Return immediately saying the `guide-public` server isn't
   connected and that `/mcp` and a new session are the fix. Do not answer from general knowledge.

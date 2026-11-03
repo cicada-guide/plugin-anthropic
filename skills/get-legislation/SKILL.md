@@ -1,6 +1,6 @@
 ---
 name: get-legislation
-description: This skill should be used for questions about U.S. STATE legislation — finding or reading a state bill ("look up HB 314", "what bills mention school funding", "what does this bill do", "what's the status of this bill"), state legislators ("who sponsored this bill", "which legislator is the Democratic state senator named Hatcher", "what party is she", "how do I contact Senator X"), or roll calls and voting records ("how did Senator X vote", "show me the roll call", "how did the chamber split", "list Alabama's legislative sessions"). Not for the U.S. Congress or federal bills, city or county ordinances, ballot measures, regulations, or non-U.S. legislatures — the dataset covers state legislatures only. Use it before stating any legislator's state, chamber, or district, which only the recorded seat gives, and before acting on any request to rank, grade, score, or rate legislators (for example by ideology) or to predict a vote: those are declined, and only recorded votes are reported.
+description: This skill should be used for questions about U.S. STATE legislation — finding or reading a state bill ("look up HB 314", "what bills mention school funding", "what does this bill do", "what's the status of this bill"), state legislators ("who sponsored this bill", "which legislator is the Democratic state senator named Hatcher", "how do I contact Senator X"), or roll calls and voting records ("how did Senator X vote", "show me the roll call", "how did the chamber split", "list Alabama's legislative sessions"). Use it too, before answering from memory, for a question about Congress or a federal bill, a city or county ordinance, a ballot measure, a regulation, or a non-U.S. legislature; the dataset covers none of these, so decline them. Use it before stating any legislator's state, chamber, or district, which only the recorded seat gives, and before acting on a request to rank, grade, score, or rate legislators or to predict a vote; those are declined too, and only recorded votes are reported.
 ---
 
 # Researching U.S. state legislation with cicada-guide
@@ -26,7 +26,9 @@ checking `/mcp` and starting a new session, and don't answer from general knowle
 The database covers **state** legislatures. It holds no federal congressional bills, no municipal
 ordinances, and no ballot measures. For a question about Congress, an act of Parliament, or a city
 council, say the dataset does not cover it rather than searching and reporting an empty result as
-if it were an answer.
+if it were an answer. Do not answer it from general knowledge either: describe none of its provisions,
+votes, dates, or outcome, even with a caveat. Name where the official record is (congress.gov for
+a federal bill, the city or county for an ordinance) and offer to research state legislation.
 
 Call `list_states` to see which jurisdictions are present before asserting that a state has no
 matching bills.
@@ -301,7 +303,8 @@ say they are not recorded. Never infer them from `search_people`, `get_person`, 
 legislator voted on. The links, email addresses, and web pages in `get_person`'s `contact_details`
 are not a source for their state, chamber, or district: a page such as `ALSenator.aspx` or
 `iga.in.gov`, or an email domain such as `@alsenate.gov`, is not their seat, and one record can hold
-both House and Senate pages. Do not call `get_person` to identify a legislator.
+both House and Senate pages. Do not mention what chamber or state a contact link names, or suggest
+it points to another or an earlier seat. Do not call `get_person` to identify a legislator.
 
 **When the seat decides who is meant, read it from `show_official`.** "The Democratic state senator
 named Hatcher" matches two Democrats whom only their recorded seats tell apart. With two or more
@@ -324,7 +327,10 @@ and vote date ranges, and ask which one the user means.
 matches the `HB 314` and `HB314` storage forms and no other number. The same number exists in many
 sessions and states, so scope by `division_id` and a session, and read each result's session. To
 filter by a year without resolving a UUID, pass `session_name` (partial match: `"2025"` covers every
-2025 session, regular and special); `session_id` pins exactly one.
+2025 session, regular and special); `session_id` pins exactly one. When the results hold the same
+number in more than one session and nothing in the request picks one, stop and ask: list each with
+number, title, session, and status, and describe none of them, or show a card, until the user
+chooses. Never assume the newest or current session.
 
 **`query` words are matched separately, so more words widen the results.** `search_bills` splits
 `query` into words and ORs a title substring match on each; only the first 8 terms are

@@ -59,7 +59,8 @@ a vote to the wrong legislator is the worst failure this dataset can produce.
    otherwise they are not recorded. Never infer them from `search_people` or `get_person`: the
    links, email addresses, and web pages in its `contact_details` are not a source for state,
    chamber, or district. A page such as `ALSenator.aspx` or an email domain such as `@alsenate.gov`
-   is not a seat, and one record can hold both House and Senate pages. Call
+   is not a seat, and one record can hold both House and Senate pages; do not report what chamber
+   or state a link names, or suggest it points to another or an earlier seat. Call
    `show_official` here only to read the seat, not to display it: your output is not rendered to
    the user, so the caller shows the card. Report the seat and nothing else from that call; contact
    details are the card's job, and they never go into `context`.
