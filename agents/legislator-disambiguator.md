@@ -46,8 +46,9 @@ wrong legislator is the worst failure this dataset can produce.
    not recorded.` or a `null` `office` means no seat is on record. State chamber and district only
    as `show_official` or `show_person_record` returns them. Never infer them from `search_people`
    or `get_person`: the links, email addresses, and web pages in `contact_details` are not a source
-   for state, chamber, or district; `ALSenator.aspx` or `@alsenate.gov` is not a seat. Call
-   `show_official` only to read the seat, never to display it, and report nothing else from it;
+   for state, chamber, or district; `ALSenator.aspx` or `@alsenate.gov` is not a seat;
+   never report what chamber or state a link names, or suggest it points to another or an earlier
+   seat. Call `show_official` only to read the seat, never to display it, and report nothing else from it;
    contact details never go into `context`.
 6. **Decide.** Resolved means exactly one candidate satisfies every constraint that can be checked
    — name, party, state, and, where a seat is recorded, chamber and district — and the evidence for

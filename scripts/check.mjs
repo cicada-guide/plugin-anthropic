@@ -130,6 +130,13 @@ for (const file of entryPoints) {
     if (kv) [lastKey, fields[kv[1]]] = [kv[1], kv[2]];
     else if (lastKey === "description" && line.trim()) fields.descriptionWraps = true;
   }
+  // An unquoted value is a YAML plain scalar: ": " inside it makes the frontmatter invalid and
+  // " #" cuts it short. Claude Code then drops the skill from the model's list with no error,
+  // though its slash command still works.
+  for (const [key, value] of Object.entries(fields)) {
+    if (typeof value !== "string" || /^["']/.test(value)) continue;
+    if (/:\s|\s#/.test(value)) fail(file, 0, `frontmatter ${key} has an unquoted ": " or " #", which is not valid YAML`);
+  }
   const expected = file.startsWith("skills/") ? file.split("/")[1] : file.split("/").pop().replace(/\.md$/, "");
   if (fields.name !== expected) fail(file, 2, `frontmatter name is "${fields.name}", expected "${expected}"`);
   if (!fields.description) fail(file, 3, "frontmatter description is missing or empty");
