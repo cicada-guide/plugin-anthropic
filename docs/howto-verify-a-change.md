@@ -176,7 +176,8 @@ says why, points to the link, and adds nothing beyond the title. If Hawaii's sit
 page, the reply will describe the bill and this case will fail; choose another bill whose
 `get_latest_bill_document` returns `text_unavailable`. Results go to `evals/results/`, which
 is ignored. The [plugin eval docs](https://code.claude.com/docs/en/plugin-evals) cover the case
-and grader format.
+and grader format. To run the same cases in promptfoo instead, see
+[How to run the evals under promptfoo](howto-run-promptfoo.md).
 
 ### 6. Check the cards in a host that renders them
 

@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+#
+# Runs the plugin's eval cases (../evals/) under promptfoo. Setup, cost and how this differs from
+# `claude plugin eval`: docs/howto-run-promptfoo.md.
+
+description: cicada-guide plugin evals
+
+prompts:
+  - "{{prompt}}"
+
+providers:
+  - id: file://provider.mjs
+    label: with-plugin
+    config:
+      plugin: true
+      # The same grants as `claude plugin eval --allow-tools` in docs/howto-verify-a-change.md.
+      allowTools:
+        - "mcp__plugin_cicada-guide_guide-public__*"
+        - ToolSearch
+  - id: file://provider.mjs
+    label: without-plugin
+    config:
+      plugin: false
+      allowTools:
+        - "mcp__plugin_cicada-guide_guide-public__*"
+        - ToolSearch
+
+defaultTest:
+  options:
+    # Grades `llm` rubrics with Sonnet, as `--judge-model sonnet` does for `claude plugin eval`.
+    provider:
+      id: file://provider.mjs
+      config:
+        judge: true
+        model: sonnet
+
+tests: file://cases.mjs
+
+evaluateOptions:
+  # Each case runs three times per arm, as in `claude plugin eval`. Every run is a full Claude Code
+  # session, and all of them share the server's 600-a-minute rate limit, so run one at a time.
+  repeat: 3
+  maxConcurrency: 1

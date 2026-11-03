@@ -69,6 +69,7 @@ deployment or its private repo; treat the endpoint as a fixed external dependenc
 | `docs/` | `README.md` index, `architecture.md`, `troubleshooting.md` — human-facing, never loaded into a session |
 | `docs/solutions/` | Documented solutions to past problems, organized by category with YAML frontmatter (`module`, `tags`, `problem_type`). Relevant when implementing or debugging in documented areas |
 | `scripts/` | `check.mjs` (offline invariants) and `check-live-tools.mjs` (docs against the live server) |
+| `promptfoo/` | Opt-in promptfoo runner for `evals/`, with its own `package.json`. Reads the cases rather than copying them; never loaded by the plugin. See [docs/howto-run-promptfoo.md](../docs/howto-run-promptfoo.md) |
 | `.github/workflows/` | `check.yml` on every pull request; `live-tools.yml` nightly; `tag-release.yml` tags each version bump on `main` |
 
 ## Invariants
