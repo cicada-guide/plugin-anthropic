@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.12.3] - 2026-11-03
+
 ### Fixed
 
 - The always-on `get-legislation` skill loads again. Since 0.11.11 its `description` held an
@@ -684,7 +686,8 @@ skill, agent or doc changed.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.2...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.3...HEAD
+[0.12.3]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.2...v0.12.3
 [0.12.2]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.1...v0.12.2
 [0.12.1]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.11.11...v0.12.0
