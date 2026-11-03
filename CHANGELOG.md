@@ -10,6 +10,14 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- `bill-brief-researcher` and `legislator-disambiguator` are trimmed under the 10,000-character
+  cap the plugin-dev guidance sets for a subagent's prompt, from 14,486 and 11,440 characters to
+  9,972 and 9,583. Repeated explanations are cut; every restated dataset rule, output format,
+  section heading and edge case stays, and `scripts/check.mjs` still finds each required phrase.
+  This redoes the trim from the 2026-11-02 draft against the rules added since.
+
 ## [0.12.2] - 2026-11-02
 
 ### Changed
