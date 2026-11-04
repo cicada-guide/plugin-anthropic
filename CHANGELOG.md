@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.12.6] - 2026-11-04
+
 ### Changed
 
 - The README's tool table describes `get_person` as one legislator's stored record and points
@@ -712,7 +714,8 @@ skill, agent or doc changed.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.5...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.6...HEAD
+[0.12.6]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.5...v0.12.6
 [0.12.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.4...v0.12.5
 [0.12.4]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.3...v0.12.4
 [0.12.3]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.2...v0.12.3
