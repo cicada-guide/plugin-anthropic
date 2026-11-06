@@ -10,6 +10,16 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- The `legislator-disambiguation` eval's `seat-from-tool` grader fails a reply that states a seat
+  from memory, even a correct one, and one that suggests an earlier or other seat no recorded seat
+  shows ("he served in the Alabama House first"). The judge first checks the trace for a
+  `show_official` or `show_person_record` result, or an agent report quoting one. Under the old
+  wording it had passed two no-plugin runs that answered Hatcher from memory. Re-grading the twelve
+  saved runs from the last two full promptfoo runs, both arms, failed those two and changed no other
+  verdict.
+
 ## [0.12.7] - 2026-11-06
 
 ### Changed
