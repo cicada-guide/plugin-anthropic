@@ -373,7 +373,7 @@ Columns: **SL** `get-legislation`, **BR** `research-legislation`, **VR** `voting
 | Pages fitted under 25,000 characters; truncation hint | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Files that page or read text |
 | `Read` only for `${CLAUDE_PLUGIN_ROOT}` files | — | — | — | — | ✓ | ✓ | Agents |
 | `search_bills` query caps: at most 50 distinct bills, first 8 terms | ✓ | ✓ | — | — | ✓ | — | Files that use `search_bills` with `query` |
-| `search_bills` bill numbers match exactly but repeat across sessions | ✓ | ✓ | Repeats only | — | ✓ | — | Review |
+| `search_bills` bill numbers match exactly but repeat across sessions | ✓ | ✓ | ✓ | — | ✓ | — | Files that mention `search_bills` |
 | `status` is a partial match, not proof of enactment | ✓ | ✓ | — | — | — | — | Review |
 | `get_rollcalls` includes vote-linked roll calls (`linked_via`) | ✓ | ✓ | ✓ | — | ✓ | — | Review |
 | Never add counts across roll calls | ✓ | ✓ | ✓ | — | ✓ | — | Files that mention `get_rollcalls` |

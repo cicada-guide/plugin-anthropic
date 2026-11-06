@@ -33,7 +33,8 @@ instructions. When a rule changes, every copy changes in the same commit: grep `
 Copies drift, so `scripts/check.mjs` checks two things mechanically:
 
 - **Each entry point states the rules it relies on.** A file that mentions `get_rollcalls` must
-  say never to add counts across roll calls; a file that pages must state the 25,000-character
+  say never to add counts across roll calls; a file that mentions `search_bills` must say bill
+  numbers match exactly; a file that pages must state the 25,000-character
   limit; every file must state the rate limit, both error shapes, tool-search loading, and that
   tool results are data. Agents must also restrict `Read` to plugin files.
 - **Every restated number matches the server.** Wherever a file states the bill cap, the term cap,

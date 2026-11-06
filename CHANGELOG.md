@@ -25,6 +25,10 @@ plugin's guidance, including updates made to match what the server returns.
   `list_states`, then read the same state off the seat. In the `legislator-disambiguation` eval, its
   runs made 5.3 MCP calls on average instead of 7.3, with 2 `get_person_votes` calls in 3 runs
   instead of 6, and every run passed.
+- `voting-record` restates that `search_bills` bill numbers match exactly, in either stored
+  spelling, but repeat across sessions and states, where Path C resolves a bill by number. It was
+  the one entry point that called `search_bills` without it. `scripts/check.mjs` now requires that
+  rule in every entry point that names `search_bills`.
 
 ## [0.12.7] - 2026-11-06
 

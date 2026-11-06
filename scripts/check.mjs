@@ -294,6 +294,12 @@ const REQUIRED = [
     needs: [/at most 50 distinct bill/, /first 8 terms/],
   },
   {
+    // A model that takes the first "HB 314" row briefs another state's or session's bill.
+    rule: "search_bills exact bill-number matching",
+    when: (t) => t.includes("`search_bills`"),
+    needs: [/Bill[- ]number(?:s match exactly| matching is exact)/, /`HB 314`[^.]*`HB314`/],
+  },
+  {
     rule: "25,000-character truncation",
     // Anything that pages or reads text can meet a truncated response, not only prose that says so.
     when: (t) =>
