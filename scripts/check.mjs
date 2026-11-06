@@ -51,11 +51,14 @@ const skillFiles = skillDirs.map((d) => `skills/${d}/SKILL.md`).filter((file) =>
 const agentFiles = walk("agents", (p) => p.endsWith(".md"));
 const entryPoints = [...skillFiles, ...agentFiles];
 const docFiles = [...walk("skills", (p) => p.endsWith(".md")), ...agentFiles, "README.md"];
-// Human-facing project docs. They link with ../ legitimately and never load into a session, so they
-// skip the runtime-path rules on docFiles but still get the link, count, number and critique checks.
+// Human-facing project docs, plus the maintainer harness under .claude/ (never shipped, and not an
+// entry point). They link with ../ legitimately and never load into a user's session, so they skip
+// the runtime-path rules on docFiles but still get the link, count, number and critique checks.
 const projectDocs = [
   ...["CONTRIBUTING.md", "CHANGELOG.md", "SECURITY.md"].filter((f) => existsSync(join(ROOT, f))),
-  ...(existsSync(join(ROOT, "docs")) ? walk("docs", (p) => p.endsWith(".md")) : []),
+  ...["docs", ".claude/skills", ".claude/agents"]
+    .filter((d) => existsSync(join(ROOT, d)))
+    .flatMap((d) => walk(d, (p) => p.endsWith(".md") && !p.endsWith(".local.md"))),
 ];
 const allMarkdown = [
   ...docFiles,
