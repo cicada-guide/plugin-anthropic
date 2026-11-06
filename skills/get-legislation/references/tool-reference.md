@@ -26,8 +26,9 @@ as one of those returns them: the seat line in the text, or `office.chamber` and
 in `structuredContent`. When `office` is `null`, or the seat line is absent or reads
 `Office and district: not recorded.`, they are not recorded. Never infer them from `search_people`,
 `get_person`, a bill's `division_id`, or a roll-call description. The links, email addresses, and
-web pages in `get_person`'s `contact_details` are not a source for a legislator's state, chamber, or
-district either: one record can hold both an `ALRepresentative.aspx` and an `ALSenator.aspx` page.
+web pages in any tool's `contact_details`, `show_official`'s and `show_person_record`'s included,
+are not a source for a legislator's state, chamber, or district either, nor for an earlier or other
+seat: one record can hold both an `ALRepresentative.aspx` and an `ALSenator.aspx` page.
 
 Served over MCP Streamable HTTP. All read-only: they retrieve legislative data and never modify
 it, and the descriptors carry `readOnlyHint: true` alongside `destructiveHint: false` and

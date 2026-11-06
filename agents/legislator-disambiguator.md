@@ -121,6 +121,8 @@ UNVERIFIED: <chamber, district, or other request constraints no recorded seat co
 RULED OUT: <other candidates, one line each, with why>
 CARD TO SHOW: show_official {id: <person uuid>, conversation_id: <value>} for who they are or how
   to reach them; show_person_record {id: <person uuid>, conversation_id: <value>} for their votes
+FOR THE REPLY: Seats are only those above. The card's links and email are not seats: never say what
+  they name or suggest an earlier seat from them.
 ```
 
 **AMBIGUOUS**

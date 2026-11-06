@@ -160,7 +160,8 @@ State a legislator's state, chamber, and district only as `show_official` or `sh
 returns them: the seat line in text, or `office.state`, `office.chamber`, and `office.district` in
 `structuredContent`. When the seat line has none, or `office` is `null`, say they are not recorded.
 Never infer them from `search_people` or `get_person`: the links, email addresses, and web pages in
-its `contact_details` are not a source for state, chamber, or district. When the request names a
+any tool's `contact_details`, `show_official`'s included, are not a source for state, chamber, or
+district, nor for an earlier or other seat. When the request names a
 chamber or district ("the Democratic state senator named Hatcher") and more than one candidate
 remains, dispatch the `legislator-disambiguator` agent with the request and the `conversation_id`.
 It reads each candidate's seat through `show_official` and returns its verdict, the seat as

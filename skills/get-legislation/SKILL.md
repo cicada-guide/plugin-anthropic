@@ -300,11 +300,14 @@ When two candidates remain plausible, list them and ask rather than picking one.
 `show_person_record` returns them** — the seat line in text, or `office.state`, `office.chamber`,
 and `office.district` in `structuredContent`. When the seat line has none, or `office` is `null`,
 say they are not recorded. Never infer them from `search_people`, `get_person`, or the bills a
-legislator voted on. The links, email addresses, and web pages in `get_person`'s `contact_details`
+legislator voted on. The links, email addresses, and web pages in any tool's `contact_details`
+(from `get_person`, `show_official`, or `show_person_record`, and a card's Email and Website lines)
 are not a source for their state, chamber, or district: a page such as `ALSenator.aspx` or
 `iga.in.gov`, or an email domain such as `@alsenate.gov`, is not their seat, and one record can hold
-both House and Senate pages. Do not mention what chamber or state a contact link names, or suggest
-it points to another or an earlier seat. Do not call `get_person` to identify a legislator.
+both House and Senate pages. Never say what chamber, state, or seat a contact link or email names,
+and never use one to suggest an earlier, other, or likely seat, even as a hedge ("he may have served
+in the House"): a seat not on the seat line, in `office`, or in `other_offices` is not recorded, and
+nothing more is said about it. Do not call `get_person` to identify a legislator.
 
 **When the seat decides who is meant, read it from `show_official`.** "The Democratic state senator
 named Hatcher" matches two Democrats whom only their recorded seats tell apart. With two or more
