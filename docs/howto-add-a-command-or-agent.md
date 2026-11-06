@@ -96,7 +96,7 @@ looking for a trigger in the same file.
 | Roll-call counts | Names `` `get_rollcalls` `` in backticks | `never add counts across roll calls` (any case) |
 | `search_people` batch cap | Names `` `search_people` `` and `` `ids` `` in backticks with no full stop between them | `batches of up to 100`, `batches of at most 100`, `1-100`, or `up to 100` |
 | `search_bills` query caps | Names both `` `search_bills` `` and `` `query` `` in backticks | `at most 50 distinct bill` and `first 8 terms` |
-| `search_bills` exact bill numbers | Names `` `search_bills` `` in backticks | `Bill numbers match exactly` or `Bill-number matching is exact`, and `` `HB 314` `` then `` `HB314` `` in one sentence |
+| `search_bills` exact bill numbers | Names `` `search_bills` `` in backticks | `Bill numbers match exactly` or `Bill-number matching is exact`; `` `HB 314` `` then `` `HB314` `` in one sentence; and ``Pass the number with its chamber prefix (`HB 314`); a number alone (`314`) returns no bills`` |
 | Agents read only plugin files | Is under `agents/` | ``Use `Read` only for files under `${CLAUDE_PLUGIN_ROOT}` `` |
 
 `contact-legislator` names `` `context` `` and `` `limit` `` and `` `has_more` ``, so on top of the

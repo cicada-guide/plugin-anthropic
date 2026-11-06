@@ -22,7 +22,8 @@ Bill numbers repeat across states and sessions, so scope the search before trust
 ```
 
 `bill` matches the exact number in either stored spelling (`HB 314` or `HB314`), but the same number
-repeats across sessions, so read each result's session before reporting. When the user named a year
+repeats across sessions, so read each result's session before reporting. Pass the number with its
+chamber prefix (`HB 314`); a number alone (`314`) returns no bills. When the user named a year
 but not a session, `session_name: "2025"` filters to every 2025 session without a UUID; it is a
 partial match, so it can return regular and special sessions together.
 
