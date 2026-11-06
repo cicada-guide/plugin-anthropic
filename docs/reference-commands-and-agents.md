@@ -319,10 +319,11 @@ someone's votes. It returns identifications, never a voting record.
 2. On zero results, retry with the surname alone, then a nickname or spelling variant, paging with
    `offset` before concluding.
 3. Treat one result as not yet proof.
-4. Probe each plausible candidate with `get_person_votes` (about 10 rows) and read
-   `bill.division_id` and `bill.session_id`, resolved through `list_states`.
-5. Read each candidate's seat with `show_official` — only to read it, never to display it — and
+4. Read each candidate's seat with `show_official` — only to read it, never to display it — and
    report nothing else from that call.
+5. Probe votes with `get_person_votes` (about 10 rows) only where the seat leaves a gap: a candidate
+   with no recorded seat, seats that cannot separate the candidates, or a session or year to
+   check. Read `bill.division_id` and `bill.session_id`, resolved through `list_states`.
 6. Decide: resolved only when exactly one candidate satisfies every checkable constraint with
    retrieved evidence. A chamber or district the recorded seat cannot confirm goes on the
    `UNVERIFIED` line.
@@ -332,8 +333,8 @@ someone's votes. It returns identifications, never a voting record.
 **Output format.** Every return starts with a `Conversation id: <value>` line once the agent has
 called a tool, so the caller keeps one analytics session. Then a verdict line, then evidence:
 
-- `VERDICT: RESOLVED` with `PERSON`, `ID`, `EVIDENCE` (state and session, and which call produced
-  them), `SEAT`, `UNVERIFIED`, `RULED OUT`, and `CARD TO SHOW: show_official {id: <person uuid>,
+- `VERDICT: RESOLVED` with `PERSON`, `ID`, `EVIDENCE` (state from the recorded seat or the
+  votes, and which call produced it), `SEAT`, `UNVERIFIED`, `RULED OUT`, and `CARD TO SHOW: show_official {id: <person uuid>,
   conversation_id: <value>}` for who they are or how to reach them, and
   `show_person_record {id: <person uuid>, conversation_id: <value>}` for their votes.
 - `VERDICT: AMBIGUOUS — N candidates remain`, one numbered line per candidate with party, id, seat,

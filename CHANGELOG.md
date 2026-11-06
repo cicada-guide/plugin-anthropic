@@ -19,6 +19,12 @@ plugin's guidance, including updates made to match what the server returns.
   wording it had passed two no-plugin runs that answered Hatcher from memory. Re-grading the twelve
   saved runs from the last two full promptfoo runs, both arms, failed those two and changed no other
   verdict.
+- `legislator-disambiguator` reads each candidate's recorded seat first and probes their votes only
+  where the seat leaves a gap: no seat on record, seats that cannot separate the candidates, or a
+  session or year to check. It used to probe every candidate's votes and resolve the state through
+  `list_states`, then read the same state off the seat. In the `legislator-disambiguation` eval, its
+  runs made 5.3 MCP calls on average instead of 7.3, with 2 `get_person_votes` calls in 3 runs
+  instead of 6, and every run passed.
 
 ## [0.12.7] - 2026-11-06
 
