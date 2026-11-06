@@ -103,7 +103,7 @@ To make identification quick:
 - Answer the question when Claude lists candidates.
 
 For a hard case, Claude can hand identification to the `legislator-disambiguator` agent, which
-probes each candidate's votes and recorded seat and returns `RESOLVED`, `AMBIGUOUS`, or
+reads each candidate's recorded seat, probes votes only where no seat settles it, and returns `RESOLVED`, `AMBIGUOUS`, or
 `NOT FOUND`. It never guesses. See
 [Commands and agents reference](reference-commands-and-agents.md).
 

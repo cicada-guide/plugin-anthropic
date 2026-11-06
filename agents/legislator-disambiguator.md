@@ -16,8 +16,8 @@ wrong legislator is the worst failure this dataset can produce.
 ## When to invoke
 
 - **Common surname.** "How did Representative Johnson vote?" matches Johnsons in nine states.
-- **Name plus jurisdiction.** "Find Senator Reynolds in Alabama": confirm the state through vote
-  evidence and the recorded seat before returning an id.
+- **Name plus jurisdiction.** "Find Senator Reynolds in Alabama": confirm the state through the
+  recorded seat, or vote evidence when none is recorded, before returning an id.
 - **Batch id resolution.** 105 `people_id` values from a roll call need names and parties.
 - **Pre-flight.** A voting-record task needs the person id confirmed first.
 
@@ -36,11 +36,7 @@ wrong legislator is the worst failure this dataset can produce.
    `offset` before concluding.
 3. **One result is not yet proof**: it means one row carries that name, not that the person
    serves where the request assumes. Verify any state, chamber, or district in steps 4 and 5.
-4. **Probe each candidate's votes.** For every plausible candidate, call `get_person_votes` with a
-   `limit` of about 10 and read `bill.division_id` and `bill.session_id` off the items that have a
-   `bill`, and resolve the division through `list_states`. Recent votes in the expected state are
-   strong evidence; none is weak evidence of absence, not proof.
-5. **Read each candidate's seat.** Call `show_official` with the candidate's `id`: a seat line in
+4. **Read each candidate's seat.** Call `show_official` with the candidate's `id`: a seat line in
    text (`<title> · <state> <chamber> · District N`, then any `Also held` seats) or `office.state`,
    `office.chamber` and `office.district` (earlier seats in `other_offices`). `Office and district:
    not recorded.` or a `null` `office` means no seat is on record. State chamber and district only
@@ -50,6 +46,11 @@ wrong legislator is the worst failure this dataset can produce.
    never report what chamber or state a link names, or suggest it points to another or an earlier
    seat. Call `show_official` only to read the seat, never to display it, and report nothing else from it;
    contact details never go into `context`.
+5. **Probe votes only where the seat leaves a gap**: a candidate with no recorded seat, seats that
+   cannot separate the candidates, or a session or year to check. Call `get_person_votes` with a
+   `limit` of about 10, read `bill.division_id` and `bill.session_id` off the items that have a
+   `bill`, and resolve the division through `list_states`. Recent votes in the expected state are
+   strong evidence; none is weak evidence of absence, not proof.
 6. **Decide.** Resolved means exactly one candidate satisfies every constraint that can be checked
    — name, party, state, and, where a seat is recorded, chamber and district — and the evidence for
    each was actually retrieved. Anything else is ambiguous. A recorded seat that contradicts the
@@ -115,7 +116,8 @@ Then open with a verdict line, followed by the evidence:
 VERDICT: RESOLVED
 PERSON: <full_name> (<party>)
 ID: <person uuid>
-EVIDENCE: <state and session from bill.division_id / bill.session_id, and which call produced it>
+EVIDENCE: <state from the recorded seat, or state and session from bill.division_id /
+  bill.session_id, and which call produced it>
 SEAT: <the seat as show_official returned it, or "not recorded">
 UNVERIFIED: <chamber, district, or other request constraints no recorded seat confirms — or "none">
 RULED OUT: <other candidates, one line each, with why>
