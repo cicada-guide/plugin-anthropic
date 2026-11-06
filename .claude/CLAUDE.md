@@ -156,3 +156,24 @@ means editing many files — do it as an explicit decision, never as a side effe
 - Commit subjects are plain sentence case with no prefix or tag.
 - Nothing in this repo is secret, but nothing user-specific belongs in it either: per-project
   settings live in `.claude/*.local.md`, which is gitignored.
+
+## Harness: plugin
+
+**Goal:** take a plugin change, or a server `Docs follow-up:` issue whose deploy is confirmed, to
+a verified draft PR, and prepare releases per [PUBLISHING.md](../PUBLISHING.md).
+
+**Issue tracking:** GitHub Issues — the orchestrator reuses or opens an issue for work that
+produces a PR (`Closes #N`), and treats a `Docs follow-up:` issue from `cicada-guide/mcp-anthropic`
+as ready only once a comment on it says `Status: deployed and verified`.
+
+**Entry point — applies to every prompt that works in this repository:** You MUST invoke the
+`plugin-orchestrator` skill *before* responding to any request about this plugin — new work, a
+follow-up, a re-run, a question, or a change to a previous result. It is the single entry point
+for this repo; do not craft a response outside it. It answers trivial or out-of-repo requests
+directly and runs the agents only when the work warrants it. In a session that also has
+`cicada-guide/mcp-anthropic` open, route server work to that repo's `server-orchestrator`.
+
+**Change history:**
+| Date | Change | Target | Reason |
+| --- | --- | --- | --- |
+| 2026-11-06 | Initial setup: two agents, two skills, orchestrator with tools registry | All | — |
