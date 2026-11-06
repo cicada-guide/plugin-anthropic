@@ -28,12 +28,14 @@ Below, `<...>` marks a part of the message that varies.
 | --- | --- |
 | Entry points | `skills/<dir>/SKILL.md` for every directory under `skills/`, and every `.md` file under `agents/` |
 | Runtime docs | Every `.md` file under `skills/` (the `references/` included) and `agents/`, and `README.md` |
-| Project docs | `CONTRIBUTING.md`, `CHANGELOG.md`, `SECURITY.md`, and every `.md` file under `docs/` |
+| Project docs | `CONTRIBUTING.md`, `CHANGELOG.md`, `SECURITY.md`, and every `.md` file under `docs/`, `.claude/skills/` (the `references/` included) and `.claude/agents/`, except `*.local.md` |
 | All Markdown | Runtime docs, project docs, `.claude/CLAUDE.md`, `PUBLISHING.md`, and `cicada-guide.local.md.example` |
 
 Runtime docs can reach a Claude session, so they get the runtime-path rules. Project docs never
-load into a session; they may link with `../` and skip those rules, but get the link, tool-count,
-number, and critique checks.
+load into a user's session; they may link with `../` and skip those rules, but get the link,
+tool-count, number, critique, and bill-summary checks. The maintainer harness under
+`.claude/skills/` and `.claude/agents/` is never shipped and is not an entry point, so it counts as
+project docs: it does not carry the rules each entry point must restate.
 
 ## `check.mjs`
 
