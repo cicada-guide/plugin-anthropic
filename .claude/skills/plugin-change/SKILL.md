@@ -52,8 +52,9 @@ that rely on the rule: a missing entry point is a finding too.
 
 ```bash
 r() { rg -U -n "$@" skills agents; }
-# search_bills exact bill-number matching (check.mjs requires both phrases below)
+# search_bills exact bill-number matching (check.mjs requires all three phrases below)
 r '(?i)bill[\s-]+number(s\s+match|\s+matching\s+is)\s+exact'; r '`HB\s+314`[^.]*`HB314`'
+r 'Pass\s+the\s+number\s+with\s+its\s+chamber\s+prefix'
 # search_bills query caps
 r 'at\s+most\s+50\s+distinct\s+bill'; r 'first\s+8\s+terms'
 # get_rollcalls includes roll calls linked through votes (not checked by check.mjs)
