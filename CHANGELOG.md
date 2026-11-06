@@ -10,6 +10,19 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- `legislator-disambiguator` ends a `RESOLVED` report with a `FOR THE REPLY` line: the seats it
+  lists are the only ones, and the card's links and email are not seats. The main conversation
+  shows the card from `show_official`, whose contact links can name another chamber, and it does not
+  always load `get-legislation` first. In eval runs it then suggested Kirk Hatcher once held a House
+  seat because one of his links is an `ALRepresentative.aspx` page. `legislator-disambiguation`
+  failed 2 of 3 runs before this change and passed 6 of 6 after it.
+- The contact-link rule in `get-legislation`, `contact-legislator`, `voting-record`, `tool-reference.md`
+  and `workflows.md` now covers any tool's `contact_details`, `show_official`'s and
+  `show_person_record`'s included, rather than only `get_person`'s, and rules out using a link to
+  suggest an earlier or other seat even as a hedge.
+
 ## [0.12.6] - 2026-11-04
 
 ### Changed
