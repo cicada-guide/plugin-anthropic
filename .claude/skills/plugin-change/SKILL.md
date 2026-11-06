@@ -46,14 +46,14 @@ checks the numbers in fixed phrasings anywhere (its `CANONICAL` table).
 
 `node scripts/check.mjs` is the definitive copy check; its `REQUIRED` table is the authoritative
 list and runs on every pull request. The searches below are a finding aid for the rest: they show
-every copy, including the `references/` files and the two rules no script checks. Each search
+every copy, including the `references/` files and the one rule no script checks. Each search
 tolerates a phrase wrapped across lines. Compare the files each one hits against the entry points
 that rely on the rule: a missing entry point is a finding too.
 
 ```bash
 r() { rg -U -n "$@" skills agents; }
-# search_bills exact bill-number matching (not checked by check.mjs)
-r '(?i)bill[\s-]+number(s\s+match|\s+matching\s+is)\s+exact'
+# search_bills exact bill-number matching (check.mjs requires both phrases below)
+r '(?i)bill[\s-]+number(s\s+match|\s+matching\s+is)\s+exact'; r '`HB\s+314`[^.]*`HB314`'
 # search_bills query caps
 r 'at\s+most\s+50\s+distinct\s+bill'; r 'first\s+8\s+terms'
 # get_rollcalls includes roll calls linked through votes (not checked by check.mjs)
