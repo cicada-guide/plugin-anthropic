@@ -59,9 +59,10 @@ Then search:
   Enacted; one that only contains the word is not.
 
 Bill-number matching is exact in either stored spelling (`HB 314` or `HB314`), but the same number
-repeats across sessions and states. When the user gave a year but no session, `session_name` with
-the year (partial match, so regular and special sessions both match) narrows without a UUID. Read
-each candidate's session before reporting.
+repeats across sessions and states. Pass the number with its chamber prefix (`HB 314`); a number
+alone (`314`) returns no bills. When the user gave a year but no session, `session_name` with the
+year (partial match, so regular and special sessions both match) narrows without a UUID. Read each
+candidate's session before reporting.
 
 A topic argument usually returns several bills. Answer with the topic list below and offer a brief
 on one; do not pick one to brief unasked. In a host that renders cards, every `search_bills` call

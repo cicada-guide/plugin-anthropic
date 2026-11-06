@@ -29,6 +29,10 @@ plugin's guidance, including updates made to match what the server returns.
   spelling, but repeat across sessions and states, where Path C resolves a bill by number. It was
   the one entry point that called `search_bills` without it. `scripts/check.mjs` now requires that
   rule in every entry point that names `search_bills`.
+- Every entry point that calls `search_bills` says to pass a bill number with its chamber prefix
+  (`HB 314`), because a number alone (`314`) returns no bills; the get-legislation workflows
+  reference says so too. Before, only the tool reference's parameter table said it.
+  `scripts/check.mjs` now requires the sentence wherever it requires exact bill-number matching.
 
 ## [0.12.7] - 2026-11-06
 

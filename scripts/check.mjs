@@ -294,10 +294,15 @@ const REQUIRED = [
     needs: [/at most 50 distinct bill/, /first 8 terms/],
   },
   {
-    // A model that takes the first "HB 314" row briefs another state's or session's bill.
+    // A model that takes the first "HB 314" row briefs another state's or session's bill, and one
+    // that passes "314" alone gets no bills back. The text is flattened, so a wrap is one space.
     rule: "search_bills exact bill-number matching",
     when: (t) => t.includes("`search_bills`"),
-    needs: [/Bill[- ]number(?:s match exactly| matching is exact)/, /`HB 314`[^.]*`HB314`/],
+    needs: [
+      /Bill[- ]number(?:s match exactly| matching is exact)/,
+      /`HB 314`[^.]*`HB314`/,
+      /Pass\s+the\s+number\s+with\s+its\s+chamber\s+prefix\s+\(`HB 314`\);\s+a\s+number\s+alone\s+\(`314`\)\s+returns\s+no\s+bills/,
+    ],
   },
   {
     rule: "25,000-character truncation",

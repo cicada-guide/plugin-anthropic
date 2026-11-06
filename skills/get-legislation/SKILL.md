@@ -327,10 +327,11 @@ different chambers or years. Never combine their records. List the candidates wi
 and vote date ranges, and ask which one the user means.
 
 **Bill numbers match exactly, but repeat across sessions.** `search_bills` with `bill: "HB 314"`
-matches the `HB 314` and `HB314` storage forms and no other number. The same number exists in many
-sessions and states, so scope by `division_id` and a session, and read each result's session. To
-filter by a year without resolving a UUID, pass `session_name` (partial match: `"2025"` covers every
-2025 session, regular and special); `session_id` pins exactly one. When the results hold the same
+matches the `HB 314` and `HB314` storage forms and no other number. Pass the number with its chamber
+prefix (`HB 314`); a number alone (`314`) returns no bills. The same number exists in many sessions
+and states, so scope by `division_id` and a session, and read each result's session. To filter by a
+year without resolving a UUID, pass `session_name` (partial match: `"2025"` covers every 2025
+session, regular and special); `session_id` pins exactly one. When the results hold the same
 number in more than one session and nothing in the request picks one, stop and ask: list each with
 number, title, session, and status, and describe none of them, or show a card, until the user
 chooses. Never assume the newest or current session.

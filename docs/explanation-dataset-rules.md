@@ -53,10 +53,12 @@ the reason for each, not the full wording.
 ### Bill numbers match exactly, but repeat
 
 `search_bills` with `bill: "HB 314"` matches the `HB 314` and `HB314` storage forms and nothing
-else: `HB 3140` doesn't match. The same number exists in many states and in every session of one
-state, though. Without the rule, a model asked about "HB 314" briefs whichever row comes first,
-which may be a different state's bill or last session's. The rule makes the model scope by state
-and session and read each result's session before choosing one.
+else: `HB 3140` doesn't match. The number needs its chamber prefix: `bill: "314"` alone returns no
+bills, so every entry point that calls `search_bills` says to pass `HB 314`, not `314`. The same
+number exists in many states and in every session of one state, though. Without the rule, a model
+asked about "HB 314" briefs whichever row comes first, which may be a different state's bill or
+last session's. The rule makes the model scope by state and session and read each result's session
+before choosing one.
 
 ### Search query caps
 
