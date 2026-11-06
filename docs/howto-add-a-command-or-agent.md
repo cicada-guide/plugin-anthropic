@@ -96,18 +96,18 @@ looking for a trigger in the same file.
 | Roll-call counts | Names `` `get_rollcalls` `` in backticks | `never add counts across roll calls` (any case) |
 | `search_people` batch cap | Names `` `search_people` `` and `` `ids` `` in backticks with no full stop between them | `batches of up to 100`, `batches of at most 100`, `1-100`, or `up to 100` |
 | `search_bills` query caps | Names both `` `search_bills` `` and `` `query` `` in backticks | `at most 50 distinct bill` and `first 8 terms` |
+| `search_bills` exact bill numbers | Names `` `search_bills` `` in backticks | `Bill numbers match exactly` or `Bill-number matching is exact`, and `` `HB 314` `` then `` `HB314` `` in one sentence |
 | Agents read only plugin files | Is under `agents/` | ``Use `Read` only for files under `${CLAUDE_PLUGIN_ROOT}` `` |
 
 `contact-legislator` names `` `context` `` and `` `limit` `` and `` `has_more` ``, so on top of the
 four rules every file carries, it states the `context` rule and 25,000-character truncation. It
-never names `` `get_rollcalls` ``, `` `search_bills` `` with `` `query` ``, or `` `search_people` ``
-with `` `ids` ``, so those rules do not apply to it. If you later add a sentence that names one of
-those triggers, the check will ask for the matching rule.
+never names `` `get_rollcalls` ``, `` `search_bills` ``, or `` `search_people` `` with `` `ids` ``,
+so those rules do not apply to it. If you later add a sentence that names one of those triggers,
+the check will ask for the matching rule.
 
 `check.mjs` also fails if any restated number differs from the server's value, anywhere in the
-file. CLAUDE.md lists rules the script cannot enforce, which a reviewer checks by hand: exact
-bill-number matching in `search_bills`, and `get_rollcalls` including roll calls linked through
-votes. The [checks reference](reference-checks.md#rules-each-entry-point-must-carry) has the exact
+file. CLAUDE.md lists rules the script cannot enforce, which a reviewer checks by hand, such as
+`get_rollcalls` including roll calls linked through votes. The [checks reference](reference-checks.md#rules-each-entry-point-must-carry) has the exact
 patterns, and [why each entry point restates the dataset rules](explanation-dataset-rules.md) has
 the reasons.
 

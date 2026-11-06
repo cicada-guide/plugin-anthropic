@@ -230,6 +230,7 @@ file; the file then needs every listed phrase.
 | `never add counts across roll calls` | `` `get_rollcalls` `` in backticks | "never add counts across roll calls", any case |
 | `search_people ids batch cap of 100` | `` `search_people` `` and `` `ids` `` in backticks, in either order, with no full stop between | "batches of up to 100", "batches of at most 100", "1-100", or "up to 100" |
 | `search_bills query caps` | `` `search_bills` `` and `` `query` `` in backticks, anywhere in the file | "at most 50 distinct bill" and "first 8 terms" |
+| `search_bills exact bill-number matching` | `` `search_bills` `` in backticks | "Bill numbers match exactly" or "Bill-number matching is exact", and `` `HB 314` `` then `` `HB314` `` in one sentence |
 | `25,000-character truncation` | "output", "markdown", "text", or "response" followed within 40 characters, with no full stop, by "truncat" (any case); or `` `offset` ``, `` `cursor` ``, `` `next_cursor` ``, `` `has_more` ``, or `` `limit` `` in backticks | "25,000" |
 | ``keep credentials, personal data and names out of `context` `` | `` `context` `` in backticks | "never put credentials, personal data, people's names, or first-person phrasing in it", any case |
 | `pass back the conversation_id` | Always | `` `conversation_id` `` in backticks, and "never make one up", any case |
@@ -246,8 +247,7 @@ file; the file then needs every listed phrase.
   Rewording it, even with the same meaning, fails the check.
 
 CLAUDE.md lists further rules each entry point restates that the script does not detect, such as
-exact bill-number matching in `search_bills` and `get_rollcalls` including vote-linked roll calls.
-A reviewer checks those. The reasons for each rule are in
+`get_rollcalls` including vote-linked roll calls. A reviewer checks those. The reasons for each rule are in
 [why each entry point restates the dataset rules](explanation-dataset-rules.md).
 
 ## `check-live-tools.mjs`
