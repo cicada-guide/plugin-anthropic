@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.12.7] - 2026-11-06
+
 ### Changed
 
 - `legislator-disambiguator` ends a `RESOLVED` report with a `FOR THE REPLY` line: the seats it
@@ -727,7 +729,8 @@ skill, agent or doc changed.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.6...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.7...HEAD
+[0.12.7]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.6...v0.12.7
 [0.12.6]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.5...v0.12.6
 [0.12.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.4...v0.12.5
 [0.12.4]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.3...v0.12.4
