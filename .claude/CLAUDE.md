@@ -96,8 +96,10 @@ configuration can reach.
 **The endpoint hostname is a published API surface.** It appears in `.mcp.json` and in prose.
 Changing it breaks every installed user with no warning and no fallback; it moves only with a
 version bump and a transition period where the old hostname still resolves. The path follows the
-same rule: 0.9.0 moved it from `/mcp` to `/mcp-anthropic`, and the server still answers `/mcp` for
-copies installed before.
+same rule. The endpoint is `https://anthropic.cicada.guide/mcp` since 0.12.0; 0.9.0 through 0.11.11
+used `https://public.cicada.guide/mcp-anthropic`, and earlier releases
+`https://public.cicada.guide/mcp`. The server still answers both older URLs for copies installed
+before.
 
 **Tool documentation drifts silently.** The endpoint is unversioned, so nothing signals when the
 live server gains, renames, or drops a tool. Tool lists are duplicated in `README.md`,
