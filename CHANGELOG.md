@@ -10,6 +10,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+## [0.12.8] - 2026-11-24
+
 ### Changed
 
 - The `legislator-disambiguation` eval's `seat-from-tool` grader fails a reply that states a seat
@@ -753,7 +755,8 @@ skill, agent or doc changed.
 - First public release: the `state-legislation`, `bill-research` and `voting-record` skills, the
   subagents, and the `guide-public` MCP server declaration.
 
-[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.7...HEAD
+[Unreleased]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.8...HEAD
+[0.12.8]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.7...v0.12.8
 [0.12.7]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.6...v0.12.7
 [0.12.6]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.5...v0.12.6
 [0.12.5]: https://github.com/cicada-guide/plugin-anthropic/compare/v0.12.4...v0.12.5
