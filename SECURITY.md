@@ -29,8 +29,8 @@ Knowing the plugin's reach helps you judge whether a finding is in scope:
 - **Slash commands pre-approve read-only tools by name.** A command skill's `allowed-tools` lists
   the `guide-public` tools it calls, one by one, and nothing else: no wildcard, no command or file
   tool. A tool the server adds later still asks for approval.
-- **Analytics.** The server records each tool call's name and arguments, the model-written
-  `context` string, and the calling model's identifier. [README.md](README.md#privacy) has the
+- **Analytics.** The server records each tool call's name and arguments, the result it returned,
+  the model-written `context` string, and the calling model's identifier. [README.md](README.md#privacy) has the
   full list.
 
 ## In scope

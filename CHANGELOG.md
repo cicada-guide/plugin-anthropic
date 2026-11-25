@@ -20,6 +20,8 @@ plugin's guidance, including updates made to match what the server returns.
 
 ### Changed
 
+- Updated to match the server: the README's privacy section and `SECURITY.md` now say the server
+  records the result each tool call returned, as its privacy policy has since 2026-11-25.
 - Updated to match the server: card URIs follow the server's new shells, `bill-workspace-v25`,
   `legislator-record-v24` and `official-card-v16`; `bill-results-v19` is unchanged. Card photos
   (`photo_url`, now `https://anthropic.cicada.guide/photos/<id>`), the PDF viewer and the privacy
