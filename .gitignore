@@ -12,7 +12,7 @@ desktop.ini
 *~
 
 # Plugin eval results, written by `claude plugin eval`
-evals/results/
+plugin/evals/results/
 
 # promptfoo runner dependencies and output (promptfoo/package.json)
 promptfoo/node_modules/

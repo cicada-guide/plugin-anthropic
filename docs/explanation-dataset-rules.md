@@ -10,12 +10,12 @@ checks that enforce them are described in the [checks reference](reference-check
 
 The plugin has several entry points, and they don't share what they load:
 
-- **The always-on skill**, `skills/get-legislation/`, loads when a question is about state
+- **The always-on skill**, `plugin/skills/get-legislation/`, loads when a question is about state
   legislation. It carries the full set of rules.
 - **Slash commands**, `research-legislation`, `voting-record`, and `contact-legislator`, can run
   without the always-on skill ever loading. A user who types `/cicada-guide:voting-record` gets that
   file's guidance, and possibly nothing else.
-- **Subagents**, `agents/*.md`, never load the always-on skill. A subagent starts with its own
+- **Subagents**, `plugin/agents/*.md`, never load the always-on skill. A subagent starts with its own
   file as its only guidance, in a fresh context, with the user's project as its working
   directory.
 
@@ -27,8 +27,8 @@ when someone reports a bad answer from that one path.
 ## The approach
 
 Each skill and agent carries its own copy of every rule it relies on, written as runtime
-instructions. When a rule changes, every copy changes in the same commit: grep `skills/` and
-`agents/` for it.
+instructions. When a rule changes, every copy changes in the same commit: grep `plugin/skills/` and
+`plugin/agents/` for it.
 
 Copies drift, so `scripts/check.mjs` checks two things mechanically:
 
@@ -46,8 +46,8 @@ See [reference-checks.md](reference-checks.md) for the exact patterns.
 ## The rules and the failures they prevent
 
 Each rule below is stated in full in the
-[always-on skill](../skills/get-legislation/SKILL.md) and the
-[tool reference](../skills/get-legislation/references/tool-reference.md). This section gives
+[always-on skill](../plugin/skills/get-legislation/SKILL.md) and the
+[tool reference](../plugin/skills/get-legislation/references/tool-reference.md). This section gives
 the reason for each, not the full wording.
 
 ### Bill numbers match exactly, but repeat

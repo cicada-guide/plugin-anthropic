@@ -3,6 +3,7 @@
   "displayName": "cicada.guide",
   "version": "0.12.8",
   "description": "Research U.S. state legislation in Claude: search bills, read bill text, look up legislators, and trace roll-call and individual voting records.",
+  "icon": "./assets/logo.svg",
   "author": {
     "name": "cicada.guide",
     "url": "https://github.com/cicada-guide"
@@ -10,6 +11,7 @@
   "homepage": "https://github.com/cicada-guide/plugin-anthropic",
   "repository": "https://github.com/cicada-guide/plugin-anthropic",
   "license": "Apache-2.0",
+  "privacyPolicyUrl": "https://anthropic.cicada.guide/privacy",
   "keywords": [
     "legislation",
     "government",

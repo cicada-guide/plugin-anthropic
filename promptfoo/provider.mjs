@@ -1,6 +1,6 @@
 // A promptfoo provider that runs one prompt through Claude Code (via the Claude Agent SDK) with
 // this checkout loaded as a plugin, the way `claude plugin eval` does, and hands back what the
-// graders in ../evals/ read: the final message as `output`, and the whole session in `metadata`.
+// graders in ../plugin/evals/ read: the final message as `output`, and the whole session in `metadata`.
 //
 // config:
 //   plugin       true loads this checkout (the with-plugin arm); false runs without it.
@@ -18,7 +18,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 
-export const PLUGIN_ROOT = fileURLToPath(new URL("..", import.meta.url));
+export const PLUGIN_ROOT = fileURLToPath(new URL("../plugin/", import.meta.url));
 
 // The built-in tools `claude plugin eval` allows without a grant. AskUserQuestion is left out:
 // nobody can answer it in an unattended run, so a question has to go in the reply.

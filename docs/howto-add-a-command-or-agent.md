@@ -5,7 +5,7 @@ to create, the frontmatter the loader and `scripts/check.mjs` expect, the datase
 must carry on its own, how it ends with a card, and the other files to update.
 
 The worked example is `/cicada-guide:contact-legislator`, added in 0.8.0. Read
-[`skills/contact-legislator/SKILL.md`](../skills/contact-legislator/SKILL.md) alongside this page.
+[`plugin/skills/contact-legislator/SKILL.md`](../plugin/skills/contact-legislator/SKILL.md) alongside this page.
 
 ## Before you start
 
@@ -18,23 +18,22 @@ The worked example is `/cicada-guide:contact-legislator`, added in 0.8.0. Read
   whose intermediate tool calls would bury the conversation; it cannot ask mid-run and returns one
   report. If an existing entry point nearly covers the request, extending it is usually better.
 - **Know the tools it will call.** Every tool and parameter it names must be one the live server
-  returns. The [tool reference](../skills/get-legislation/references/tool-reference.md) is the
+  returns. The [tool reference](../plugin/skills/get-legislation/references/tool-reference.md) is the
   source; run `node scripts/check-live-tools.mjs` if in doubt.
 
 ## Add a slash-command skill
 
 ### 1. Create the directory and file
 
-Create `skills/<name>/SKILL.md`. The directory name is the command: `skills/contact-legislator/`
-becomes `/cicada-guide:contact-legislator`. Every directory under `skills/` must hold a `SKILL.md`,
+Create `plugin/skills/<name>/SKILL.md`. The directory name is the command: `plugin/skills/contact-legislator/`
+becomes `/cicada-guide:contact-legislator`. Every directory under `plugin/skills/` must hold a `SKILL.md`,
 or `check.mjs` fails with `skill directory has no SKILL.md`.
 
 No manifest lists the skills one by one. The Claude plugin loader picks up the new directory.
 
 ### 2. Write the frontmatter
 
-The existing command skills use five keys. `contact-legislator`'s (its `allowed-tools` line
-shortened here):
+The existing command skills use four keys. `contact-legislator`'s:
 
 ```yaml
 ---
@@ -42,7 +41,6 @@ name: contact-legislator
 description: Shows who one U.S. state legislator is and how to reach them — office, chamber, district, party, and the email, phone, and website on record — as a contact card. This skill should be used when the user asks how to contact a named state legislator or who someone is ("how do I reach Senator Reynolds", "show me Rep. Ortiz's contact info"), not for how they voted.
 argument-hint: "<name> [state]"
 disable-model-invocation: false
-allowed-tools: mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin_cicada-guide_guide-public__show_official
 ---
 ```
 
@@ -52,10 +50,13 @@ allowed-tools: mcp__plugin_cicada-guide_guide-public__search_people, mcp__plugin
 | `description` | One line, however long. `check.mjs` fails if it wraps onto a second line, so no YAML folded or multi-line strings. Say what it produces, then "This skill should be used when..." with quoted example requests, then what it is not for |
 | `argument-hint` | Quoted. `<required>` and `[optional]` arguments, the same string you quote in README and the always-on skill |
 | `disable-model-invocation` | `false` in every existing command, so Claude can reach for the workflow on its own as well as when the user types it. `true` would make it user-invoked only |
-| `allowed-tools` | One line. The `guide-public` tools the body tells Claude to call, each as `mcp__plugin_cicada-guide_guide-public__<tool>`, comma-separated. They run without a permission prompt. No wildcard and no other tool: `check.mjs` fails otherwise, and `check-live-tools.mjs` fails on a name the server lacks. Leave out a tool the body only warns against |
 
 The file must start with `---` on its first line and use LF line endings; `check.mjs` reads the
 frontmatter with a pattern that expects both. It recognizes lowercase, hyphenated keys only.
+
+Do not add `allowed-tools`. The plugin directory accepts it, from a publisher that is not
+Verified, only with plain `Read`, `Grep`, `Glob` and `LS`, so `check.mjs` fails on the key and
+every tool call follows the user's own permission settings.
 
 The always-on `get-legislation` skill has only `name` and `description`. It is not a command.
 
@@ -97,7 +98,7 @@ looking for a trigger in the same file.
 | `search_people` batch cap | Names `` `search_people` `` and `` `ids` `` in backticks with no full stop between them | `batches of up to 100`, `batches of at most 100`, `1-100`, or `up to 100` |
 | `search_bills` query caps | Names both `` `search_bills` `` and `` `query` `` in backticks | `at most 50 distinct bill` and `first 8 terms` |
 | `search_bills` exact bill numbers | Names `` `search_bills` `` in backticks | `Bill numbers match exactly` or `Bill-number matching is exact`; `` `HB 314` `` then `` `HB314` `` in one sentence; ``Pass the number with its chamber prefix (`HB 314`); a number alone (`314`) returns no bills``; ``Find a named bill with `bill` plus`` then ``not with a topic `query` `` in one sentence; and ``search again without `query` `` |
-| Agents read only plugin files | Is under `agents/` | ``Use `Read` only for files under `${CLAUDE_PLUGIN_ROOT}` `` |
+| Agents read only plugin files | Is under `plugin/agents/` | ``Use `Read` only for files under `${CLAUDE_PLUGIN_ROOT}` `` |
 
 `contact-legislator` names `` `context` `` and `` `limit` `` and `` `has_more` ``, so on top of the
 four rules every file carries, it states the `context` rule and 25,000-character truncation. It
@@ -120,7 +121,7 @@ read `${CLAUDE_PLUGIN_ROOT}/skills/get-legislation/references/tool-reference.md`
 ```
 
 A subagent's working directory is the user's project, so `../skills/...` resolves to nothing.
-`check.mjs` fails on any `../` outside `skills/get-legislation/`, and on a
+`check.mjs` fails on any `../` outside `plugin/skills/get-legislation/`, and on a
 `${CLAUDE_PLUGIN_ROOT}/` path that does not exist. Keep the path in backticks: the check reads the
 path up to whitespace, a backtick, a quote, or `)`, so a bare path followed by a full stop is read
 with the full stop and fails.
@@ -160,7 +161,7 @@ words ("Three packaged skills"). For `contact-legislator` 0.8.0 updated:
 
 - **`README.md`**: the command table under "What it does" (with the exact argument hint), the
   sentence counting the packaged skills above it, a bullet under "Skills", and an example question.
-- **`skills/get-legislation/SKILL.md`**: the list under "Longer workflows have dedicated entry
+- **`plugin/skills/get-legislation/SKILL.md`**: the list under "Longer workflows have dedicated entry
   points", quoting the argument hint exactly. This is how Claude learns the command exists.
 - **Sibling skills** that should hand off to it. `voting-record` points contact requests to
   `/contact-legislator`.
@@ -188,7 +189,7 @@ arguments. [How to verify a change](howto-verify-a-change.md) has the details.
 
 ### 1. Create the file
 
-Create `agents/<name>.md`. The file name is the agent's name: `agents/legislator-disambiguator.md`
+Create `plugin/agents/<name>.md`. The file name is the agent's name: `plugin/agents/legislator-disambiguator.md`
 is `legislator-disambiguator`.
 
 ### 2. Write the frontmatter
@@ -258,7 +259,7 @@ The one exception is reading data a card tool returns: `legislator-disambiguator
 ### 5. Update the files that list agents
 
 - **`README.md`**: a bullet under "Agents", and the sentence counting the subagents.
-- **`skills/get-legislation/SKILL.md`**: the sentence naming the subagents, under "Longer
+- **`plugin/skills/get-legislation/SKILL.md`**: the sentence naming the subagents, under "Longer
   workflows have dedicated entry points", with when to dispatch the new one.
 - **`docs/`**: the Subagents row in [architecture.md](architecture.md) and
   [the commands and agents reference](reference-commands-and-agents.md).

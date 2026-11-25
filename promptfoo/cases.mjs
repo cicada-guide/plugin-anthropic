@@ -1,4 +1,4 @@
-// Builds promptfoo tests from ../evals/, so `claude plugin eval` and promptfoo run the same cases
+// Builds promptfoo tests from ../plugin/evals/, so `claude plugin eval` and promptfoo run the same cases
 // and graders and neither copy can drift. Each case becomes one test per arm: `with-plugin` gets
 // every grader, `without-plugin` (the no-plugin baseline) leaves out the ones `claude plugin eval`
 // excludes from a two-arm score.

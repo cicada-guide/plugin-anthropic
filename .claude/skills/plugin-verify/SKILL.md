@@ -44,7 +44,7 @@ model's judgment for it.
 
 | Fact | Copies | Compare against |
 | --- | --- | --- |
-| Tool list | `README.md` Tools table, `skills/get-legislation/SKILL.md` Tool selection, `references/tool-reference.md` | the live `tools/list`, never each other |
+| Tool list | `README.md` Tools table, `plugin/skills/get-legislation/SKILL.md` Tool selection, `references/tool-reference.md` | the live `tools/list`, never each other |
 | A touched tool's parameters | its `tool-reference.md` table and every call example | the schema: names, types, `max`, defaults, required |
 | Tools without `response_format` | the four places in [How to update the tool docs, step 6](../../../docs/howto-update-tool-docs.md#6-update-the-response_format-exclusion-lists) | the `jq` query in its step 1 |
 | Card URIs | `tool-reference.md`, `docs/reference-cards.md`, `CHANGELOG.md` | the `_meta` URIs in the live list |
@@ -55,7 +55,7 @@ A copy that lags is a finding even when the scripts pass.
 
 ## 4. Run the eval suite (any shipped skill or agent changed)
 
-After any change to a file under `skills/` or `agents/`, run the full suite as
+After any change to a file under `plugin/skills/` or `plugin/agents/`, run the full suite as
 [How to verify a change, step 5](../../../docs/howto-verify-a-change.md#5-run-the-eval-suite) gives
 it, including its judge-model flag (that step says why). Run a subset only when the brief names
 one, and record which cases ran. Read the `WITH` column against the threshold. Eval transcripts

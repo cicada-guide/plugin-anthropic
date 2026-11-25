@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
 #
-# Runs the plugin's eval cases (../evals/) under promptfoo. Setup, cost and how this differs from
+# Runs the plugin's eval cases (../plugin/evals/) under promptfoo. Setup, cost and how this differs from
 # `claude plugin eval`: docs/howto-run-promptfoo.md.
 
 description: cicada-guide plugin evals

@@ -13,6 +13,9 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const ENDPOINT = "https://anthropic.cicada.guide/mcp";
 const SERVER_KEY = "guide-public";
 const PLUGIN_NAME = "cicada-guide";
+// The shipped plugin lives in plugin/, which holds nothing else: the directory reviews that folder,
+// and the marketplace at the repo root points at it. Every path a user's session sees is under it.
+const PLUGIN_DIR = "plugin";
 
 const failures = [];
 const fail = (file, line, message) =>
@@ -42,15 +45,15 @@ function readJson(file) {
 }
 
 // Every directory under skills/ is a skill and must carry a SKILL.md; a stray file there is not one.
-const skillDirs = readdirSync(join(ROOT, "skills")).filter((d) => statSync(join(ROOT, "skills", d)).isDirectory());
-const skillFiles = skillDirs.map((d) => `skills/${d}/SKILL.md`).filter((file) => {
+const skillDirs = readdirSync(join(ROOT, PLUGIN_DIR, "skills")).filter((d) => statSync(join(ROOT, PLUGIN_DIR, "skills", d)).isDirectory());
+const skillFiles = skillDirs.map((d) => `${PLUGIN_DIR}/skills/${d}/SKILL.md`).filter((file) => {
   if (existsSync(join(ROOT, file))) return true;
   fail(file, 0, "skill directory has no SKILL.md");
   return false;
 });
-const agentFiles = walk("agents", (p) => p.endsWith(".md"));
+const agentFiles = walk(`${PLUGIN_DIR}/agents`, (p) => p.endsWith(".md"));
 const entryPoints = [...skillFiles, ...agentFiles];
-const docFiles = [...walk("skills", (p) => p.endsWith(".md")), ...agentFiles, "README.md"];
+const docFiles = [...walk(`${PLUGIN_DIR}/skills`, (p) => p.endsWith(".md")), ...agentFiles, "README.md"];
 // Human-facing project docs, plus the maintainer harness under .claude/ (never shipped, and not an
 // entry point). They link with ../ legitimately and never load into a user's session, so they skip
 // the runtime-path rules on docFiles but still get the link, count, number and critique checks.
@@ -68,13 +71,13 @@ const allMarkdown = [
 
 // ── Manifests ────────────────────────────────────────────────────────────────────────────────────
 
-const claude = readJson(".claude-plugin/plugin.json");
+const claude = readJson(`${PLUGIN_DIR}/.claude-plugin/plugin.json`);
 const marketplace = readJson(".claude-plugin/marketplace.json");
-const mcp = readJson(".mcp.json");
+const mcp = readJson(`${PLUGIN_DIR}/.mcp.json`);
 
 if (claude && marketplace) {
   const versions = {
-    ".claude-plugin/plugin.json version": claude.version,
+    "plugin/.claude-plugin/plugin.json version": claude.version,
     ".claude-plugin/marketplace.json metadata.version": marketplace.metadata?.version,
     ".claude-plugin/marketplace.json plugins[0].version": marketplace.plugins?.[0]?.version,
   };
@@ -87,25 +90,54 @@ if (claude && marketplace) {
     fail(".claude-plugin/marketplace.json", 0, `the three version fields disagree: ${JSON.stringify(versions)}`);
   }
   for (const [file, name] of [
-    [".claude-plugin/plugin.json", claude.name],
+    ["plugin/.claude-plugin/plugin.json", claude.name],
     [".claude-plugin/marketplace.json", marketplace.plugins?.[0]?.name],
   ]) {
     if (name !== PLUGIN_NAME) fail(file, 0, `plugin name is ${JSON.stringify(name)}, expected "${PLUGIN_NAME}"`);
   }
-  if (marketplace.plugins?.[0]?.source !== "./") {
-    fail(".claude-plugin/marketplace.json", 0, 'plugins[0].source must be "./" — the repo root is the plugin');
+  if (marketplace.plugins?.[0]?.source !== `./${PLUGIN_DIR}`) {
+    fail(".claude-plugin/marketplace.json", 0, `plugins[0].source must be "./${PLUGIN_DIR}" — the plugin is that folder`);
   }
 }
 
 if (mcp) {
   const servers = Object.keys(mcp.mcpServers ?? {});
   if (servers.length !== 1 || servers[0] !== SERVER_KEY) {
-    fail(".mcp.json", 0, `expected exactly one server, "${SERVER_KEY}"; found ${JSON.stringify(servers)}`);
+    fail(`${PLUGIN_DIR}/.mcp.json`, 0, `expected exactly one server, "${SERVER_KEY}"; found ${JSON.stringify(servers)}`);
   }
   const url = mcp.mcpServers?.[SERVER_KEY]?.url;
   if (url !== ENDPOINT) {
-    fail(".mcp.json", 0, `endpoint is ${url}; the pinned endpoint is ${ENDPOINT} (see CLAUDE.md before changing it)`);
+    fail(`${PLUGIN_DIR}/.mcp.json`, 0, `endpoint is ${url}; the pinned endpoint is ${ENDPOINT} (see CLAUDE.md before changing it)`);
   }
+}
+
+// ── Shipped folder ───────────────────────────────────────────────────────────────────────────────
+
+// The plugin directory reviews plugin/ as submitted and refuses, from an organization that is not
+// Verified, any file there that is not Markdown, JSON or the icon: scripts, package manifests, a
+// CLAUDE.md, a .claude folder. Maintainer files stay at the repo root, outside the folder. The
+// directory takes README.md and LICENSE from the repo root, so neither is copied in.
+const ICON = "assets/logo.svg";
+if (claude && claude.icon !== `./${ICON}`) {
+  fail(`${PLUGIN_DIR}/.claude-plugin/plugin.json`, 0, `icon is ${JSON.stringify(claude.icon)}, expected "./${ICON}"`);
+}
+for (const file of walk(PLUGIN_DIR, () => true)) {
+  const inner = file.slice(PLUGIN_DIR.length + 1);
+  const base = inner.split("/").pop();
+  if (inner === ICON) continue;
+  if (!/\.(md|json)$/.test(base)) fail(file, 0, "the plugin folder ships only Markdown, JSON and the icon; move this file to the repo root");
+  if (/^(claude|claude\.local|agents)\.md$/i.test(base)) fail(file, 0, "the directory refuses a CLAUDE.md or AGENTS.md in a plugin; put guidance in skills/");
+  if (/(^|\/)(\.claude|node_modules)\//.test(inner)) fail(file, 0, "the directory refuses a .claude or node_modules folder in a plugin");
+  if (inner.startsWith(".claude-plugin/") && inner !== ".claude-plugin/plugin.json") fail(file, 0, "only plugin.json belongs in the plugin's .claude-plugin folder");
+  if (read(file).startsWith("#!")) fail(file, 1, "the directory refuses a file that starts with #!");
+}
+// The icon must be a plain SVG: no style, script, event handler, foreignObject, animation or
+// reference outside the file, or the directory reports it unusable.
+{
+  const svg = read(`${PLUGIN_DIR}/${ICON}`);
+  const banned = /<!DOCTYPE|<style|style=|<script|\son\w+=|<foreignObject|<animate|<set\b|(?:xlink:)?href="(?!#)|url\((?!#)/i;
+  const m = svg.match(banned);
+  if (m) fail(`${PLUGIN_DIR}/${ICON}`, lineOf(svg, m.index), `"${m[0]}" makes the icon unusable to the directory; keep it a plain SVG`);
 }
 
 // The checks reference quotes the live-tools User-Agent, so the two change together.
@@ -140,23 +172,19 @@ for (const file of entryPoints) {
     if (typeof value !== "string" || /^["']/.test(value)) continue;
     if (/:\s|\s#/.test(value)) fail(file, 0, `frontmatter ${key} has an unquoted ": " or " #", which is not valid YAML`);
   }
-  const expected = file.startsWith("skills/") ? file.split("/")[1] : file.split("/").pop().replace(/\.md$/, "");
+  const expected = file.startsWith(`${PLUGIN_DIR}/skills/`) ? file.split("/")[2] : file.split("/").pop().replace(/\.md$/, "");
   if (fields.name !== expected) fail(file, 2, `frontmatter name is "${fields.name}", expected "${expected}"`);
   if (!fields.description) fail(file, 3, "frontmatter description is missing or empty");
   if (fields.descriptionWraps) fail(file, 3, "frontmatter description must stay on one line");
-  // A skill pre-approves tools by name, so it may name only this server's tools, one by one: a
-  // wildcard would also approve any tool the server adds later, without review.
-  if (file.startsWith("skills/") && fields["allowed-tools"] !== undefined) {
-    const prefix = `mcp__plugin_${PLUGIN_NAME}_${SERVER_KEY}__`;
-    for (const tool of fields["allowed-tools"].split(",").map((t) => t.trim()).filter(Boolean)) {
-      if (!tool.startsWith(prefix) || !/^[a-z_]+$/.test(tool.slice(prefix.length))) {
-        fail(file, 0, `allowed-tools entry ${tool} is not one named ${SERVER_KEY} tool (${prefix}<tool>)`);
-      }
-    }
+  // The plugin directory accepts, from an organization that is not Verified, an `allowed-tools`
+  // list of plain Read, Grep, Glob and LS only. No skill needs those, so no skill pre-approves
+  // anything: each tool call follows the user's own permission settings.
+  if (fields["allowed-tools"] !== undefined) {
+    fail(file, 0, "allowed-tools pre-approves tools, which the plugin directory refuses from this publisher; remove the key");
   }
   // Agents read outside text autonomously, so they get the server's tools and Read, nothing that
   // runs commands or writes files. Omitting `tools:` would inherit every tool the session has.
-  if (file.startsWith("agents/")) {
+  if (file.startsWith(`${PLUGIN_DIR}/agents/`)) {
     const allowed = (entry) => entry === "Read" || entry === `mcp__plugin_${PLUGIN_NAME}_${SERVER_KEY}__*`;
     const tools = (fields.tools ?? "").split(",").map((t) => t.trim()).filter(Boolean);
     if (!tools.length) fail(file, 0, "agent frontmatter needs a `tools:` allowlist; without one it inherits every tool");
@@ -170,14 +198,14 @@ for (const file of entryPoints) {
 
 for (const file of docFiles) {
   const text = read(file);
-  const withinAlwaysOnSkill = file.startsWith("skills/get-legislation/");
+  const withinAlwaysOnSkill = file.startsWith(`${PLUGIN_DIR}/skills/get-legislation/`);
   if (!withinAlwaysOnSkill) {
     for (const m of text.matchAll(/\.\.\//g)) {
       fail(file, lineOf(text, m.index), "relative ../ path — use ${CLAUDE_PLUGIN_ROOT}/...; a subagent runs in the user's project");
     }
   }
   for (const m of text.matchAll(/\$\{CLAUDE_PLUGIN_ROOT\}\/([^\s`)'"]+)/g)) {
-    if (!existsSync(join(ROOT, m[1]))) fail(file, lineOf(text, m.index), `\${CLAUDE_PLUGIN_ROOT}/${m[1]} does not exist`);
+    if (!existsSync(join(ROOT, PLUGIN_DIR, m[1]))) fail(file, lineOf(text, m.index), `\${CLAUDE_PLUGIN_ROOT}/${m[1]} does not exist`);
   }
 }
 
@@ -348,12 +376,12 @@ const REQUIRED = [
   {
     // A subagent's calls are invisible to the caller, so only its report can hand the id back.
     rule: "agents report the conversation_id",
-    when: (_t, file) => file.startsWith("agents/"),
+    when: (_t, file) => file.startsWith(`${PLUGIN_DIR}/agents/`),
     needs: [/Begin every return[^.]*with `Conversation id: <value>`/],
   },
   {
     rule: "agents read only plugin files",
-    when: (_t, file) => file.startsWith("agents/"),
+    when: (_t, file) => file.startsWith(`${PLUGIN_DIR}/agents/`),
     needs: [/Use `Read` only for files under `\$\{CLAUDE_PLUGIN_ROOT\}`/],
   },
   {

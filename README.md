@@ -17,7 +17,7 @@ legislators, sessions, roll calls, and ~5.6M individual vote records.
 For local development, run a single session with the plugin loaded from a checkout:
 
 ```bash
-claude --plugin-dir /path/to/plugin
+claude --plugin-dir /path/to/plugin-anthropic/plugin
 ```
 
 No API key, no account, no OAuth flow. The server is open to anonymous callers, so the tools work
@@ -29,8 +29,8 @@ connected. If it doesn't, see [Troubleshooting](docs/troubleshooting.md). The se
 tools listed under [Tools](#tools) below; that set grows as tools are added.
 
 Claude Code may ask for approval before a tool runs. The tools only read legislative data, so you
-can allow them for the session. The three slash commands below pre-approve the tools they call, by
-name, so they run without asking.
+can allow them for the session. The plugin pre-approves no tool, so the slash commands below ask
+the same way until you do.
 
 ## What it does
 
@@ -144,7 +144,7 @@ Text below the frontmatter is standing project context, folded into scoping deci
 One caveat on `context_prefix`: the `context` parameter it extends is added to every tool schema
 by the server's analytics wrapper rather than by the tools themselves, so it stops working if that
 instrumentation is removed. The full contract, including how Claude recovers from that, is in
-[`skills/get-legislation/references/project-settings.md`](skills/get-legislation/references/project-settings.md).
+[`plugin/skills/get-legislation/references/project-settings.md`](plugin/skills/get-legislation/references/project-settings.md).
 
 Two things it deliberately cannot do. A default never overrides an explicit request — asking
 about Texas gets Texas, whatever `default_division` says — and the file cannot widen scope or
@@ -180,7 +180,7 @@ change when you make one.
 | `list_sessions` | Legislative sessions within a jurisdiction |
 | `get_more_tools` | Report a request no tool can serve. Returns no data; the server keeps the note to learn which tools are missing |
 
-Full parameter reference: [`skills/get-legislation/references/tool-reference.md`](skills/get-legislation/references/tool-reference.md).
+Full parameter reference: [`plugin/skills/get-legislation/references/tool-reference.md`](plugin/skills/get-legislation/references/tool-reference.md).
 
 ## Skills
 
@@ -233,7 +233,7 @@ What the plugin runs, sends, and fetches:
 
 - **Runs no code of its own.** The plugin has no hooks, no local MCP server, and no scripts that
   Claude Code executes; `scripts/` holds contributor checks that only a maintainer runs by hand.
-  Its one component that reaches the network is the remote MCP server in `.mcp.json`. The skills
+  Its one component that reaches the network is the remote MCP server in `plugin/.mcp.json`. The skills
   ask Claude to read one optional file in your project, `.claude/cicada-guide.local.md`, for
   default settings, and values from it such as `default_division` and `context_prefix` can go into
   tool calls.
@@ -260,9 +260,9 @@ research support, not as an authoritative legal record.
 ## Links
 
 - Issues and plugin source: <https://github.com/cicada-guide/plugin-anthropic>
-- Tool reference: [`skills/get-legislation/references/tool-reference.md`](skills/get-legislation/references/tool-reference.md)
-- Call sequences for multi-step research: [`skills/get-legislation/references/workflows.md`](skills/get-legislation/references/workflows.md)
-- Project settings contract: [`skills/get-legislation/references/project-settings.md`](skills/get-legislation/references/project-settings.md)
+- Tool reference: [`plugin/skills/get-legislation/references/tool-reference.md`](plugin/skills/get-legislation/references/tool-reference.md)
+- Call sequences for multi-step research: [`plugin/skills/get-legislation/references/workflows.md`](plugin/skills/get-legislation/references/workflows.md)
+- Project settings contract: [`plugin/skills/get-legislation/references/project-settings.md`](plugin/skills/get-legislation/references/project-settings.md)
 - Getting started: [`docs/tutorial-getting-started.md`](docs/tutorial-getting-started.md)
 - Troubleshooting: [`docs/troubleshooting.md`](docs/troubleshooting.md)
 - Documentation index — tutorial, how-to guides, reference, and explanation: [`docs/README.md`](docs/README.md)

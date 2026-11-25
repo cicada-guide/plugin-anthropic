@@ -51,11 +51,11 @@ shown in this skill is an example: confirm the current name with tool search, an
   requests?"), a conversational message, or something outside this repo. No agents, no
   workspace, no issue.
 - **One-line fix the user dictated** — make it and run `node scripts/check.mjs`. If it touches
-  `skills/` or `agents/`, also run the full eval suite
+  `plugin/skills/` or `plugin/agents/`, also run the full eval suite
   ([How to verify a change](../../../docs/howto-verify-a-change.md#5-run-the-eval-suite), step 5).
   No agents, no workspace. Report; if the user wants it as a PR, take the issue step below, then
   Phase 4 step 3.
-- **In-domain work** — anything that will change `skills/`, `agents/`, `docs/`, `evals/`,
+- **In-domain work** — anything that will change `plugin/skills/`, `plugin/agents/`, `docs/`, `plugin/evals/`,
   `README.md`, `CHANGELOG.md`, `scripts/` or `.claude-plugin/`. Continue below.
 
 | Request | Phases | Verifier reads |
@@ -168,7 +168,7 @@ Agent(subagent_type: "plugin-verifier", description: "Verify plugin change",
   Phase 4 only if the user says so, listing those checks as `NOT_RUN` in the PR description.
 - If plugin-verifier returns no report or no `VERDICT` line, retry once; on a second failure,
   stop and report. Never open or push to a PR without a verdict.
-- **Evals.** After any change under `skills/` or `agents/`, the verifier runs the full eval
+- **Evals.** After any change under `plugin/skills/` or `plugin/agents/`, the verifier runs the full eval
   suite ([How to verify a change](../../../docs/howto-verify-a-change.md#5-run-the-eval-suite),
   step 5) with `--judge-model sonnet`. Each run is a model call on the maintainer's account: if
   the user set a budget, ask before spending it. Do not narrow the suite to a subset by default.
@@ -215,7 +215,7 @@ tag.
   `Status:` comment, also a maintainer's, reads `Status: deployed and verified`, and whose
   server PR is merged → live list saved and shows `chamber` → editor updates the three tool
   lists, the parameter table, the changelog → verifier: `check.mjs` and `check-live-tools.mjs`
-  pass, copies agree, and because `skills/get-legislation/SKILL.md` changed, the full eval suite
+  pass, copies agree, and because `plugin/skills/get-legislation/SKILL.md` changed, the full eval suite
   runs → PASS → draft PR with `Closes #N` and the server PR link.
 - **Error:** the same issue whose latest `Status:` comment is `Status: reverted`, or comes from
   a non-maintainer → the orchestrator reports it is not ready and stops; nothing is edited.

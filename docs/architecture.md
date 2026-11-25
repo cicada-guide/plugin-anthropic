@@ -11,10 +11,11 @@ beside it.
  host (Claude Code)
    │  reads the manifest
    ▼
- .claude-plugin/plugin.json ─┐
- .claude-plugin/marketplace.json
-   │                          │
-   │ skills/  agents/         │ .mcp.json  ──  "guide-public"
+ .claude-plugin/marketplace.json  ──  "source": "./plugin"
+   ▼
+ plugin/.claude-plugin/plugin.json ─┐
+   │                                │
+   │ skills/  agents/               │ .mcp.json  ──  "guide-public"
    ▼                          ▼
  guidance loaded into    Streamable HTTP ──► https://anthropic.cicada.guide/mcp
  the model's context                          (Cloudflare Worker, private repo
@@ -23,20 +24,27 @@ beside it.
 
 ## Manifests
 
-- **`.claude-plugin/plugin.json`** is the Claude manifest.
+- **`plugin/.claude-plugin/plugin.json`** is the Claude manifest.
 - **`.claude-plugin/marketplace.json`** lets `/plugin marketplace add cicada-guide/plugin-anthropic` work.
-  Its single entry has `"source": "./"`: the repo root *is* the plugin, so there is no
-  sub-directory to package.
+  Its single entry has `"source": "./plugin"`. The plugin is that folder, which holds only what
+  ships and the eval cases: the plugin directory reviews the folder as submitted, and refuses scripts, package manifests,
+  `CLAUDE.md` and `.claude/` there from a publisher that is not Verified. Maintainer files
+  (`scripts/`, `docs/`, `promptfoo/`, `.claude/`) stay at the repo root, outside it; only the eval
+  cases sit inside, in `plugin/evals/`, because `claude plugin eval` reads them from below the
+  plugin root, and they are Markdown. The directory takes `README.md` and `LICENSE` from the repo
+  root, so neither is copied in.
+- **`plugin/assets/logo.svg`** is the icon, named by `icon` in `plugin.json`. It is a plain SVG:
+  fill colors as attributes, no `<style>`, script or outside reference.
 The two files carry three independent `version` fields. They must match, or hosts see different
 releases. `scripts/check.mjs` fails until they agree.
 
 ## The MCP server
 
-`.mcp.json` declares exactly one server, keyed `guide-public`, at
+`plugin/.mcp.json` declares exactly one server, keyed `guide-public`, at
 `https://anthropic.cicada.guide/mcp`. Two consequences follow:
 
 - **Tool names include the server key.** A host exposes each tool to the model as
-  `mcp__plugin_cicada-guide_guide-public__<tool>`. Agent allowlists, skill `allowed-tools`, and any prose that
+  `mcp__plugin_cicada-guide_guide-public__<tool>`. Agent allowlists and any prose that
   names a fully qualified tool must keep the `guide-public` segment. Without it the name matches nothing.
 - **The hostname is a published API.** Every installed copy of the plugin has it baked in. It
   moves only with a version bump and a transition period in which the old hostname still
@@ -54,9 +62,9 @@ reaches the model differently:
 
 | Kind | Where | How it loads |
 | --- | --- | --- |
-| Always-on skill | `skills/get-legislation/` | Loads automatically on any state-legislation question. Its `references/` hold the tool reference, workflows, the governor-action table and project-settings contract |
-| Slash-command skills | `skills/research-legislation/`, `skills/voting-record/`, `skills/contact-legislator/` | Run as `/cicada-guide:<name>`, or when Claude judges a request needs the full workflow |
-| Subagents | `agents/*.md`: `bill-brief-researcher`, `legislator-disambiguator` | Dispatched by Claude for long, autonomous jobs; each returns one consolidated report |
+| Always-on skill | `plugin/skills/get-legislation/` | Loads automatically on any state-legislation question. Its `references/` hold the tool reference, workflows, the governor-action table and project-settings contract |
+| Slash-command skills | `plugin/skills/research-legislation/`, `plugin/skills/voting-record/`, `plugin/skills/contact-legislator/` | Run as `/cicada-guide:<name>`, or when Claude judges a request needs the full workflow |
+| Subagents | `plugin/agents/*.md`: `bill-brief-researcher`, `legislator-disambiguator` | Dispatched by Claude for long, autonomous jobs; each returns one consolidated report |
 
 The three slash commands each own one workflow and end with a card when the answer fits one:
 `research-legislation` writes a sourced brief on one bill and ends with `show_bill`, or lists the
@@ -76,15 +84,15 @@ are in [why each entry point restates the dataset rules](explanation-dataset-rul
 
 **Cross-component links use `${CLAUDE_PLUGIN_ROOT}`.** A subagent runs with the user's project as
 its working directory, so a relative path such as `../skills/...` resolves to nothing. Only files
-inside `skills/get-legislation/` may link their sibling `references/` relatively.
+inside `plugin/skills/get-legislation/` may link their sibling `references/` relatively.
 
 Agents are also sandboxed. Their frontmatter `tools:` allowlist names only `Read` and the
 `guide-public` server's tools, so an agent that reads bill text or a PDF cannot run commands or
 write files, whatever that text says.
 
-The three command skills pre-approve the `guide-public` tools they call, named one by one in
-`allowed-tools`, so a slash command runs without a permission prompt per tool. They name no
-wildcard: a tool the server adds later still asks first.
+No skill carries `allowed-tools`. The plugin directory accepts that key, from a publisher that is
+not Verified, only with plain `Read`, `Grep`, `Glob` and `LS`, which no skill needs, so every
+tool call follows the user's own permission settings.
 
 ## Cards
 
@@ -126,7 +134,7 @@ Users can put a `.claude/cicada-guide.local.md` in their own project, copied fro
 [`cicada-guide.local.md.example`](../cicada-guide.local.md.example). It sets a default response
 format, a `context` prefix and default jurisdictions. A pinned response format is never sent to
 the card tools or `get_rollcall_breakdown`, which take no `response_format`. The contract is in
-[project-settings.md](../skills/get-legislation/references/project-settings.md). The file is
+[project-settings.md](../plugin/skills/get-legislation/references/project-settings.md). The file is
 per-user and gitignored. Nothing user-specific belongs in this repo.
 
 ## Checks
@@ -138,7 +146,7 @@ per-user and gitignored. Nothing user-specific belongs in this repo.
 
 The live check stays off pull requests so that a server outage cannot block a merge. Neither
 script can tell whether Claude *follows* the guidance. For that, load a checkout with
-`claude --plugin-dir /path/to/plugin` and try it (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
+`claude --plugin-dir /path/to/plugin-anthropic/plugin` and try it (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
 
 ## Related
 

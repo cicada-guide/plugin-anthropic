@@ -10,7 +10,7 @@ every release.
 | --- | --- | --- |
 | License | Apache-2.0 | Permissive with an explicit patent grant. `LICENSE` at the repo root, `"license": "Apache-2.0"` in the plugin manifest. |
 | Repository | `cicada-guide/plugin-anthropic`, public | The plugin lives here; the Worker source stays private in `cicada-guide/mcp-anthropic`. |
-| Layout | Repo root is the plugin | `.claude-plugin/` holds both `marketplace.json` (`"source": "./"`) and `plugin.json`. |
+| Layout | The plugin is `plugin/` | The repo root's `.claude-plugin/marketplace.json` points at it (`"source": "./plugin"`), and `plugin/.claude-plugin/plugin.json` is the manifest. The folder holds only what ships plus the Markdown eval cases, so the plugin directory, which reviews it as submitted, sees no scripts or maintainer files. Submit the `plugin` folder. |
 | MCP endpoint | `https://anthropic.cicada.guide/mcp` | Cloudflare Custom Domain on the Worker, rather than the `workers.dev` hostname. Earlier releases used `https://public.cicada.guide/mcp-anthropic`, and `https://public.cicada.guide/mcp` before 0.9.0; both were retired on 2026-11-25 with the `public.cicada.guide` domain, so installs older than 0.12.0 no longer connect. |
 | MCP server key | `guide-public` | Tools surface as `mcp__plugin_cicada-guide_guide-public__search_bills`. The `<server>` segment is mandatory — `mcp__plugin_cicada-guide__search_bills` is not reachable by any configuration. |
 | Contact email | None | The manifests' `author` and `owner` carry a name and URL only, and issues route through the repo. |
@@ -22,11 +22,11 @@ every release.
 
 - **Reconcile the tool reference against the live server.** Run `tools/list` against
   `https://anthropic.cicada.guide/mcp` and diff it against
-  `skills/get-legislation/references/tool-reference.md`, which records the server version it was
+  `plugin/skills/get-legislation/references/tool-reference.md`, which records the server version it was
   verified against. The endpoint is unversioned, so nothing else signals drift. The server is
   stateless: it issues no `mcp-session-id`, and a bare `tools/list` POST is answered directly, with
   no `initialize` first. Reconcile against the server, never against the other copies: the tool
-  names are repeated in `README.md` and `skills/get-legislation/SKILL.md`, and those three
+  names are repeated in `README.md` and `plugin/skills/get-legislation/SKILL.md`, and those three
   agreeing with each other is exactly the state drift leaves behind.
   `node scripts/check-live-tools.mjs` does the fetch and the reconciliation in one step, and the
   `live-tools` workflow runs it nightly. To inspect the raw list by hand, this writes it to
@@ -41,7 +41,7 @@ every release.
   ```
 
 - **Bump all three `version` fields together.** They live in two files:
-  `.claude-plugin/plugin.json`, and *both* `metadata.version` and `plugins[0].version` in
+  `plugin/.claude-plugin/plugin.json`, and *both* `metadata.version` and `plugins[0].version` in
   `.claude-plugin/marketplace.json`. They are independent fields and drift silently if one is
   missed. `node scripts/check.mjs` fails until all three match.
 - **Date the changelog.** Move the `Unreleased` entries in `CHANGELOG.md` under a heading for the
@@ -52,7 +52,7 @@ every release.
 - **Land on `main` before announcing.** The marketplace resolver reads the default branch, not a
   feature branch. An install command shared against unmerged work resolves a stale manifest, or
   none at all.
-- **The release tags itself.** When a change to `.claude-plugin/plugin.json` lands on `main`,
+- **The release tags itself.** When a change to `plugin/.claude-plugin/plugin.json` lands on `main`,
   `.github/workflows/tag-release.yml` reads the version and, if `v<version>` does not exist yet,
   pushes an annotated tag on the `main` commit that brought the bump in (for a merged pull request,
   its merge commit, where every earlier tag points). Check the Actions tab for the run; it can also
@@ -63,7 +63,7 @@ every release.
 Locally, from a checkout:
 
 ```bash
-claude --plugin-dir /path/to/plugin
+claude --plugin-dir /path/to/plugin-anthropic/plugin
 ```
 
 Then `/mcp` should list `guide-public` as connected, and `/help` should show

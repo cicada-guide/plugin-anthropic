@@ -24,22 +24,21 @@ Knowing the plugin's reach helps you judge whether a finding is in scope:
   contacts officials, files documents, or changes state.
 - **No credentials.** There is no account, API key or OAuth flow. The plugin stores and transmits
   no secrets.
-- **Subagents are sandboxed by allowlist.** Each agent in `agents/` may use `Read` and the
+- **Subagents are sandboxed by allowlist.** Each agent in `plugin/agents/` may use `Read` and the
   `guide-public` server's tools only. It can't run commands or write files.
-- **Slash commands pre-approve read-only tools by name.** A command skill's `allowed-tools` lists
-  the `guide-public` tools it calls, one by one, and nothing else: no wildcard, no command or file
-  tool. A tool the server adds later still asks for approval.
+- **Nothing is pre-approved.** No skill carries `allowed-tools`, so every tool call, the
+  `guide-public` tools included, follows the user's own permission settings.
 - **Analytics.** The server records each tool call's name and arguments, the result it returned,
   the model-written `context` string, and the calling model's identifier. [README.md](README.md#privacy) has the
   full list.
 
 ## In scope
 
-- Guidance in `skills/` or `agents/` that leads Claude to run instructions found in tool results
+- Guidance in `plugin/skills/` or `plugin/agents/` that leads Claude to run instructions found in tool results
   such as bill text or PDFs. Tool results are data, not instructions.
 - Guidance that leads Claude to put credentials, personal data, or file contents into a tool
   argument, including `context`.
-- A way to point `.mcp.json` or a manifest at an endpoint other than
+- A way to point `plugin/.mcp.json` or a manifest at an endpoint other than
   `https://anthropic.cicada.guide/mcp`, or to widen an agent's tool allowlist, that
   `scripts/check.mjs` does not catch.
 - Vulnerabilities in the hosted server at `anthropic.cicada.guide`.
