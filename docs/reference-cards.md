@@ -15,9 +15,9 @@ there rather than repeating them. Why the plugin ends answers with a card is in
 | Tool | Card | Resource URI | The card fetches | The model receives |
 | --- | --- | --- | --- | --- |
 | `search_bills` | Bill results | `ui://cicada-guide/bill-results-v19.html` | More pages of the same search, once every loaded result is shown | The full result list, as text or JSON, as usual |
-| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v24.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
-| `show_official` | Contact card | `ui://cicada-guide/official-card-v15.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
-| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v23.html` | Vote history and sessions (`get_person_votes`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
+| `show_bill` | Bill card | `ui://cicada-guide/bill-workspace-v25.html` | Sponsors, documents, and floor votes (`get_bill_dossier`); each vote's party split (`get_rollcall_breakdown`) | The bill row: no votes, no sponsors. The text fallback omits the `headline` and `summary`; `structuredContent` echoes them in `_display` |
+| `show_official` | Contact card | `ui://cicada-guide/official-card-v16.html` | Recent votes (`get_person_votes`) | Identity, seat, term, party, and the contact details on record |
+| `show_person_record` | Legislator record | `ui://cicada-guide/legislator-record-v24.html` | Vote history and sessions (`get_person_votes`), and sponsored bills (`search_bills`) | Identity and seat only, never the votes |
 
 The URIs are the ones the live `tools/list` advertises in each tool's `_meta.ui.resourceUri`. The
 `-vN` suffix changes when the server changes a card's HTML shell, so a host that caches by URI
@@ -43,11 +43,11 @@ shows only the tool's result, so every card tool is safe to call everywhere.
   They name the card that fits, and the main conversation calls it. See
   [Commands and agents](reference-commands-and-agents.md#agents).
 - **One network host, with fallbacks.** Everything a card loads comes from
-  `https://public.cicada.guide`. The document viewer draws a PDF's pages with pdf.js from there,
+  `https://anthropic.cicada.guide`. The document viewer draws a PDF's pages with pdf.js from there,
   from bytes it fetches with `read_pdf_bytes`; when the host blocks it or the document can't be
   fetched, or "Open original" is refused, the card shows the document URL as a link with a
   **Copy link** button instead. The legislator photo comes from
-  `https://public.cicada.guide/photos/<id>`; without it, a silhouette stays. The district outline arrives in `show_official`'s `structuredContent`, so the map needs no
+  `https://anthropic.cicada.guide/photos/<id>`; without it, a silhouette stays. The district outline arrives in `show_official`'s `structuredContent`, so the map needs no
   host.
 - **A tapped bill goes through the conversation.** No card opens a bill itself. Tapping a bill in
   the results card or the legislator record posts a user turn asking Claude to show it with

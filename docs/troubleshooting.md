@@ -20,8 +20,11 @@ Run `/mcp` in Claude Code. The plugin's server is listed as `guide-public`.
 
 3. **Start a new session.** A host reads plugin configuration when a session starts.
 4. **Check your network.** The host must reach `https://anthropic.cicada.guide` over HTTPS for
-   the tools, and `https://public.cicada.guide` for card photos and the PDF viewer. A corporate
-   proxy or firewall that blocks the first shows up as a failed connection, not as a tool error.
+   the tools, card photos and the PDF viewer. A corporate proxy or firewall that blocks it shows
+   up as a failed connection, not as a tool error.
+5. **Update an install older than 0.12.0.** Those releases point at `public.cicada.guide`, which
+   was retired on 2026-11-25 and no longer resolves. Update the plugin (`/plugin` opens the plugin
+   manager), or point a connector at `https://anthropic.cicada.guide/mcp`.
 
 No sign-in is ever needed. If a host asks you to authenticate to `guide-public`, the host has made
 a mistake; the server accepts anonymous callers.
@@ -143,7 +146,7 @@ the latest version of a non-PDF document as text. It shows the document's URL as
 **Copy link** button instead when it can't: an older non-PDF version; a PDF over 20 MB, which is
 the card's own limit; a PDF the server can't fetch from the legislature's site, such as one from a
 site outside its list of known sources, or one over 20 MB from a site that can't send part of a
-file; or a host that blocks the viewer's script from `public.cicada.guide`. Open the link, or copy it into a
+file; or a host that blocks the viewer's script from `anthropic.cicada.guide`. Open the link, or copy it into a
 browser. Claude can also
 read the text with `get_latest_bill_document`.
 

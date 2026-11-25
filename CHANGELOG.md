@@ -10,8 +10,21 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Removed
+
+- **Installs older than 0.12.0 no longer connect.** The server retired `public.cicada.guide` on
+  2026-11-25, so `https://public.cicada.guide/mcp-anthropic` (0.9.0 through 0.11.11) and
+  `https://public.cicada.guide/mcp` (earlier releases) no longer resolve. Update the plugin, or
+  point a connector at `https://anthropic.cicada.guide/mcp`. The server answers only on
+  `anthropic.cicada.guide` from now on.
+
 ### Changed
 
+- Updated to match the server: card URIs follow the server's new shells, `bill-workspace-v25`,
+  `legislator-record-v24` and `official-card-v16`; `bill-results-v19` is unchanged. Card photos
+  (`photo_url`, now `https://anthropic.cicada.guide/photos/<id>`), the PDF viewer and the privacy
+  policy (`https://anthropic.cicada.guide/privacy`) load from `anthropic.cicada.guide`, and the
+  docs no longer name `public.cicada.guide` as a live host.
 - Updated to match the server: `search_bills` filters combine, so a bill must match every one.
   Every entry point that searches bills now says to find a named bill with `bill` plus a state or
   session filter, not a topic `query`, and to search again without `query` when a search with

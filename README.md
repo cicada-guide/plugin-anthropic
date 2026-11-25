@@ -244,11 +244,11 @@ What the plugin runs, sends, and fetches:
 - **Fetches on your behalf:** `get_latest_bill_document` and `read_pdf_bytes` have the server
   download a bill's public document from the state legislature's own website; `read_pdf_bytes`
   accepts only legislature hosts on the server's allowlist.
-- **Cards** load legislator photos and the bill card's PDF viewer from `public.cicada.guide` only.
+- **Cards** load legislator photos and the bill card's PDF viewer from `anthropic.cicada.guide` only.
   Any other data a card shows comes from the same server's tools, called through the host, not
   fetched by the card itself.
 
-The full policy is at <https://public.cicada.guide/privacy>.
+The full policy is at <https://anthropic.cicada.guide/privacy>.
 
 ## Data sources
 

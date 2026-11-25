@@ -13,8 +13,8 @@ is read-only: it looks things up and never contacts anyone or changes anything.
 ## What you'll need
 
 - Claude Code.
-- Network access to `https://anthropic.cicada.guide` (tools) and `https://public.cicada.guide`
-  (card photos and the PDF viewer) over HTTPS.
+- Network access to `https://anthropic.cicada.guide` over HTTPS, for the tools, card photos and
+  the PDF viewer.
 - Nothing else. The server accepts anonymous callers, so there is no key to paste and no OAuth
   flow to complete.
 
