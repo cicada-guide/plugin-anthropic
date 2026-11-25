@@ -45,9 +45,9 @@ jq -r '.result.tools[] | select(.inputSchema.properties.response_format == null)
 jq '.result.tools[] | select(.name == "show_bill") | .inputSchema' tools-list.json
 ```
 
-Every schema lists `context`, `llm_model` and `conversation_id`, and of the three requires only
-`context`. The server's analytics wrapper adds all three to each tool; they are documented once,
-under "Shared parameters" in the tool reference, not per tool. Every schema except
+Every schema lists `context`, `llm_model` and `conversation_id`, and of the three requires
+`context` and `llm_model`. The server's analytics wrapper adds all three to each tool; they are
+documented once, under "Shared parameters" in the tool reference, not per tool. Every schema except
 `get_more_tools`'s also declares `additionalProperties: false`.
 
 ### 2. See what disagrees

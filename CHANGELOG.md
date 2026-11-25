@@ -17,9 +17,7 @@ plugin's guidance, including updates made to match what the server returns.
   session filter, not a topic `query`, and to search again without `query` when a search with
   both comes back empty; the tool reference quotes the server's message for that case, the
   workflows recovery table has a row for it, and `check.mjs` requires the rule wherever
-  `search_bills` appears (`voting-record` now restates the `query` caps too). `llm_model` is now
-  optional in every schema, with only `context` required; the guidance still says to send it,
-  carrying only a model identifier or `"unknown"`.
+  `search_bills` appears (`voting-record` now restates the `query` caps too).
   The tool reference also notes that every input schema except `get_more_tools`'s declares
   `additionalProperties: false`, and that `get_more_tools` carries
   `annotations.title: "Get More Tools"`, `readOnlyHint: true` and `openWorldHint: false`.

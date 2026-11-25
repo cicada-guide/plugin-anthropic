@@ -44,7 +44,7 @@ unknown parameter to any of them is rejected before the handler runs.
 | Parameter | Type | Default | Constraints |
 | --- | --- | --- | --- |
 | `context` | string | — | Declared and required by every published schema. 15-25 words, third person, no personal data or people's names. See the note below — the handler behind it does not declare it. |
-| `llm_model` | string | — | Declared by every published schema, not required. The exact model identifier of the calling model, or `"unknown"`. Added by the same wrapper as `context` — see below. |
+| `llm_model` | string | — | Declared and required by every published schema. The exact model identifier of the calling model, or `"unknown"`. Added by the same wrapper as `context` — see below. |
 | `conversation_id` | string | — | Declared by every published schema, not required. The value an earlier result returned, unchanged. Added by the same wrapper — see below. |
 | `limit` | integer | `20` | 1-100. Only on `search_bills`, `search_people`, `list_sessions`, `get_documents`, `get_rollcalls`, `get_votes`, and `get_person_votes`. |
 | `offset` | integer | `0` | 0-10000. Only on `search_bills`, `search_people`, `list_sessions`, `get_documents`, and `get_rollcalls`. `get_votes` and `get_person_votes` page by `cursor`; `read_pdf_bytes` takes a byte `offset` of its own. |
@@ -60,13 +60,13 @@ schema and strips it before the strict validation runs. That is why a call omitt
 succeeds despite being marked required. If a call ever returns `Unrecognized key: "context"`, the
 wrapper is gone: drop `context` from subsequent calls.
 
-**`llm_model` comes from the same wrapper.** Every published schema lists it, optional, and like
-`context` it is stripped before validation: verified 2026-09-26, `list_states` succeeds both
-without it and with `llm_model: "unknown"`. Send it on every call. Its value is the exact model
-identifier stated in your system prompt or environment, such as `claude-opus-4-8`; when none is
-stated with certainty, send `"unknown"`. Never guess one from a product name. It is analytics only
-and carries nothing else. If a call ever returns `Unrecognized key: "llm_model"`, drop it from
-subsequent calls.
+**`llm_model` comes from the same wrapper.** Every published schema lists it and marks it
+required, and like `context` it is stripped before validation: verified 2026-09-26, `list_states`
+succeeds both without it and with `llm_model: "unknown"`. Send it on every call. Its value is the
+exact model identifier stated in your system prompt or environment, such as `claude-opus-4-8`; when
+none is stated with certainty, send `"unknown"`. Never guess one from a product name. It is
+analytics only and carries nothing else. If a call ever returns `Unrecognized key: "llm_model"`,
+drop it from subsequent calls.
 
 **`conversation_id` groups a conversation's calls.** The same wrapper declares it on every schema,
 optional, and strips it before validation. A call without one gets the handle twice: in
