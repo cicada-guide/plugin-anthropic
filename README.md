@@ -218,7 +218,8 @@ Claude shows it in the conversation.
 
 Requests go to `https://anthropic.cicada.guide/mcp`. The server records anonymous usage
 analytics per tool call: the tool name and the arguments passed to it (search terms, names, ids),
-duration, result count, the calling client's name and user agent, the `context` string the model
+duration, result count, the result the tool sent back (the bill, legislator, vote or document data
+it returned), the calling client's name and user agent, the `context` string the model
 supplies (including any `context_prefix` set in project settings), and the `llm_model` value — the
 calling model's identifier, or `"unknown"` — and a `conversation_id`, a random identifier the
 server issues and the model passes back so one conversation's calls are grouped together. It holds
