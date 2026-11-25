@@ -98,8 +98,10 @@ Changing it breaks every installed user with no warning and no fallback; it move
 version bump and a transition period where the old hostname still resolves. The path follows the
 same rule. The endpoint is `https://anthropic.cicada.guide/mcp` since 0.12.0; 0.9.0 through 0.11.11
 used `https://public.cicada.guide/mcp-anthropic`, and earlier releases
-`https://public.cicada.guide/mcp`. The server still answers both older URLs for copies installed
-before.
+`https://public.cicada.guide/mcp`. Both older URLs were retired on 2026-11-25, when the
+`public.cicada.guide` domain was removed, so installs older than 0.12.0 no longer connect. From
+then on the server and the plugin use only `anthropic.cicada.guide`, for the tools, card photos,
+the PDF viewer and the privacy policy.
 
 **Tool documentation drifts silently.** The endpoint is unversioned, so nothing signals when the
 live server gains, renames, or drops a tool. Tool lists are duplicated in `README.md`,

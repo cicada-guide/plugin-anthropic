@@ -11,7 +11,7 @@ every release.
 | License | Apache-2.0 | Permissive with an explicit patent grant. `LICENSE` at the repo root, `"license": "Apache-2.0"` in the plugin manifest. |
 | Repository | `cicada-guide/plugin-anthropic`, public | The plugin lives here; the Worker source stays private in `cicada-guide/mcp-anthropic`. |
 | Layout | Repo root is the plugin | `.claude-plugin/` holds both `marketplace.json` (`"source": "./"`) and `plugin.json`. |
-| MCP endpoint | `https://anthropic.cicada.guide/mcp` | Cloudflare Custom Domain on the Worker, rather than the `workers.dev` hostname. Earlier releases used `https://public.cicada.guide/mcp-anthropic`, and `https://public.cicada.guide/mcp` before 0.9.0; the same Worker still answers both for earlier installs. |
+| MCP endpoint | `https://anthropic.cicada.guide/mcp` | Cloudflare Custom Domain on the Worker, rather than the `workers.dev` hostname. Earlier releases used `https://public.cicada.guide/mcp-anthropic`, and `https://public.cicada.guide/mcp` before 0.9.0; both were retired on 2026-11-25 with the `public.cicada.guide` domain, so installs older than 0.12.0 no longer connect. |
 | MCP server key | `guide-public` | Tools surface as `mcp__plugin_cicada-guide_guide-public__search_bills`. The `<server>` segment is mandatory — `mcp__plugin_cicada-guide__search_bills` is not reachable by any configuration. |
 | Contact email | None | The manifests' `author` and `owner` carry a name and URL only, and issues route through the repo. |
 | Always-on skill name | `get-legislation` | Named `state-legislation` in 0.2.0, renamed from `cicada-guide`, which had produced `/cicada-guide:cicada-guide`; that pass also converted cross-component links to `${CLAUDE_PLUGIN_ROOT}`, since both touch the same sites. Renamed `get-legislation` after 0.9.5, when the `bill-research` command became `research-legislation`. |
@@ -83,11 +83,11 @@ the repo is reachable — everything else passes just as well while the repo is 
 ## Infrastructure dependency
 
 The plugin points at `anthropic.cicada.guide`, a Cloudflare Custom Domain routed to the
-`cicada-guide-mcp-anthropic` Worker. Cards also load photos and pdf.js from `public.cicada.guide`, the
-same Worker's other custom domain, which earlier releases used as their MCP endpoint. Both routes
-are configured in the private `cicada-guide/mcp-anthropic` repo's `wrangler.jsonc` and activated by
-`wrangler deploy`.
+`cicada-guide-mcp-anthropic` Worker. Cards load photos and pdf.js from the same host. Earlier
+releases used `public.cicada.guide`, the Worker's other custom domain, until it was retired on
+2026-11-25. The route is configured in the private `cicada-guide/mcp-anthropic` repo's
+`wrangler.jsonc` and activated by `wrangler deploy`.
 
-If either domain is ever retired or re-pointed, this plugin breaks for every installed user with no
+If the domain is ever retired or re-pointed, this plugin breaks for every installed user with no
 warning and no fallback. Treat the hostname as a published API surface: change it only with a
 version bump here, and keep the old hostname resolving through the transition.
