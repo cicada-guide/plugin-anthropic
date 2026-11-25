@@ -12,6 +12,10 @@ plugin's guidance, including updates made to match what the server returns.
 
 ### Removed
 
+- **The slash commands pre-approve no tools.** `/cicada-guide:research-legislation`,
+  `/cicada-guide:voting-record` and `/cicada-guide:contact-legislator` no longer carry
+  `allowed-tools`, so their tool calls follow your own permission settings and may ask first. The
+  plugin directory accepts that key only with plain `Read`, `Grep`, `Glob` and `LS`.
 - **Installs older than 0.12.0 no longer connect.** The server retired `public.cicada.guide` on
   2026-11-25, so `https://public.cicada.guide/mcp-anthropic` (0.9.0 through 0.11.11) and
   `https://public.cicada.guide/mcp` (earlier releases) no longer resolve. Update the plugin, or
@@ -20,6 +24,15 @@ plugin's guidance, including updates made to match what the server returns.
 
 ### Changed
 
+- **The plugin moved to `plugin/`.** The marketplace entry's `source` is now `"./plugin"`, and the
+  manifest, `.mcp.json`, skills, agents and icon live in that folder, which holds nothing else.
+  Installs through `/plugin marketplace add cicada-guide/plugin-anthropic` pick it up on update
+  with no change; a `claude --plugin-dir` checkout now points at `plugin/`, and the eval suite
+  moved with it to `plugin/evals/` (`claude plugin eval plugin`). Maintainer files (`scripts/`,
+  `docs/`, `promptfoo/`, `.claude/`) stay at the repo root, outside the folder the plugin
+  directory reviews.
+- `plugin.json` now names its icon (`icon`) and the server's privacy policy (`privacyPolicyUrl`,
+  `https://anthropic.cicada.guide/privacy`), and the icon is a plain SVG with no CSS.
 - Updated to match the server: the README's privacy section and `SECURITY.md` now say the server
   records the result each tool call returned, as its privacy policy has since 2026-11-25.
 - Updated to match the server: card URIs follow the server's new shells, `bill-workspace-v25`,

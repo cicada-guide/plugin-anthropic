@@ -27,7 +27,7 @@ Changing the plugin:
 
 - [Verify a change](howto-verify-a-change.md): the offline checks, the live tools check, and
   loading a checkout into a real session.
-- [Run the evals under promptfoo](howto-run-promptfoo.md): the same `evals/` cases in promptfoo,
+- [Run the evals under promptfoo](howto-run-promptfoo.md): the same `plugin/evals/` cases in promptfoo,
   for its results viewer and side-by-side model comparisons.
 - [Add a command or agent](howto-add-a-command-or-agent.md): the files, frontmatter, and rules a
   new entry point must carry.
@@ -41,13 +41,13 @@ Changing the plugin:
 - [Cards](reference-cards.md): the interactive cards, what each shows, and what reaches the model.
 - [Checks](reference-checks.md): every rule `scripts/check.mjs` and `scripts/check-live-tools.mjs`
   enforce, and how to fix each failure.
-- [Tool reference](../skills/get-legislation/references/tool-reference.md): every tool's
+- [Tool reference](../plugin/skills/get-legislation/references/tool-reference.md): every tool's
   parameters, pagination, and errors.
-- [Workflows](../skills/get-legislation/references/workflows.md): call sequences for multi-step
+- [Workflows](../plugin/skills/get-legislation/references/workflows.md): call sequences for multi-step
   research.
-- [Governor action](../skills/get-legislation/references/governor-action.md): each state's
+- [Governor action](../plugin/skills/get-legislation/references/governor-action.md): each state's
   governor deadline, default when the governor does not act, and effective date.
-- [Project settings](../skills/get-legislation/references/project-settings.md): the
+- [Project settings](../plugin/skills/get-legislation/references/project-settings.md): the
   `.claude/cicada-guide.local.md` contract.
   [`cicada-guide.local.md.example`](../cicada-guide.local.md.example) is the template.
 - [Troubleshooting](troubleshooting.md): connection problems, missing tools, rate limits,

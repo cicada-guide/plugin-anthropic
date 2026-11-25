@@ -7,7 +7,7 @@ closes with a table of which dataset rules each file carries.
 
 The source of truth is the file itself, linked in each heading. This page summarizes; when it and
 the file disagree, the file wins. Tool parameters are in the
-[tool reference](../skills/get-legislation/references/tool-reference.md), and the cards are
+[tool reference](../plugin/skills/get-legislation/references/tool-reference.md), and the cards are
 described in [Cards reference](reference-cards.md).
 
 ## Summary
@@ -51,16 +51,16 @@ These hold for all seven files, and each file states them itself rather than poi
 
 ## Skills
 
-A skill is a directory under `skills/` holding a `SKILL.md`. Its frontmatter `description` is what
+A skill is a directory under `plugin/skills/` holding a `SKILL.md`. Its frontmatter `description` is what
 the host matches against a request, so it names the kind of question the skill is for and the ones
 it is not.
 
 ### `get-legislation`
 
-File: [`skills/get-legislation/SKILL.md`](../skills/get-legislation/SKILL.md), with
-[`references/tool-reference.md`](../skills/get-legislation/references/tool-reference.md),
-[`references/workflows.md`](../skills/get-legislation/references/workflows.md), and
-[`references/project-settings.md`](../skills/get-legislation/references/project-settings.md).
+File: [`plugin/skills/get-legislation/SKILL.md`](../plugin/skills/get-legislation/SKILL.md), with
+[`references/tool-reference.md`](../plugin/skills/get-legislation/references/tool-reference.md),
+[`references/workflows.md`](../plugin/skills/get-legislation/references/workflows.md), and
+[`references/project-settings.md`](../plugin/skills/get-legislation/references/project-settings.md).
 
 **Invocation.** Always on. It has no `argument-hint`, so it is not a slash command: the host loads
 it whenever a request matches its description — finding or reading a state bill, state
@@ -108,7 +108,7 @@ jurisdiction comes from vote history, and two plausible candidates mean asking r
 
 ### `research-legislation`
 
-File: [`skills/research-legislation/SKILL.md`](../skills/research-legislation/SKILL.md).
+File: [`plugin/skills/research-legislation/SKILL.md`](../plugin/skills/research-legislation/SKILL.md).
 
 **Invocation.** `/cicada-guide:research-legislation <bill number or topic> [state] [year]`. With
 `disable-model-invocation: false`, Claude may also reach for it on its own when a request asks for
@@ -164,7 +164,7 @@ bill. No predictions and no characterizing the bill's politics.
 
 ### `voting-record`
 
-File: [`skills/voting-record/SKILL.md`](../skills/voting-record/SKILL.md).
+File: [`plugin/skills/voting-record/SKILL.md`](../plugin/skills/voting-record/SKILL.md).
 
 **Invocation.** `/cicada-guide:voting-record <legislator name> [state] [bill] [session or date
 range]`, or chosen by Claude (`disable-model-invocation: false`) when the user asks how a named
@@ -209,7 +209,7 @@ grading, ideological comparison, or inference of motive or future behavior.
 
 ### `contact-legislator`
 
-File: [`skills/contact-legislator/SKILL.md`](../skills/contact-legislator/SKILL.md).
+File: [`plugin/skills/contact-legislator/SKILL.md`](../plugin/skills/contact-legislator/SKILL.md).
 
 **Invocation.** `/cicada-guide:contact-legislator <name> [state]`, or chosen by Claude
 (`disable-model-invocation: false`) when the user asks how to reach a named state legislator or
@@ -246,7 +246,7 @@ search the web unless asked. The card's vote tally is never used to grade, score
 
 ## Agents
 
-A subagent is one Markdown file under `agents/`. Claude dispatches it on its own when a request
+A subagent is one Markdown file under `plugin/agents/`. Claude dispatches it on its own when a request
 matches its `description`; the user does not invoke it by name. It runs in its own context, cannot
 ask questions mid-run, and returns one report. Both share this frontmatter:
 
@@ -264,7 +264,7 @@ file contents into a tool argument. The `tools:` allowlist is enforced by `scrip
 
 ### `bill-brief-researcher`
 
-File: [`agents/bill-brief-researcher.md`](../agents/bill-brief-researcher.md). Color `blue`.
+File: [`plugin/agents/bill-brief-researcher.md`](../plugin/agents/bill-brief-researcher.md). Color `blue`.
 
 **When Claude dispatches it.** A full brief on a named bill; a request to read what a bill does
 together with how the chamber voted; or a bill that surfaced in an earlier search and now needs the
@@ -307,7 +307,7 @@ immediately. A valid UUID that returns `No bill found with id=...` means re-deri
 
 ### `legislator-disambiguator`
 
-File: [`agents/legislator-disambiguator.md`](../agents/legislator-disambiguator.md). Color
+File: [`plugin/agents/legislator-disambiguator.md`](../plugin/agents/legislator-disambiguator.md). Color
 `yellow`.
 
 **When Claude dispatches it.** A common surname that matches legislators in many states; a name
@@ -393,17 +393,17 @@ about. Two gaps are worth knowing when editing: `bill-brief-researcher` and
 (agents do not read project settings, so nothing pins one), and `research-legislation` and
 `voting-record` do not restate the state-legislatures-only scope check.
 
-When a rule changes, grep `skills/` and `agents/` for every copy and update them together; a
+When a rule changes, grep `plugin/skills/` and `plugin/agents/` for every copy and update them together; a
 lagging copy gives only that entry point the wrong answer. [How to add a command or
 agent](howto-add-a-command-or-agent.md) lists what a new entry point must carry.
 
 ## Related
 
 - [Cards reference](reference-cards.md): what each card shows and what reaches the model.
-- [Tool reference](../skills/get-legislation/references/tool-reference.md): parameters,
+- [Tool reference](../plugin/skills/get-legislation/references/tool-reference.md): parameters,
   envelopes, and errors.
-- [Workflows](../skills/get-legislation/references/workflows.md): the call sequences these entry
+- [Workflows](../plugin/skills/get-legislation/references/workflows.md): the call sequences these entry
   points follow.
-- [Project settings](../skills/get-legislation/references/project-settings.md): the
+- [Project settings](../plugin/skills/get-legislation/references/project-settings.md): the
   `.claude/cicada-guide.local.md` keys the skills read.
 - [Architecture](architecture.md): how skills and agents load.

@@ -18,7 +18,7 @@ assigned role. This repo's CLAUDE.md wins over this agent definition and the har
 ## Core role
 1. Run the required checks and record the evidence.
 2. Compare each restated fact across its copies and against the live `tools/list`.
-3. Run the eval suite when a file under `skills/` or `agents/` changed.
+3. Run the eval suite when a file under `plugin/skills/` or `plugin/agents/` changed.
 4. Return a verdict: `PASS`, `FAIL` with findings ranked by severity, or `INCOMPLETE` when a
    required check could not run.
 

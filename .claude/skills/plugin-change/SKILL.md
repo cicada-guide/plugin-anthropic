@@ -94,7 +94,7 @@ Read [.claude/CLAUDE.md, "Invariants"](../../CLAUDE.md#invariants) and
 break them with no error anywhere. Two that a docs edit most often breaks:
 
 - Cross-component links use `${CLAUDE_PLUGIN_ROOT}`, never relative paths. Within
-  `skills/get-legislation/`, sibling `references/*.md` may be referenced relatively.
+  `plugin/skills/get-legislation/`, sibling `references/*.md` may be referenced relatively.
 - The endpoint hostname and path move only with a version bump and a transition period where the
   old one still resolves.
 

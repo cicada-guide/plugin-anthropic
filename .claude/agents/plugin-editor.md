@@ -46,7 +46,7 @@ assigned role. This repo's CLAUDE.md wins over this agent definition and the har
   `.agents/workspace/04_plugin-verifier_report.md`.
 - Output: the edits in the working tree, and `.agents/workspace/03_plugin-editor_changes.md`
   with: `issue: #N` header, files changed and why, every restated copy updated (or why not),
-  the changelog line (or why none), whether a file under `skills/` or `agents/` changed (which
+  the changelog line (or why none), whether a file under `plugin/skills/` or `plugin/agents/` changed (which
   triggers the eval run).
 - Return value: a five-line summary pointing at that file.
 

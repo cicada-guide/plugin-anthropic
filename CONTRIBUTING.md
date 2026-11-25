@@ -13,8 +13,8 @@ see [Add a command or agent](docs/howto-add-a-command-or-agent.md). Every check 
 ## Before you start
 
 - **Wrong or misleading answer?** Open an issue. Include the question you asked, the answer you
-  got, and, if you can, the tool calls Claude made. Most fixes are guidance changes in `skills/`
-  or `agents/`.
+  got, and, if you can, the tool calls Claude made. Most fixes are guidance changes in `plugin/skills/`
+  or `plugin/agents/`.
 - **Server down or erroring?** Check `curl https://anthropic.cicada.guide/health` first. It should
   return `{"status":"ok"}`. Server problems can still be reported here, since the server repo is
   not public.
@@ -51,7 +51,7 @@ see [Add a command or agent](docs/howto-add-a-command-or-agent.md). Every check 
 5. Load your checkout into a real session and try the change:
 
    ```bash
-   claude --plugin-dir /path/to/plugin
+   claude --plugin-dir /path/to/plugin-anthropic/plugin
    ```
 
    `/mcp` should list `guide-public` as connected, and `/help` should show the plugin's slash

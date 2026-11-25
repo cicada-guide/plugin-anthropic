@@ -6,7 +6,7 @@ name: tag-release
 on:
   push:
     branches: [main]
-    paths: [.claude-plugin/plugin.json]
+    paths: [plugin/.claude-plugin/plugin.json]
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
           fetch-depth: 0
       - name: Tag the version bump
         run: |
-          version=$(jq -r .version .claude-plugin/plugin.json)
+          version=$(jq -r .version plugin/.claude-plugin/plugin.json)
           tag="v$version"
           git fetch --tags --force
           if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
@@ -36,12 +36,12 @@ jobs:
           # oldest one in the run that still carries this version. For a merged pull request that
           # is its merge commit, which is where every earlier tag points.
           bump=""
-          for commit in $(git log --first-parent --format=%H -- .claude-plugin/plugin.json); do
-            [ "$(git show "$commit:.claude-plugin/plugin.json" | jq -r .version)" = "$version" ] || break
+          for commit in $(git log --first-parent --format=%H -- plugin/.claude-plugin/plugin.json); do
+            [ "$(git show "$commit:plugin/.claude-plugin/plugin.json" | jq -r .version)" = "$version" ] || break
             bump=$commit
           done
           if [ -z "$bump" ]; then
-            echo "::error::No commit sets version $version in .claude-plugin/plugin.json"
+            echo "::error::No commit sets version $version in plugin/.claude-plugin/plugin.json"
             exit 1
           fi
           git config user.name "github-actions[bot]"

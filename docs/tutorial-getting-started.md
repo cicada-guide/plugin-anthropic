@@ -35,7 +35,7 @@ that was already open will not see the new tools.
 If you are working from a checkout of the repository instead, load it for a single session:
 
 ```bash
-claude --plugin-dir /path/to/plugin
+claude --plugin-dir /path/to/plugin-anthropic/plugin
 ```
 
 ## Step 2: Confirm the server and the commands
@@ -83,8 +83,8 @@ What does Alabama HB 591 from the 2026 Regular Session do?
 ```
 
 Claude may ask for approval before each tool runs. The tools only read legislative data, and
-each is marked read-only, so you can allow them for the session. The slash commands pre-approve the
-tools they call and do not ask.
+each is marked read-only, so you can allow them for the session. The slash commands ask the same
+way: the plugin pre-approves no tool.
 
 Behind the scenes Claude resolves Alabama to its jurisdiction, searches for the bill number within
 it, and reads the bill's record and its newest document. Naming the state matters: the same bill

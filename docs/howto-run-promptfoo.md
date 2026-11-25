@@ -5,7 +5,7 @@
 cases in [promptfoo](https://www.promptfoo.dev/) instead, for its results viewer, its history of
 past runs, and side-by-side comparisons, such as one model against another on the same cases.
 
-It does not copy the cases. `promptfoo/cases.mjs` reads `evals/*/prompt.md` and each case's
+It does not copy the cases. `promptfoo/cases.mjs` reads `plugin/evals/*/prompt.md` and each case's
 `graders/*.md` every time it runs, so a case added or changed for `claude plugin eval` runs here
 too, unchanged.
 
@@ -87,7 +87,7 @@ The cases and graders are the same. These things are not:
   `last_message` or `trace`, and an `llm` grader can focus on either. A case with any other grader
   type, target or focus fails to load, rather than passing without it.
 - **Results.** They go to promptfoo's own store, read by `npx promptfoo view`, not to
-  `evals/results/`.
+  `plugin/evals/results/`.
 
 The trace is the same shape as the one `claude plugin eval` grades: the session as JSON, one message
 per line. A regex grader sees every line; an `llm` judge with `focus: trace` sees the first 12 and

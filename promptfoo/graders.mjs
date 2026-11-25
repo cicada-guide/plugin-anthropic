@@ -1,4 +1,4 @@
-// promptfoo assertions for the free grader types in ../evals/ graders/*.md. Each reads the
+// promptfoo assertions for the free grader types in ../plugin/evals/ graders/*.md. Each reads the
 // grader's frontmatter from `context.config` (cases.mjs copies it there) and the session from the
 // provider's metadata (provider.mjs).
 

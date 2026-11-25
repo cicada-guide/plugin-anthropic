@@ -45,9 +45,9 @@ and agent schemas:
 
 ```bash
 claude plugin validate --strict .claude-plugin/marketplace.json
-claude plugin validate --strict .claude-plugin/plugin.json
-claude plugin validate --strict skills
-claude plugin validate --strict agents
+claude plugin validate --strict plugin/.claude-plugin/plugin.json
+claude plugin validate --strict plugin/skills
+claude plugin validate --strict plugin/agents
 ```
 
 `--strict` fails on warnings as well as errors. CI runs the same four commands.
@@ -60,9 +60,9 @@ Run this whenever you touch a tool name, a parameter, a parameter table, or a ca
 node scripts/check-live-tools.mjs
 ```
 
-It reads the endpoint from `.mcp.json`, fetches the live `tools/list`, and checks the docs against
-it: every live tool is named in `README.md`, `skills/get-legislation/SKILL.md`, and
-`skills/get-legislation/references/tool-reference.md`; no skill, agent, or README names a tool
+It reads the endpoint from `plugin/.mcp.json`, fetches the live `tools/list`, and checks the docs against
+it: every live tool is named in `README.md`, `plugin/skills/get-legislation/SKILL.md`, and
+`plugin/skills/get-legislation/references/tool-reference.md`; no skill, agent, or README names a tool
 the server lacks; and no example or parameter table passes a parameter the tool's schema does not
 declare. It prints `Documentation matches the live tools/list (N tools).` on success, exits 1 on a
 mismatch, and exits 2 when it could not get a tool list at all.
@@ -108,7 +108,7 @@ here.
 Only a real session shows whether Claude follows the guidance you wrote:
 
 ```bash
-claude --plugin-dir /path/to/plugin
+claude --plugin-dir /path/to/plugin-anthropic/plugin
 ```
 
 Then confirm the plugin loaded:
@@ -140,12 +140,12 @@ Also watch for:
 
 ### 5. Run the eval suite
 
-A real session shows one answer. The eval suite in `evals/` runs fixed prompts several times, with
+A real session shows one answer. The eval suite in `plugin/evals/` runs fixed prompts several times, with
 and without the plugin, and grades each answer, so it catches a rule that holds in one session and
 breaks in the next. Run it after changing a skill or agent:
 
 ```bash
-claude plugin eval . --trust-plugin --allow-real-servers \
+claude plugin eval plugin --trust-plugin --allow-real-servers \
   --allow-tools "mcp__plugin_cicada-guide_guide-public__*" ToolSearch \
   --judge-model sonnet --threshold 0.8
 ```
@@ -174,7 +174,7 @@ tools did not return. `text-unavailable` asks about Hawaii HB 420 (2025), whose 
 will not serve to an automated request. It passes a reply that says the text could not be read,
 says why, points to the link, and adds nothing beyond the title. If Hawaii's site starts serving the
 page, the reply will describe the bill and this case will fail; choose another bill whose
-`get_latest_bill_document` returns `text_unavailable`. Results go to `evals/results/`, which
+`get_latest_bill_document` returns `text_unavailable`. Results go to `plugin/evals/results/`, which
 is ignored. The [plugin eval docs](https://code.claude.com/docs/en/plugin-evals) cover the case
 and grader format. To run the same cases in promptfoo instead, see
 [How to run the evals under promptfoo](howto-run-promptfoo.md).
@@ -197,7 +197,7 @@ The workflows are in `.github/workflows/` and run on `ubuntu-latest`; the two ch
 | --- | --- | --- | --- |
 | `check.yml` | `node scripts/check.mjs`, then `claude plugin validate` (pinned Claude Code version, from npm) | Every pull request, and every push to `main` | Yes, when it fails |
 | `live-tools.yml` | `node scripts/check-live-tools.mjs` | Nightly at 07:17 UTC, and on demand from the Actions tab (`workflow_dispatch`) | No. It never runs on a pull request, so a server outage cannot block a merge |
-| `tag-release.yml` | Tags a new version `v<version>` | Every push to `main` that changes `.claude-plugin/plugin.json`, and on demand | No. It runs only after the merge |
+| `tag-release.yml` | Tags a new version `v<version>` | Every push to `main` that changes `plugin/.claude-plugin/plugin.json`, and on demand | No. It runs only after the merge |
 
 Nothing in CI loads the plugin into a session or runs the eval suite; steps 4 and 5 are yours to
 do. A failed nightly `live-tools` run usually means the server changed; start at

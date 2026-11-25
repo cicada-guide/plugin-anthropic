@@ -18,7 +18,7 @@ node scripts/check.mjs
 ```
 
 They cover the invariants below: the three version fields, manifest names and `source`, the pinned
-endpoint and server key, the live-tools User-Agent that `docs/reference-checks.md` quotes, skill
+endpoint and server key, what the `plugin/` folder may hold and the plain-SVG icon, the live-tools User-Agent that `docs/reference-checks.md` quotes, skill
 and agent frontmatter, `${CLAUDE_PLUGIN_ROOT}` and Markdown links, tool counts in prose, the numbers in each restated dataset rule, each entry point carrying the
 rules it relies on, phrases that critique the dataset, and any mention of a bill synopsis, which
 the server never returns. The project docs (`CONTRIBUTING.md`,
@@ -31,8 +31,7 @@ purpose, change `scripts/check.mjs` in the same commit.
 `node scripts/check-live-tools.mjs` reconciles the tool documentation against the live
 `tools/list`: every live tool documented in the three tool lists, no documented tool the server
 lacks, no example or parameter table passing a parameter the schema does not declare, every
-documented card URI one a live tool links, every tool a skill's `allowed-tools` pre-approves one
-the server has, and, on a live run, every card resource and the version
+documented card URI one a live tool links, and, on a live run, every card resource and the version
 before it still reading. `.github/workflows/live-tools.yml` runs it nightly and on demand, never on a pull request, so a
 server outage cannot block a merge. `--file tools-list.json` checks a saved response instead.
 
@@ -40,13 +39,13 @@ Neither script can tell whether Claude follows the guidance. For that, load the 
 real session:
 
 ```bash
-claude --plugin-dir /path/to/plugin
+claude --plugin-dir /path/to/plugin-anthropic/plugin
 ```
 
 `/mcp` should list `guide-public` as connected, and `/help` should show the plugin's slash
 commands. `curl https://anthropic.cicada.guide/health` reports server health.
 
-After changing a skill or agent, also run the eval suite in `evals/` with `claude plugin eval`,
+After changing a skill or agent, also run the eval suite in `plugin/evals/` with `claude plugin eval`,
 passing `--judge-model sonnet`: the small default judge has failed correct answers. The command
 and what each case measures are in
 [How to verify a change](../docs/howto-verify-a-change.md#5-run-the-eval-suite).
@@ -59,20 +58,21 @@ deployment or its private repo; treat the endpoint as a fixed external dependenc
 
 | Path | Role |
 | --- | --- |
-| `.claude-plugin/plugin.json` | Claude manifest |
-| `.claude-plugin/marketplace.json` | Marketplace entry, `"source": "./"` — the repo root *is* the plugin |
-| `.mcp.json` | The single declaration of the MCP endpoint |
-| `skills/get-legislation/` | Always-on skill, plus `references/` (tool reference, workflows, project settings) |
-| `skills/*/SKILL.md` | Other skills are slash commands, one directory each |
-| `agents/` | Subagents, one Markdown file each |
+| `plugin/` | The shipped plugin plus its eval cases — the folder submitted to the plugin directory. Every path in this table outside `plugin/` is maintainer-only |
+| `plugin/.claude-plugin/plugin.json` | Claude manifest, with `icon` and `privacyPolicyUrl` |
+| `.claude-plugin/marketplace.json` | Marketplace entry at the repo root, `"source": "./plugin"` |
+| `plugin/.mcp.json` | The single declaration of the MCP endpoint |
+| `plugin/skills/get-legislation/` | Always-on skill, plus `references/` (tool reference, workflows, project settings) |
+| `plugin/skills/*/SKILL.md` | Other skills are slash commands, one directory each |
+| `plugin/agents/` | Subagents, one Markdown file each |
 | `cicada-guide.local.md.example` | Template users copy to `.claude/cicada-guide.local.md` |
 | `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md` | Human-facing project docs. CONTRIBUTING points here rather than restating the rules |
 | `docs/` | `README.md` index, `architecture.md`, `troubleshooting.md` — human-facing, never loaded into a session |
 | `docs/solutions/` | Documented solutions to past problems, organized by category with YAML frontmatter (`module`, `tags`, `problem_type`). Relevant when implementing or debugging in documented areas |
 | `scripts/` | `check.mjs` (offline invariants) and `check-live-tools.mjs` (docs against the live server) |
-| `evals/` | Eval cases for `claude plugin eval`, one directory each (`prompt.md` and `graders/`). See [How to verify a change](../docs/howto-verify-a-change.md#5-run-the-eval-suite) |
-| `assets/` | `logo.svg`, the plugin logo |
-| `promptfoo/` | Opt-in promptfoo runner for `evals/`, with its own `package.json`. Reads the cases rather than copying them; never loaded by the plugin. See [docs/howto-run-promptfoo.md](../docs/howto-run-promptfoo.md) |
+| `plugin/evals/` | Eval cases for `claude plugin eval`, one directory each (`prompt.md` and `graders/`). See [How to verify a change](../docs/howto-verify-a-change.md#5-run-the-eval-suite) |
+| `plugin/assets/` | `logo.svg`, the plugin icon, a plain SVG |
+| `promptfoo/` | Opt-in promptfoo runner for `plugin/evals/`, with its own `package.json`. Reads the cases rather than copying them; never loaded by the plugin. See [docs/howto-run-promptfoo.md](../docs/howto-run-promptfoo.md) |
 | `.github/workflows/` | `check.yml` on every pull request; `live-tools.yml` nightly; `tag-release.yml` tags each version bump on `main` |
 | `.claude/skills/`, `.claude/agents/` | Maintainer harness (orchestrator, procedures, agents) — not shipped, never loaded by installed users |
 
@@ -81,20 +81,27 @@ deployment or its private repo; treat the endpoint as a fixed external dependenc
 These break installed users silently — no error, sometimes no symptom until someone reports a
 wrong answer. `scripts/check.mjs` catches the mechanical ones; the rest need a reviewer.
 
-**Version is three fields in two files.** `.claude-plugin/plugin.json`, and *both*
+**`plugin/` holds only what ships.** The plugin directory reviews that folder as submitted and,
+from a publisher that is not Verified, refuses scripts, package manifests, a `CLAUDE.md`, a
+`.claude/` folder, an SVG with `<style>`, and any skill `allowed-tools`. Keep maintainer files at
+the repo root; the directory takes `README.md` and `LICENSE` from there. `check.mjs` enforces it.
+`claude plugin validate --strict --profile directory plugin` (a newer Claude Code than CI pins)
+runs the directory's own file checks locally.
+
+**Version is three fields in two files.** `plugin/.claude-plugin/plugin.json`, and *both*
 `metadata.version` and `plugins[0].version` in `.claude-plugin/marketplace.json`. They
 are independent fields that drift when one is missed. Grep before committing a bump:
-`grep -rn '"version"' .claude-plugin`.
+`grep -rn '"version"' .claude-plugin plugin/.claude-plugin`.
 
 **Cross-component links use `${CLAUDE_PLUGIN_ROOT}`, never relative paths.** A subagent's working
 directory is the user's project, so `../skills/...` resolves to nothing. Within
-`skills/get-legislation/`, sibling `references/*.md` may be referenced relatively.
+`plugin/skills/get-legislation/`, sibling `references/*.md` may be referenced relatively.
 
 **The MCP `<server>` path segment is mandatory.** Tools reach the model as
 `mcp__plugin_cicada-guide_guide-public__<tool>`. Dropping `guide-public` produces a name no
 configuration can reach.
 
-**The endpoint hostname is a published API surface.** It appears in `.mcp.json` and in prose.
+**The endpoint hostname is a published API surface.** It appears in `plugin/.mcp.json` and in prose.
 Changing it breaks every installed user with no warning and no fallback; it moves only with a
 version bump and a transition period where the old hostname still resolves. The path follows the
 same rule. The endpoint is `https://anthropic.cicada.guide/mcp` since 0.12.0; 0.9.0 through 0.11.11
@@ -106,7 +113,7 @@ the PDF viewer and the privacy policy.
 
 **Tool documentation drifts silently.** The endpoint is unversioned, so nothing signals when the
 live server gains, renames, or drops a tool. Tool lists are duplicated in `README.md`,
-`skills/get-legislation/SKILL.md`, and `references/tool-reference.md`. Before editing any of
+`plugin/skills/get-legislation/SKILL.md`, and `references/tool-reference.md`. Before editing any of
 them, run `tools/list` against the live endpoint (the server is stateless, so it is one POST; the
 command is in PUBLISHING.md) and reconcile all three against the server — not against each other.
 Avoid writing a tool *count* into prose; it is the first thing to go stale.
@@ -136,7 +143,7 @@ calls, the 100-id `search_people` batch cap, the two error shapes, the 600-a-min
 passing back the `conversation_id` an earlier result returned and never making one up, treating
 `governor_action` as the state's general rule and never computing a date from it, and loading a
 tool listed by name only before calling it. Agents also state that `Read` is for
-`${CLAUDE_PLUGIN_ROOT}` files only. When one changes, grep `skills/` and `agents/` for its other
+`${CLAUDE_PLUGIN_ROOT}` files only. When one changes, grep `plugin/skills/` and `plugin/agents/` for its other
 copies and update every one. A lagging copy gives only that entry point the wrong answer, so
 nothing else looks broken.
 

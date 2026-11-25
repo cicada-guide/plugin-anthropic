@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Reconciles the tool documentation against the live server's `tools/list` (CLAUDE.md: "Tool
 // documentation drifts silently"), and checks that every card resource, and the version before it,
-// still reads. Needs network access to the endpoint in `.mcp.json`.
+// still reads. Needs network access to the endpoint in `plugin/.mcp.json`.
 //
 //   node scripts/check-live-tools.mjs                     # fetch tools/list from the live endpoint
 //   node scripts/check-live-tools.mjs --file tools.json   # use a saved tools/list response instead
@@ -20,7 +20,7 @@ const lineOf = (text, index) => text.slice(0, index).split("\n").length;
 const PROTOCOL_VERSION = "2025-06-18";
 
 // Documents that list every tool — reconcile each against the server, not against each other.
-const TOOL_LISTS = ["README.md", "skills/get-legislation/SKILL.md", "skills/get-legislation/references/tool-reference.md"];
+const TOOL_LISTS = ["README.md", "plugin/skills/get-legislation/SKILL.md", "plugin/skills/get-legislation/references/tool-reference.md"];
 
 function walk(dir) {
   return readdirSync(join(ROOT, dir)).flatMap((entry) => {
@@ -111,7 +111,7 @@ const fileArg = process.argv.indexOf("--file");
 const endpointArg = process.argv.indexOf("--endpoint");
 const endpoint = endpointArg > 0
   ? process.argv[endpointArg + 1]
-  : Object.values(JSON.parse(read(".mcp.json")).mcpServers)[0].url;
+  : Object.values(JSON.parse(read("plugin/.mcp.json")).mcpServers)[0].url;
 let response;
 try {
   response = fileArg > 0 ? JSON.parse(readFileSync(process.argv[fileArg + 1], "utf8")) : await fetchTools(endpoint);
@@ -142,7 +142,7 @@ const params = (name) => new Set(Object.keys(tools.get(name)?.inputSchema?.prope
 
 const failures = [];
 const fail = (file, line, message) => failures.push(`${relative(ROOT, join(ROOT, file))}${line ? `:${line}` : ""}: ${message}`);
-const docFiles = [...walk("skills"), ...walk("agents"), "README.md"];
+const docFiles = [...walk("plugin/skills"), ...walk("plugin/agents"), "README.md"];
 
 // 1. Every live tool appears in each document that lists the tools.
 for (const file of TOOL_LISTS) {
@@ -175,7 +175,7 @@ for (const file of docFiles) {
 
 // 4. Parameter tables under each tool's heading in the tool reference list only declared parameters.
 {
-  const file = "skills/get-legislation/references/tool-reference.md";
+  const file = "plugin/skills/get-legislation/references/tool-reference.md";
   const lines = read(file).split("\n");
   let tool = null;
   let inTable = false;
@@ -219,17 +219,6 @@ if (fileArg < 0) {
         fail("(live server)", 0, `resources/read ${u} failed: ${error.message}`);
       }
     }
-  }
-}
-
-// 7. Every tool a skill pre-approves in `allowed-tools` is one the server has. A renamed tool would
-// otherwise fall back to a permission prompt, with nothing failing.
-for (const file of walk("skills").filter((f) => f.endsWith("SKILL.md"))) {
-  const text = read(file);
-  const line = text.match(/^allowed-tools:\s*(.*)$/m);
-  for (const entry of line ? line[1].split(",").map((t) => t.trim()).filter(Boolean) : []) {
-    const name = entry.replace(/^mcp__.*__/, "");
-    if (!tools.has(name)) fail(file, lineOf(text, line.index), `allowed-tools pre-approves \`${name}\`, which is not a tool on the live server`);
   }
 }
 
