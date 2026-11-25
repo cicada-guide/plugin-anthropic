@@ -16,7 +16,9 @@ Find Alabama HB 591 from the 2026 Regular Session
 
 Claude resolves the state, then searches for that number within it, adding the session when you
 gave one. Bill-number matching is exact in either spelling: `HB 591` and `HB591` find the same
-bill, but `HB 5910` does not match `HB 591`.
+bill, but `HB 5910` does not match `HB 591`. Claude looks a named bill up by its number, state and
+session, not by topic words: every search filter must match, so adding a topic to the number finds
+nothing when the bill's title and text don't contain it.
 
 The same number recurs across states and sessions, so:
 

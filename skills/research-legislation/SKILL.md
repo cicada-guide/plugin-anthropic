@@ -62,7 +62,9 @@ Bill-number matching is exact in either stored spelling (`HB 314` or `HB314`), b
 repeats across sessions and states. Pass the number with its chamber prefix (`HB 314`); a number
 alone (`314`) returns no bills. When the user gave a year but no session, `session_name` with the
 year (partial match, so regular and special sessions both match) narrows without a UUID. Read each
-candidate's session before reporting.
+candidate's session before reporting. Find a named bill with `bill` plus `division_id` or a
+session, not with a topic `query`: every filter must match, so a `bill` and `query` search returns
+only bills matching both. When one comes back empty, search again without `query`.
 
 A topic argument usually returns several bills. Answer with the topic list below and offer a brief
 on one; do not pick one to brief unasked. In a host that renders cards, every `search_bills` call

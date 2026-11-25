@@ -31,7 +31,10 @@ rather than guessing.
 the first 8 terms, with no signal in the response, so a thin topic result is not proof of absence.
 Bill-number matching is exact in either spelling (`HB 314` or `HB314`); `session_name` with a year
 (partial match) narrows without a UUID. Pass the number with its chamber prefix (`HB 314`); a number
-alone (`314`) returns no bills. If several bills remain plausible, return the candidates.
+alone (`314`) returns no bills. Find a named bill with `bill` plus `division_id` or a session,
+not with a topic `query`: every filter must match, so a `bill` and `query` search returns only
+bills matching both. When one comes back empty, search again without `query`. If several bills
+remain plausible, return the candidates.
 When the session is unresolved, page past the first match to the end or ask for the session;
 never silently choose the latest session.
 

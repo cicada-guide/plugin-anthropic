@@ -10,6 +10,18 @@ plugin's guidance, including updates made to match what the server returns.
 
 ## [Unreleased]
 
+### Changed
+
+- Updated to match the server: `search_bills` filters combine, so a bill must match every one.
+  Every entry point that searches bills now says to find a named bill with `bill` plus a state or
+  session filter, not a topic `query`, and to search again without `query` when a search with
+  both comes back empty; the tool reference quotes the server's message for that case, the
+  workflows recovery table has a row for it, and `check.mjs` requires the rule wherever
+  `search_bills` appears (`voting-record` now restates the `query` caps too).
+  The tool reference also notes that every input schema except `get_more_tools`'s declares
+  `additionalProperties: false`, and that `get_more_tools` carries
+  `annotations.title: "Get More Tools"`, `readOnlyHint: true` and `openWorldHint: false`.
+
 ## [0.12.8] - 2026-11-24
 
 ### Changed

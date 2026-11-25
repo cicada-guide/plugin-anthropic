@@ -60,6 +60,12 @@ asked about "HB 314" briefs whichever row comes first, which may be a different 
 last session's. The rule makes the model scope by state and session and read each result's session
 before choosing one.
 
+`search_bills` filters combine: a bill must match every one. A model that adds a topic `query` to
+`bill: "HB 314"` gets nothing back when the bill's title and documents don't contain the topic
+words, and may report that the bill doesn't exist. So the rule says to find a named bill with
+`bill` plus a state or session filter, and to search again without `query` when a search with both
+comes back empty.
+
 ### Search query caps
 
 `search_bills` splits `query` into words and matches each one separately, so more words widen the

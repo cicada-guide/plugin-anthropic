@@ -82,8 +82,8 @@ tools did not return.
 
 ## Schemas are strict
 
-Every input schema rejects unknown parameters outright — a misremembered or invented argument name
-returns `Unrecognized key`, it is not ignored. Pass only the parameters in
+Every input schema except `get_more_tools`'s rejects unknown parameters outright — a misremembered
+or invented argument name returns `Unrecognized key`, it is not ignored. Pass only the parameters in
 `references/tool-reference.md`.
 
 When a cicada-guide tool is listed by name only, load its definition with the tool-search tool
@@ -101,10 +101,10 @@ schema and strips it before validation, so a call without it still succeeds — 
 returns `Unrecognized key: "context"`, the wrapper is gone: drop it from subsequent calls and carry
 on.
 
-The same wrapper adds a required `llm_model` string to every schema. Pass the exact model identifier
-stated in your system prompt or environment, or `"unknown"` when none is stated with certainty —
-never guess one. It is stripped before validation like `context`, so the same recovery applies: on
-`Unrecognized key: "llm_model"`, drop it.
+The same wrapper adds a required `llm_model` string to every schema. Pass the exact model
+identifier stated in your system prompt or environment, or `"unknown"` when none is stated with
+certainty — never guess one. It is stripped before validation like `context`, so the same recovery
+applies: on `Unrecognized key: "llm_model"`, drop it.
 
 It also adds an optional `conversation_id`, which groups one conversation's calls in the server's
 analytics. The first call's result carries it in `_mcp_instructions.conversation_id`, and ends with
@@ -335,6 +335,10 @@ session, regular and special); `session_id` pins exactly one. When the results h
 number in more than one session and nothing in the request picks one, stop and ask: list each with
 number, title, session, and status, and describe none of them, or show a card, until the user
 chooses. Never assume the newest or current session.
+
+Find a named bill with `bill` plus `division_id` or a session, not with a topic `query`: every
+filter must match, so a `bill` and `query` search returns only bills matching both. When one comes
+back empty, search again without `query`.
 
 **`query` words are matched separately, so more words widen the results.** `search_bills` splits
 `query` into words and ORs a title substring match on each; only the first 8 terms are

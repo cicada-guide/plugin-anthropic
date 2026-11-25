@@ -45,9 +45,10 @@ jq -r '.result.tools[] | select(.inputSchema.properties.response_format == null)
 jq '.result.tools[] | select(.name == "show_bill") | .inputSchema' tools-list.json
 ```
 
-Every schema lists `context`, `llm_model` and `conversation_id`. The server's analytics wrapper
-adds all three to each tool; they are documented once, under "Shared parameters" in the tool
-reference, not per tool.
+Every schema lists `context`, `llm_model` and `conversation_id`, and of the three requires
+`context` and `llm_model`. The server's analytics wrapper adds all three to each tool; they are
+documented once, under "Shared parameters" in the tool reference, not per tool. Every schema except
+`get_more_tools`'s also declares `additionalProperties: false`.
 
 ### 2. See what disagrees
 
@@ -86,7 +87,7 @@ you confirmed with a live call as dated, the way the existing notes do.
 
 | Parameter | Type | Notes |
 | --- | --- | --- |
-| `bill` | string, max 50 | Bill number with its chamber prefix ("HB 314"); exact match ignoring case, spaces and dots. A number alone ("314") returns no bills and a prompt to add the prefix |
+| `bill` | string, max 50 | Bill number with its chamber prefix ("HB 314"); exact match ignoring case, spaces and dots. A number alone ("314") returns no bills and a prompt to add the prefix. Combine it with a state or session filter, not `query` |
 | `query` | string, max 500 | ... |
 ````
 
