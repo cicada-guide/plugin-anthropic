@@ -195,7 +195,11 @@ Report each roll call's own `counts`; never add counts across roll calls.
    number repeats across sessions and states. Pass the number with its chamber prefix (`HB 314`); a
    number alone (`314`) returns no bills. When the user gave a year but no session, `session_name`
    with the year (partial match, so regular and special sessions both match) narrows without a UUID.
-   Read each candidate's session before reporting.
+   Read each candidate's session before reporting. Find a named bill with `bill` plus `division_id`
+   or a session, not with a topic `query`: every filter must match, so a `bill` and `query` search
+   returns only bills matching both. When one comes back empty, search again without `query`. A
+   `query` also resolves at most 50 distinct bills by document text and uses only the first 8 terms,
+   with no signal in the response.
 2. Resolve the person as in Path A step 1, including the jurisdiction check. Never pick one
    same-name candidate silently.
 3. `get_votes` with both `bill_id` and `people_id`. The filters combine, so each row is that

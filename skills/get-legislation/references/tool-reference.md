@@ -36,14 +36,15 @@ it, and the descriptors carry `readOnlyHint: true` alongside `destructiveHint: f
 `openWorldHint` is `true` on `get_latest_bill_document` and `read_pdf_bytes`, which fetch documents
 from legislative hosts outside the server, and `false` on every other tool.
 
-Every input schema is strict — an unknown parameter is rejected before the handler runs.
+Every tool but `get_more_tools` declares `additionalProperties: false` in its input schema, so an
+unknown parameter to any of them is rejected before the handler runs.
 
 ## Shared parameters
 
 | Parameter | Type | Default | Constraints |
 | --- | --- | --- | --- |
 | `context` | string | — | Declared and required by every published schema. 15-25 words, third person, no personal data or people's names. See the note below — the handler behind it does not declare it. |
-| `llm_model` | string | — | Declared and required by every published schema. The exact model identifier of the calling model, or `"unknown"`. Added by the same wrapper as `context` — see below. |
+| `llm_model` | string | — | Declared by every published schema, not required. The exact model identifier of the calling model, or `"unknown"`. Added by the same wrapper as `context` — see below. |
 | `conversation_id` | string | — | Declared by every published schema, not required. The value an earlier result returned, unchanged. Added by the same wrapper — see below. |
 | `limit` | integer | `20` | 1-100. Only on `search_bills`, `search_people`, `list_sessions`, `get_documents`, `get_rollcalls`, `get_votes`, and `get_person_votes`. |
 | `offset` | integer | `0` | 0-10000. Only on `search_bills`, `search_people`, `list_sessions`, `get_documents`, and `get_rollcalls`. `get_votes` and `get_person_votes` page by `cursor`; `read_pdf_bytes` takes a byte `offset` of its own. |
@@ -59,9 +60,9 @@ schema and strips it before the strict validation runs. That is why a call omitt
 succeeds despite being marked required. If a call ever returns `Unrecognized key: "context"`, the
 wrapper is gone: drop `context` from subsequent calls.
 
-**`llm_model` comes from the same wrapper.** Every published schema lists it and marks it required,
-and like `context` it is stripped before validation: verified 2026-09-26, `list_states` succeeds
-both without it and with `llm_model: "unknown"`. Send it on every call. Its value is the exact model
+**`llm_model` comes from the same wrapper.** Every published schema lists it, optional, and like
+`context` it is stripped before validation: verified 2026-09-26, `list_states` succeeds both
+without it and with `llm_model: "unknown"`. Send it on every call. Its value is the exact model
 identifier stated in your system prompt or environment, such as `claude-opus-4-8`; when none is
 stated with certainty, send `"unknown"`. Never guess one from a product name. It is analytics only
 and carries nothing else. If a call ever returns `Unrecognized key: "llm_model"`, drop it from
@@ -194,9 +195,9 @@ descending, nulls last.
 
 | Parameter | Type | Notes |
 | --- | --- | --- |
-| `bill` | string, max 50 | Bill number with its chamber prefix ("HB 314"); exact match ignoring case, spaces and dots. A number alone ("314") returns no bills and a prompt to add the prefix |
+| `bill` | string, max 50 | Bill number with its chamber prefix ("HB 314"); exact match ignoring case, spaces and dots. A number alone ("314") returns no bills and a prompt to add the prefix. Combine it with a state or session filter, not `query` |
 | `query` | string, max 500 | Each word a separate title substring, ORed, plus full-text search over attached documents |
-| `subject` | string | Exact match against an entry in the `subjects` array |
+| `subject` | string, max 200 | Exact match against an entry in the `subjects` array |
 | `status` | string, max 100 | Partial, case-insensitive match on the recorded status text |
 | `session_id` | UUID | From `list_sessions` |
 | `session_name` | string, max 200 | Partial, case-insensitive match on the session name, e.g. `"2025"` |
@@ -213,6 +214,11 @@ Items carry `id`, `bill`, `title`, `status`, `type`, `date`, `subjects`, `headli
 Texas returned the four SB8 bills from four sessions and no other numbers. The same number repeats
 across sessions and states, so scope by `division_id` and a session, and read each result's session
 before reporting.
+
+**Every filter must match.** Find a named bill with `bill` plus `division_id` or a session, not
+with a topic `query`: a `bill` and `query` search returns only bills matching both. When one comes
+back empty, search again without `query`. An empty `bill` and `query` search answers
+`No bill numbered "<bill>" also matched the query "<query>": the filters combine, so a bill must match every one. To find the bill, search again without query: bill plus a division_id or session_name.`
 
 **`session_name` filters by session name without a UUID.** It is a partial match, so `"2025"` covers
 every 2025 session, regular and special; use `session_id` from `list_sessions` to pin one session.
@@ -734,11 +740,14 @@ Items carry `id`, `name`, `geoidfq`. Use a returned `id` as `division_id`.
 
 ### `get_more_tools`
 
-Added by the server's analytics library, not a data tool. It returns no data and never lists new
-tools: every call answers "Unfortunately, we have shown you the full tool list. We have noted your
-feedback and will work to improve the tool list in the future." The server records its `context`
-as a report of a missing capability. Call it only after the other tools cannot serve the request,
-and still tell the user the dataset does not cover it.
+Added by the server's analytics library, not a data tool. Its descriptor carries
+`annotations.title: "Get More Tools"`, `readOnlyHint: true` and `openWorldHint: false`, like the
+data tools, but no top-level `title`, and its input schema does not declare
+`additionalProperties: false`. It returns no data and never lists new tools: every call answers
+"Unfortunately, we have shown you the full tool list. We have noted your feedback and will work
+to improve the tool list in the future." The server records its `context` as a report of a missing
+capability. Call it only after the other tools cannot serve the request, and still tell the user
+the dataset does not cover it.
 
 | Parameter | Type | Default | Constraints |
 | --- | --- | --- | --- |

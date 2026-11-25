@@ -123,8 +123,9 @@ calling anything. Not for a topic sweep across states.
 1. **Identify the bill.** Resolve the state with `list_states`, and the session with
    `list_sessions` when a year is given; with no state named, scope to the project's
    `default_division` and say so. A bill number goes to `search_bills` with `bill` and
-   `division_id`; a topic goes to `search_bills` with `query`. Several plausible bills means
-   listing them and asking. An unresolved session means paging through every exact-number match,
+   `division_id`, never with a topic `query`; a topic goes to `search_bills` with `query`. When a
+   search with both comes back empty, it searches again without `query`. Several plausible bills
+   means listing them and asking. An unresolved session means paging through every exact-number match,
    never assuming the current session.
 2. **Gather.** `get_bill_dossier` in one call, or in order: `get_bill`; `search_people` with `ids`
    for the sponsors; `get_latest_bill_document`, every part; `get_rollcalls`, every page; and
@@ -273,8 +274,9 @@ the intermediate calls don't fill the conversation. Not for a topic sweep across
 **Process.**
 
 1. **Identify.** `list_states`, `list_sessions` when a year was given, then `search_bills` with
-   `bill` or `query` and `division_id`. Several plausible bills means stopping and returning the
-   candidates; an unresolved session means paging to the end or asking for the session.
+   `bill` or `query` and `division_id`, never both for a named bill. Several plausible bills means
+   stopping and returning the candidates; an unresolved session means paging to the end or asking
+   for the session.
 2. **Gather**, skipping what the request does not need: `get_bill`; `get_latest_bill_document`,
    every part; `get_documents` when an earlier version matters; `search_people` with `ids` for the
    sponsors; `show_official` on a sponsor only when the request asks for their chamber or district,
@@ -372,8 +374,8 @@ Columns: **SL** `get-legislation`, **BR** `research-legislation`, **VR** `voting
 | No credentials, personal data, people's names, or first-person phrasing in `context` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Files that mention `context` |
 | Pages fitted under 25,000 characters; truncation hint | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | Files that page or read text |
 | `Read` only for `${CLAUDE_PLUGIN_ROOT}` files | — | — | — | — | ✓ | ✓ | Agents |
-| `search_bills` query caps: at most 50 distinct bills, first 8 terms | ✓ | ✓ | — | — | ✓ | — | Files that use `search_bills` with `query` |
-| `search_bills` bill numbers match exactly, need the chamber prefix, and repeat across sessions | ✓ | ✓ | ✓ | — | ✓ | — | Files that mention `search_bills` |
+| `search_bills` query caps: at most 50 distinct bills, first 8 terms | ✓ | ✓ | ✓ | — | ✓ | — | Files that use `search_bills` with `query` |
+| `search_bills` bill numbers match exactly, need the chamber prefix, and repeat across sessions; a named bill is found with `bill` plus a state or session, not `query` | ✓ | ✓ | ✓ | — | ✓ | — | Files that mention `search_bills` |
 | `status` is a partial match, not proof of enactment | ✓ | ✓ | — | — | — | — | Review |
 | `get_rollcalls` includes vote-linked roll calls (`linked_via`) | ✓ | ✓ | ✓ | — | ✓ | — | Review |
 | Never add counts across roll calls | ✓ | ✓ | ✓ | — | ✓ | — | Files that mention `get_rollcalls` |

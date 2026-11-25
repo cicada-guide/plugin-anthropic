@@ -27,6 +27,10 @@ chamber prefix (`HB 314`); a number alone (`314`) returns no bills. When the use
 but not a session, `session_name: "2025"` filters to every 2025 session without a UUID; it is a
 partial match, so it can return regular and special sessions together.
 
+Find a named bill with `bill` plus `division_id` or a session, not with a topic `query`: every
+filter must match, so a `bill` and `query` search returns only bills matching both. When one comes
+back empty, search again without `query`.
+
 Omit `session_id` only when the session has not been resolved. In that case, the first exact-number
 match is not enough: finish paging for other sessions or ask which session the user intends.
 
@@ -358,6 +362,7 @@ The reverse direction — every bill a legislator sponsored — goes through `se
 | Two identical-looking candidates | Two legislators with the same name | List both with party, state, and vote dates, and ask; never combine their records |
 | A sitting legislator appears to have no votes | The chosen row may be a different legislator with the same name | Surface other rows with the same name as candidates and ask |
 | Right bill number, wrong bill | The same number exists in another session or state | Scope by `division_id` and `session_id` (or `session_name`); read each result's session |
+| `No bill numbered "<bill>" also matched the query "<query>"` | `search_bills` with both `bill` and `query`: every filter must match | Search again without `query`: `bill` plus `division_id` or a session |
 | Names missing from a vote breakdown | `get_votes` returns UUIDs only | Use `get_rollcall_breakdown`, whose `members` carry names and party |
 | `headline` or `summary` rejected by `show_bill` | Missing or empty, or a `headline` over 120 characters | Always pass both, as plain text: a headline of at most 120 characters and a non-empty summary; when the text could not be read, say so in the summary |
 | Asked for a legislator's chamber or district | `search_people` and `get_person` return neither, and `get_person`'s contact links are not a seat | Use the `show_official` seat line; when it has none, say they are not recorded. To separate several candidates by seat, dispatch `legislator-disambiguator` |
